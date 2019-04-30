@@ -1,0 +1,22 @@
+﻿@model IEnumerable<FmsService.Team>
+
+@{
+    ViewData["Title"] = "New Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Please Select a Team To Manage:</h2>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>>Please Select a Team:</title>
+</head>
+<body>
+     @await Component.InvokeAsync("Teams")
+</body>
+</html>
+
+
+

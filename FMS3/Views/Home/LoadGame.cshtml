@@ -1,0 +1,51 @@
+﻿@model IEnumerable<FmsService.GameDetails>
+
+@{
+    ViewData["Title"] = "LoadGame";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Load Game</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                Manager Name
+            </th>
+            <th>
+                Team
+            </th>
+            <th>
+                Year
+            </th>
+            <th>
+                Week
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeamId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentWeek)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "SelectGame", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

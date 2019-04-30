@@ -1,0 +1,37 @@
+﻿@model FmsService.GameDetails
+
+@{
+    ViewData["Title"] = "StartGame";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Game Details:</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TeamId)
+        </dd>
+    </dl>
+</div>
+<div>
+    
+    <a asp-action="Index">Back to Menu</a>
+</div>

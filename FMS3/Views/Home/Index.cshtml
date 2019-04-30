@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Main Menu</h2>
+        <ul>
+            <li>1. @Html.ActionLink("New Game", "NewGame", "Home")</li>
+            <li>2. @Html.ActionLink("Load Game", "LoadGame", "Home")</li>
+
+            <li>3. @Html.ActionLink("Records", "Index", "Home")</li>
+            <li>4. @Html.ActionLink("Options", "Index", "Home")</li>
+            <li>5. @Html.ActionLink("Exit", "Index", "Home")</li>
+
+
+        </ul>
+    </div>
+    
+   
+</div>

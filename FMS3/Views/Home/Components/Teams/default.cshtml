@@ -1,0 +1,54 @@
+﻿@model FmsService.Team[]
+<h3>Teams</h3>
+
+<table class="table table-bordered">
+    <tr height="40px">
+        <td>
+            @Html.LabelFor(t => t.First().Id)
+        </td>
+        <td>
+            @Html.LabelFor(t => t.First().Name)
+        </td>
+        <td>
+            @Html.LabelFor(t => t.First().Division)
+        </td>
+        <td>
+            @Html.LabelFor(t => t.First().YearFormed)
+        </td>
+        <td>
+            @Html.LabelFor(t => t.First().Cash)
+        </td>
+        <td>
+            @Html.LabelFor(t => t.First().StadiumCapacity)
+        </td>
+        <td></td>
+    </tr>
+
+
+        @foreach (var team in Model)
+        {
+<tr>
+    <td>
+        @team.Id.ToString()
+    </td>
+    <td>
+        @team.Name.ToString()
+    </td>
+    <td>
+        @team.Division.ToString()
+    </td>
+    <td>
+        @team.YearFormed.ToString()
+    </td>
+    <td>
+        @team.Cash.ToString()
+    </td>
+    <td>
+        @team.StadiumCapacity.ToString()
+    </td>
+    <td>
+        @Html.ActionLink("Select", "StartGame", "Home", new { teamId = team.Id })
+    </td>
+</tr>
+        }
+   </table>

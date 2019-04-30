@@ -1,0 +1,45 @@
+﻿@model FmsService.Team
+@{
+    ViewData["Title"] = "Team Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TeamDetails</h2>
+
+
+@Html.LabelFor(t => t.Id):
+@Html.LabelForModel(Model.Id.ToString())
+<br />
+
+@Html.LabelFor(t => t.Name):
+@Html.LabelForModel(Model.Name)
+<br />
+
+@Html.LabelFor(t => t.Division):
+@Component.InvokeAsync("DivisionName", new { divisionId = Model.Division }).Result
+<br />
+
+@Html.LabelFor(t => t.YearFormed):
+@Html.LabelForModel(Model.YearFormed.ToString())
+<br />
+
+@Html.LabelFor(t => t.Cash):
+@Component.InvokeAsync("CashFormat", new { cashValue = Model.Cash }).Result
+<br />
+
+@Html.LabelFor(t => t.StadiumCapacity):
+@Html.LabelForModel(Model.StadiumCapacity.ToString())
+<br />
+<br />
+(Recent Form)
+<br />
+(Squad)
+<br />
+(History)
+<br />
+(News)
+<br />
+(Records)
+<br />
+
+
