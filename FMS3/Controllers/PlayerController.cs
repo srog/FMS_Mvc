@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FMS3.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class PlayerController : Controller
     {
-        private static FmsService.FmsServiceClient _fmsServiceClient = new FmsService.FmsServiceClient();
+        private readonly PlayerData _playerData = new PlayerData();
 
         public IActionResult Index()
         {
-            var playerList = _fmsServiceClient.GetAllPlayersAsync().Result;
+            var playerList = _playerData.GetAllPlayers();
 
             return View(playerList);
         }

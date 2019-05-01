@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FMS3.Data;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace FMS3.Views.Shared.ViewComponents.TeamName
 {
     public class TeamNameViewComponent : ViewComponent
     {
-        private readonly FmsService.FmsServiceClient _fmsService;
+        private readonly TeamData _teamData;
 
-        public TeamNameViewComponent(FmsService.FmsServiceClient fmsServiceClient)
+        public TeamNameViewComponent(TeamData teamData)
         {
-            _fmsService = fmsServiceClient;
+            _teamData = teamData;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
-            var teamName = teamId == 0 ? "Free Agent" :  _fmsService.GetTeamAsync(teamId).Result.Name;
+            var teamName = teamId == 0 ? "Free Agent" :  _teamData.GetTeam(teamId).Name;
             return View("Default", teamName);
         }
     }

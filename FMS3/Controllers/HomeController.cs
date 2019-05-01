@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FMS3.Models;
-using System.Threading.Tasks;
+using FMS3.Data;
 
 namespace FMS3.Controllers
 {
     public class HomeController : Controller
     {
-        private static FmsService.FmsServiceClient _fmsServiceClient = new FmsService.FmsServiceClient();
+        private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
 
         public IActionResult Index()
         {
@@ -22,30 +20,36 @@ namespace FMS3.Controllers
             //_fmsServiceClient.NewGame();
 
             // Display initial new game screen
-            var teamList = _fmsServiceClient.GetAllTeamsAsync().Result;
+            //var teamList = _fmsServiceClient.GetAllTeamsAsync().Result;
 
-            return View(teamList);
+            return View();
         }
 
         public IActionResult LoadGame()
         {
-            var games = _fmsServiceClient.GetAllGameDetailsAsync().Result;
+            var games = _gameDetailsData.GetAllGameDetails();
             return View(games);
         }
 
-        public IActionResult StartGame(int teamId)
+        public IActionResult StartGame(int teamId, string managerName)
         {
-            var startGameTask = DoStartGame(teamId);
-            startGameTask.Wait();
+            var gameId = _gameDetailsData.AddGameDetails(new GameDetails
+            {
+                CurrentYear = 2020,
+                CurrentWeek = 0,
+                TeamId = teamId,
+                ManagerName = managerName
+            });
 
-            var gameDetails = _fmsServiceClient.GetAllGameDetailsAsync().Result;
-            return View(gameDetails[gameDetails.Length-1]);
+            var gameDetails = _gameDetailsData.GetGameDetails(gameId);
+
+            _gameDetailsData.StartNewGame(gameDetails);
+
+            return View(gameDetails);
+
+     
         }
 
-        public async Task DoStartGame(int teamId)
-        {
-            await _fmsServiceClient.StartGameAsync(teamId, "Ron Manager");
-        }
 
         public IActionResult Privacy()
         {

@@ -35,8 +35,8 @@ namespace FMS3
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<FmsService.FmsServiceClient, FmsService.FmsServiceClient>();
-            services.AddTransient<TeamNameViewComponent>();
+            //services.AddTransient<FmsService.FmsServiceClient, FmsService.FmsServiceClient>();
+            //services.AddTransient<TeamNameViewComponent>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,31 +1,22 @@
-﻿
-using FmsService;
+﻿using FMS3.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace FMS3.Controllers
 {
     public class TeamController : Controller
     {
-        private static FmsService.FmsServiceClient _fmsServiceClient = new FmsService.FmsServiceClient();
+        private static readonly TeamData _teamData = new TeamData();
 
         public IActionResult Index()
         {
-            var teamList = _fmsServiceClient.GetAllTeamsAsync().Result;
-
+            var teamList = _teamData.GetAllTeams();
             return View(teamList);
         }
 
         public IActionResult TeamDetails(int id)
         {
-            var team = _fmsServiceClient.GetTeamAsync(id).Result;
+            var team = _teamData.GetTeam(id);
             return View(team);
-        }
-
-
-        public IEnumerable<Team> GetAllTeams()
-        {
-            return _fmsServiceClient.GetAllTeamsAsync().Result;
         }
 
     }

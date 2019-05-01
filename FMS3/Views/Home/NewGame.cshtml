@@ -1,5 +1,4 @@
-﻿@model IEnumerable<FmsService.Team>
-
+﻿
 @{
     ViewData["Title"] = "New Game";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,6 +13,7 @@
     <title>>Please Select a Team:</title>
 </head>
 <body>
+    <input type="text" id="managerName" value="@ViewBag.ManagerName" />
      @await Component.InvokeAsync("Teams")
 </body>
 </html>

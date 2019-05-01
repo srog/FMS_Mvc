@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FmsService.GameDetails>
+﻿@model IEnumerable<FMS3.Models.GameDetails>
 
 @{
     ViewData["Title"] = "LoadGame";
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.ManagerName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TeamId)
+                @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CurrentYear)
