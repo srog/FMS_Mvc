@@ -1,0 +1,43 @@
+﻿@model FMS3.Models.GameDetails
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Main Game Page</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            Team Managed
+        </dt>
+        <dd>
+            @await Component.InvokeAsync("TeamName", new { teamId = Model.TeamId })
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentSeasonId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentSeasonId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentWeek)
+        </dd>
+    </dl>
+</div>

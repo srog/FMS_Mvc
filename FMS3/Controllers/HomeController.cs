@@ -8,6 +8,7 @@ namespace FMS3.Controllers
     public class HomeController : Controller
     {
         private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
+      
 
         public IActionResult Index()
         {
@@ -15,12 +16,8 @@ namespace FMS3.Controllers
         }
 
         public IActionResult NewGame()
-        {
-            // Set up new game variables
-            //_fmsServiceClient.NewGame();
-
-            // Display initial new game screen
-            //var teamList = _fmsServiceClient.GetAllTeamsAsync().Result;
+        {            
+            GlobalData.GameDetailsId = _gameDetailsData.StartNewGame();
 
             return View();
         }
@@ -31,25 +28,25 @@ namespace FMS3.Controllers
             return View(games);
         }
 
-        public IActionResult StartGame(int teamId, string managerName)
+        public IActionResult SelectManager(string managerName)
         {
-            var gameId = _gameDetailsData.AddGameDetails(new GameDetails
-            {
-                CurrentYear = 2020,
-                CurrentWeek = 0,
-                TeamId = teamId,
-                ManagerName = managerName
-            });
+            var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
+            game.ManagerName = managerName;
+            _gameDetailsData.UpdateGameDetails(game);
 
-            var gameDetails = _gameDetailsData.GetGameDetails(gameId);
+            return View("StartGame",game);
 
-            _gameDetailsData.StartNewGame(gameDetails);
-
-            return View(gameDetails);
-
-     
         }
 
+        public IActionResult SelectTeam(int teamId)
+        {
+            var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
+            game.TeamId = teamId;
+
+            _gameDetailsData.UpdateGameDetails(game);
+
+            return View("SelectManager",game);     
+        }
 
         public IActionResult Privacy()
         {

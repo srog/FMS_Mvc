@@ -11,5 +11,6 @@
         public int Value { get; set; }
         public bool Retired { get; set; }
         public int InjuredWeeks { get; set; }
+        public int GameDetailsId { get; set; }
     }
 }

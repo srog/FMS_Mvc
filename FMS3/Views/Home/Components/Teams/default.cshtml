@@ -1,6 +1,4 @@
-﻿@model FMS3.Models.Team[]
-
-<h3>Teams</h3>
+﻿@model IEnumerable<FMS3.Models.Team>
 
 <table class="table table-bordered">
     <tr height="40px">
@@ -11,7 +9,7 @@
             @Html.LabelFor(t => t.First().Name)
         </td>
         <td>
-            @Html.LabelFor(t => t.First().Division)
+            @Html.LabelFor(t => t.First().DivisionId)
         </td>
         <td>
             @Html.LabelFor(t => t.First().YearFormed)
@@ -26,30 +24,30 @@
     </tr>
 
 
-        @foreach (var team in Model)
-        {
-<tr>
-    <td>
-        @team.Id.ToString()
-    </td>
-    <td>
-        @team.Name.ToString()
-    </td>
-    <td>
-        @team.Division.ToString()
-    </td>
-    <td>
-        @team.YearFormed.ToString()
-    </td>
-    <td>
-        @team.Cash.ToString()
-    </td>
-    <td>
-        @team.StadiumCapacity.ToString()
-    </td>
-    <td>
-        @Html.ActionLink("Select", "StartGame", "Home", new { teamId = team.Id })
-    </td>
-</tr>
-        }
-   </table>
+    @foreach (var team in Model)
+    {
+        <tr>
+            <td>
+                @team.Id.ToString()
+            </td>
+            <td>
+                @team.Name.ToString()
+            </td>
+            <td>
+                @Component.InvokeAsync("DivisionName", new { divisionId = @team.DivisionId }).Result
+            </td>
+            <td>
+                @team.YearFormed.ToString()
+            </td>
+            <td>
+                @Component.InvokeAsync("CashFormat", new { cashValue = @team.Cash }).Result
+            </td>
+            <td>
+                @team.StadiumCapacity.ToString()
+            </td>
+            <td>
+                @Html.ActionLink("Select", "SelectTeam", "Home", new { teamId = team.Id })
+            </td>
+        </tr>
+    }
+</table>

@@ -9,7 +9,7 @@ namespace FMS3.Data
     {
         private readonly IWebApi _webApi;
         private readonly string gameDetailsURL = "http://localhost:56822/api/gameDetails";
-        private readonly string startNewGameURL = "http://localhost:56822/api/startNewGame";
+        private readonly string startNewGameURL = "http://localhost:56822/api/StartNewGame";
 
         public GameDetailsData()
         {
@@ -19,11 +19,22 @@ namespace FMS3.Data
             }
         }
 
-        public bool StartNewGame(GameDetails gameDetails)
+        public int StartNewGame()
         {
-            var response = _webApi.Post(startNewGameURL, gameDetails);
+            var response = _webApi.Post(startNewGameURL);
+            var newGameId = 0;
 
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                newGameId = response.Content.ReadAsAsync<int>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+
+            // return new game id
+            return newGameId;
         }
 
         public IEnumerable<GameDetails> GetAllGameDetails()
@@ -31,7 +42,7 @@ namespace FMS3.Data
             var response = _webApi.Get(gameDetailsURL);
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsAsync<IEnumerable<Models.GameDetails>>().Result;
+                return response.Content.ReadAsAsync<IEnumerable<GameDetails>>().Result;
             }
             else
             {
@@ -42,7 +53,7 @@ namespace FMS3.Data
 
         public GameDetails GetGameDetails(int id)
         {
-            var response = _webApi.Get(gameDetailsURL, id);
+            var response = _webApi.GetByGameDetailsId(gameDetailsURL, id);
 
             if (response.IsSuccessStatusCode)
             {

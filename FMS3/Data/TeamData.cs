@@ -8,6 +8,7 @@ namespace FMS3.Data
     {
         private readonly IWebApi _webApi;
         private readonly string teamURL = "http://localhost:56822/api/team";
+        //private readonly string teamListURL = "http://localhost:56822/api/teamList";
 
         public TeamData()
         {
@@ -17,12 +18,12 @@ namespace FMS3.Data
             }
         }
 
-        public IEnumerable<Team> GetAllTeams()
+        public IEnumerable<Team> GetAllTeams(int gameDetailsId)
         {
-            var response = _webApi.Get(teamURL);
+            var response = _webApi.GetByGameDetailsId(teamURL, gameDetailsId);
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsAsync<IEnumerable<Models.Team>>().Result;
+                return response.Content.ReadAsAsync<IEnumerable<Team>>().Result;
             }
             else
             {

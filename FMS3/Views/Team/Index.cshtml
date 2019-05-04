@@ -27,7 +27,7 @@
                     @Html.LabelFor(t => t.First().Name)
                 </td>
                 <td>
-                    @Html.LabelFor(t => t.First().Division)
+                    @Html.LabelFor(t => t.First().DivisionId)
                 </td>
                 <td>
                     @Html.LabelFor(t => t.First().YearFormed)
@@ -47,7 +47,7 @@
                 @team.Name.ToString()
             </td>
             <td>
-                @Component.InvokeAsync("DivisionName", new { divisionId = @team.Division }).Result
+                @Component.InvokeAsync("DivisionName", new { divisionId = @team.DivisionId }).Result
             </td>
             <td>
                 @team.YearFormed.ToString()

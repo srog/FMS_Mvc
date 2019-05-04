@@ -15,8 +15,8 @@
 @Html.LabelForModel(Model.Name)
 <br />
 
-@Html.LabelFor(t => t.Division):
-@Component.InvokeAsync("DivisionName", new { divisionId = Model.Division }).Result
+@Html.LabelFor(t => t.DivisionId):
+@Component.InvokeAsync("DivisionName", new { divisionId = Model.DivisionId }).Result
 <br />
 
 @Html.LabelFor(t => t.YearFormed):

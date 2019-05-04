@@ -79,3 +79,6 @@ D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.Views.pdb
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.dll
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.pdb
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.csproj.CopyComplete
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.csprojAssemblyReference.cache
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\SelectManager.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Game\Index.g.cshtml.cs

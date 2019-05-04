@@ -1,11 +1,9 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "New Game";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Please Select a Team To Manage:</h2>
-
 
 <html>
 <head>
@@ -13,8 +11,12 @@
     <title>>Please Select a Team:</title>
 </head>
 <body>
-    <input type="text" id="managerName" value="@ViewBag.ManagerName" />
+   
      @await Component.InvokeAsync("Teams")
+
+<div>
+    <a asp-action="Index">Back to Menu</a>
+</div>
 </body>
 </html>
 

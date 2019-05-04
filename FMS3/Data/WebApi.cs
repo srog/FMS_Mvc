@@ -10,11 +10,12 @@ namespace FMS3.Data
     {
         HttpResponseMessage Get(string url, string param = "");
         HttpResponseMessage Get(string url, int id, string param = "");
-        HttpResponseMessage Post(string url, object param);
+        HttpResponseMessage Post(string url, object param = null);
         HttpResponseMessage Put(string url, object param);
         HttpResponseMessage Delete(string url, int id);
 
         HttpResponseMessage GetBySupplierId(string url, int supplierId, string param = "");
+        HttpResponseMessage GetByGameDetailsId(string url, int gameDetailsId, string param = "");
 
     }
     public class WebApi : IWebApi
@@ -48,7 +49,7 @@ namespace FMS3.Data
         {
             var client = new HttpClient
             {
-                BaseAddress = new Uri(url + "/" + id)
+                BaseAddress = new Uri(url + "?id=" + id)
             };
 
             // Add an Accept header for JSON format.
@@ -90,7 +91,30 @@ namespace FMS3.Data
             }
         }
 
-        public HttpResponseMessage Post(string url, object param)
+        public HttpResponseMessage GetByGameDetailsId(string url, int gameDetailsId, string param = null)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(url + "/" + gameDetailsId)
+            };
+
+            // Add an Accept header for JSON format.
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // List data response.
+            HttpResponseMessage response = client.GetAsync(param).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                return new HttpResponseMessage { StatusCode = response.StatusCode };
+            }
+        }
+
+        public HttpResponseMessage Post(string url, object param = null)
         {
             var client = new HttpClient
             {
@@ -99,7 +123,7 @@ namespace FMS3.Data
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.PostAsync(url, param, new JsonMediaTypeFormatter()).Result;
+            HttpResponseMessage response = client.PostAsJsonAsync(url, param).Result;
 
             if (response.IsSuccessStatusCode)
             {

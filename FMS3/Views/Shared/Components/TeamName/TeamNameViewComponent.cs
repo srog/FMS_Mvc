@@ -6,12 +6,7 @@ namespace FMS3.Views.Shared.ViewComponents.TeamName
 {
     public class TeamNameViewComponent : ViewComponent
     {
-        private readonly TeamData _teamData;
-
-        public TeamNameViewComponent(TeamData teamData)
-        {
-            _teamData = teamData;
-        }
+        private static TeamData _teamData = new TeamData();
 
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
