@@ -16,9 +16,8 @@ namespace FMS3.Controllers
                 return View(new List<Player>());
             }
 
-            var playerList = _playerData.GetAllPlayers();
-
-            return View(playerList);
+            
+            return View(new List<Player>());
         }
     }
 }

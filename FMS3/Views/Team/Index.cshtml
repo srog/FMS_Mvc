@@ -56,7 +56,7 @@
                 @Component.InvokeAsync("CashFormat", new { cashValue = @team.Cash }).Result
             </td>
             <td>
-                @Html.ActionLink("Team Details", "TeamDetails", "Team", new { id = team.Id })
+                @Html.ActionLink("Details", "TeamDetails", "Team", new { id = team.Id })
             </td>
         </tr>
             }

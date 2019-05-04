@@ -4,37 +4,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>TeamDetails</h2>
+<h2>Team Details - @Html.LabelForModel(Model.Name)</h2>
 
 
-@Html.LabelFor(t => t.Id):
-@Html.LabelForModel(Model.Id.ToString())
-<br />
 
-@Html.LabelFor(t => t.Name):
-@Html.LabelForModel(Model.Name)
-<br />
-
-@Html.LabelFor(t => t.DivisionId):
+@Html.DisplayNameFor(model => model.DivisionId):
 @Component.InvokeAsync("DivisionName", new { divisionId = Model.DivisionId }).Result
 <br />
 
-@Html.LabelFor(t => t.YearFormed):
+@Html.DisplayNameFor(model => model.YearFormed):
 @Html.LabelForModel(Model.YearFormed.ToString())
 <br />
 
-@Html.LabelFor(t => t.Cash):
+@Html.DisplayNameFor(model => model.Cash):
 @Component.InvokeAsync("CashFormat", new { cashValue = Model.Cash }).Result
 <br />
 
-@Html.LabelFor(t => t.StadiumCapacity):
+@Html.DisplayNameFor(model => model.StadiumCapacity):
 @Html.LabelForModel(Model.StadiumCapacity.ToString())
 <br />
 <br />
-(Recent Form)
+Recent Form:
 <br />
-(Squad)
+@Component.InvokeAsync("RecentForm", new { teamId = Model.Id }).Result
 <br />
+@Component.InvokeAsync("SquadSummary", new { teamId = Model.Id }).Result
+<br />
+
 (History)
 <br />
 (News)

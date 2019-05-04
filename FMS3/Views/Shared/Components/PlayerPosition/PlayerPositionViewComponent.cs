@@ -10,7 +10,7 @@ namespace FMS3.Views.Shared.ViewComponents.PlayerPosition
 
         public async Task<IViewComponentResult> InvokeAsync(int positionId)
         {
-            return View("Default", Enum.GetName(typeof(PositionEnum), positionId));
+            return View("PlayerPosition", Enum.GetName(typeof(PositionEnum), positionId));
         }
     }
 }

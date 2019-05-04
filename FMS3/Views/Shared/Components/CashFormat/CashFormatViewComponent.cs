@@ -15,7 +15,7 @@ namespace FMS3.Views.Shared.ViewComponents.CashFormat
             {
                 cashString = "£0";
             }
-            return View("Default",cashString);
+            return View("CashFormat",cashString);
         }
     }
 }

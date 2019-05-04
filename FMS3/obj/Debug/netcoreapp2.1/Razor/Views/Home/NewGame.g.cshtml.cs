@@ -63,7 +63,7 @@ using FMS3.Models;
             WriteLiteral("\r\n<h2>Please Select a Team To Manage:</h2>\r\n\r\n<html>\r\n");
             EndContext();
             BeginContext(145, 117, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4817e4f68b1648e18cfa7cd561c5bd8e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "41c44dcffe5f4724810c68555f022b73", async() => {
                 BeginContext(151, 104, true);
                 WriteLiteral("\r\n    <meta name=\"viewport\" content=\"width=device-width\" />\r\n    <title>>Please Select a Team:</title>\r\n");
                 EndContext();
@@ -83,7 +83,7 @@ using FMS3.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(264, 125, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "57e16b08abc44152af660f9d1c8b810c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "98719b6d32624252a439e765042a5679", async() => {
                 BeginContext(270, 12, true);
                 WriteLiteral("\r\n   \r\n     ");
                 EndContext();
@@ -98,7 +98,7 @@ Write(await Component.InvokeAsync("Teams"));
                 WriteLiteral("\r\n\r\n<div>\r\n    ");
                 EndContext();
                 BeginContext(334, 38, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "67a986b71d65468996cfe5b6b256e4f9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b2331d66782f40a9be72526604c71515", async() => {
                     BeginContext(356, 12, true);
                     WriteLiteral("Back to Menu");
                     EndContext();

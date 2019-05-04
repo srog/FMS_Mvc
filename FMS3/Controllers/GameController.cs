@@ -1,9 +1,7 @@
 ﻿using FMS3.Data;
+using FMS3.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FMS3.Controllers
 {
@@ -16,7 +14,17 @@ namespace FMS3.Controllers
             GlobalData.GameDetailsId = id;
             var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
 
+            SetUpGlobalData(game);
+
             return View("Index", game);
+        }
+
+        private void SetUpGlobalData(GameDetails game)
+        {
+            GlobalData.CurrentSeasonId = game.CurrentSeasonId;
+
+            var _teamData = new TeamData();
+            GlobalData.GameTeamIdList = _teamData.GetAllTeams(game.Id).Select(t => t.Id);
         }
 
         public IActionResult Index()

@@ -10,8 +10,8 @@ namespace FMS3.Views.Shared.ViewComponents.TeamName
 
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
-            var teamName = teamId == 0 ? "Free Agent" :  _teamData.GetTeam(teamId).Name;
-            return View("Default", teamName);
+            var team = _teamData.GetTeam(teamId);
+            return View("TeamName", team);
         }
     }
 }

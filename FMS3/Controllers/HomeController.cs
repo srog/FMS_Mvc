@@ -12,6 +12,10 @@ namespace FMS3.Controllers
 
         public IActionResult Index()
         {
+            if (GlobalData.GameDetailsId > 0)
+            {
+                return RedirectToAction("Index", "Game");
+            }
             return View();
         }
 

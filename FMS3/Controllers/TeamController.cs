@@ -17,7 +17,7 @@ namespace FMS3.Controllers
                 return View(new List<Team>());
             }
             var teamList = _teamData.GetAllTeams(GlobalData.GameDetailsId);
-            return View(teamList.Select(t => t.GameDetailsId == GlobalData.GameDetailsId));
+            return View(teamList);
         }
 
         public IActionResult TeamDetails(int id)

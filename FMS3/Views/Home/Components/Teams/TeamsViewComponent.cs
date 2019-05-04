@@ -13,7 +13,7 @@ namespace FMS3.ViewComponents
         {
             var teamList = _teamData.GetAllTeams(GlobalData.GameDetailsId);
       
-            return View(teamList);
+            return View("TeamSelect",teamList);
         }
 
     }

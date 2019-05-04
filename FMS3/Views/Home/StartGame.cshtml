@@ -24,7 +24,7 @@
             @Html.DisplayFor(model => model.ManagerName)
         </dd>
         <dt>
-            Team
+            @Html.DisplayNameFor(model => model.TeamId)
         </dt>
         <dd>
             @await Component.InvokeAsync("TeamName", new { teamId = Model.TeamId })

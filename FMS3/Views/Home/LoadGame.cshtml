@@ -19,16 +19,16 @@ else
         <tr>
 
             <th>
-                Manager Name
+                @Html.DisplayNameFor(model => model.ManagerName)
             </th>
             <th>
-                Team
+                @Html.DisplayNameFor(model => model.TeamId)
             </th>
             <th>
-                Season
+                @Html.DisplayNameFor(model => model.CurrentSeasonId)
             </th>
             <th>
-                Week
+                @Html.DisplayNameFor(model => model.CurrentWeek)
             </th>
             <th></th>
         </tr>
@@ -45,10 +45,10 @@ else
                     @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CurrentSeasonId)
+                    @await Component.InvokeAsync("SeasonName", new { seasonId = item.CurrentSeasonId })
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CurrentWeek)
+                    @item.WeekDisplay
                 </td>
                 <td>
                     @Html.ActionLink("Select","Start","Game", new { id = item.Id })

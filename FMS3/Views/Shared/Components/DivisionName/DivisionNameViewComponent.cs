@@ -9,7 +9,8 @@ namespace FMS3.Views.Shared.ViewComponents.DivisionName
     {
         public async Task<IViewComponentResult> InvokeAsync(int divisionId)
         {
-            return View("Default", Enum.GetName(typeof(DivisionEnum), divisionId));
+            var division = Enum.GetName(typeof(DivisionEnum), divisionId);
+            return View("DivisionName", division);
         }
     }
 }
