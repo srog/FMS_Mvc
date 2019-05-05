@@ -8,7 +8,6 @@ namespace FMS3.Data
     {
         private readonly IWebApi _webApi;
         private readonly string teamURL = "http://localhost:56822/api/team";
-        //private readonly string teamListURL = "http://localhost:56822/api/teamList";
 
         public TeamData()
         {

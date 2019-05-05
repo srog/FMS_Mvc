@@ -1,72 +1,77 @@
 ﻿@model IEnumerable<FMS3.Models.Player>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Player List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Position)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
-                Team 
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeamId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Value)
             </th>
+         
+            <th>
+                @Html.DisplayNameFor(model => model.InjuredWeeks)
+            </th>
+           
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Component.InvokeAsync("PlayerPosition", new { positionId = item.Position}).Result
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId})
-            </td>
-            <td>
-                @Component.InvokeAsync("CashFormat", new { cashValue = item.Value }).Result
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeamId)
+                </td>
+                <td>
+                    @Component.InvokeAsync("CashFormat", new { cashValue = item.Value }).Result
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Retired)
+                </td>
+                <td>
+                    @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = item.InjuredWeeks }).Result
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameDetailsId)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

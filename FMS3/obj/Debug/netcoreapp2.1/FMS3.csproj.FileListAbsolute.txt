@@ -59,7 +59,6 @@ D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\LoadGam
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\NewGame.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\StartGame.g.cshtml.cs
-D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Index.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -85,3 +84,8 @@ D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Compo
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\PlayerPosition\PlayerPosition.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\SeasonName\SeasonName.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\TeamName\TeamName.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Index.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Details.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\InjuryStatus\InjuryStatus.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Components\PlayerAttributes\PlayerAttributes.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Components\PlayerStats\PlayerStats.g.cshtml.cs

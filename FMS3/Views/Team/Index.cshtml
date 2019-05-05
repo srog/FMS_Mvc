@@ -18,7 +18,7 @@
     <h3>Team List</h3>
 
     <div>
-        <table  class="table table-bordered">
+        <table class="table table-bordered">
             <tr height="40px">
                 <td>
                     @Html.LabelFor(t => t.First().Id)
@@ -39,31 +39,31 @@
             </tr>
             @foreach (var team in Model)
             {
-        <tr>
-            <td>
-                @team.Id.ToString()
-            </td>
-            <td>
-                @team.Name.ToString()
-            </td>
-            <td>
-                @Component.InvokeAsync("DivisionName", new { divisionId = @team.DivisionId }).Result
-            </td>
-            <td>
-                @team.YearFormed.ToString()
-            </td>
-            <td>
-                @Component.InvokeAsync("CashFormat", new { cashValue = @team.Cash }).Result
-            </td>
-            <td>
-                @Html.ActionLink("Details", "TeamDetails", "Team", new { id = team.Id })
-            </td>
-        </tr>
+                <tr>
+                    <td>
+                        @team.Id.ToString()
+                    </td>
+                    <td>
+                        @team.Name.ToString()
+                    </td>
+                    <td>
+                        @Component.InvokeAsync("DivisionName", new { divisionId = @team.DivisionId }).Result
+                    </td>
+                    <td>
+                        @team.YearFormed.ToString()
+                    </td>
+                    <td>
+                        @Component.InvokeAsync("CashFormat", new { cashValue = @team.Cash }).Result
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "TeamDetails", "Team", new { id = team.Id })
+                    </td>
+                </tr>
             }
         </table>
     </div>
 
-
+    @Html.ActionLink("Back To Main Page", "Index", "Game")
 </body>
 </html>
 

@@ -11,13 +11,13 @@ namespace FMS3.Controllers
 
         public IActionResult Index()
         {
-            if (GlobalData.GameDetailsId == 0)
-            {
-                return View(new List<Player>());
-            }
+            return View();
+        }
 
-            
-            return View(new List<Player>());
+        public IActionResult Details(int playerId)
+        {
+            var player = _playerData.GetPlayer(playerId);
+            return View(player);
         }
     }
 }

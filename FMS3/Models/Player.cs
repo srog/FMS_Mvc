@@ -16,5 +16,7 @@ namespace FMS3.Models
         [Display(Name = "Weeks Injured")]
         public int InjuredWeeks { get; set; }
         public int GameDetailsId { get; set; }
+
+        public string ShortName => Name.Split(" ")[0][0] + "." + Name.Split(" ")[1];    
     }
 }

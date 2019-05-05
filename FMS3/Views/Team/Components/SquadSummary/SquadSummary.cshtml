@@ -5,7 +5,10 @@ Squad Summary:
 <table class="table">
     <thead>
         <tr>
-           
+            <th>
+                Selection Status
+            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -24,7 +27,7 @@ Squad Summary:
             </th>
           
             <th>
-                @Html.DisplayNameFor(model => model.InjuredWeeks)
+                Injury Status
             </th>
          
         </tr>
@@ -32,9 +35,11 @@ Squad Summary:
     <tbody>
 @foreach (var item in Model) {
         <tr>
-         
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                SEL/NOT SEL
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
@@ -43,19 +48,19 @@ Squad Summary:
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Position)
+                @Component.InvokeAsync("PlayerPosition", new { positionId = item.Position }).Result
             </td>
-      
+
             <td>
                 @Component.InvokeAsync("CashFormat", new { cashValue = item.Value }).Result
             </td>
-  
+
             <td>
-                @Html.DisplayFor(modelItem => item.InjuredWeeks)
+                @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = item.InjuredWeeks }).Result
             </td>
-      
+
             <td>
-                @Html.ActionLink("Details", "Index", "Player", new { id = item.Id }) 
+                @Html.ActionLink("Details", "Details", "Player", new { playerId = item.Id })
             </td>
         </tr>
 }

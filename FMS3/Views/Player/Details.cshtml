@@ -1,0 +1,63 @@
+﻿@model FMS3.Models.Player
+
+@{
+    ViewData["Title"] = "Player Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h4>Player - @Html.DisplayFor(model => model.Name)</h4>
+    <h5>
+        @Component.InvokeAsync("TeamName", new { teamId = Model.TeamId }).Result
+    </h5>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+        <dd>
+            @Component.InvokeAsync("PlayerPosition", new { positionId = Model.Position }).Result
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+        <dd>
+            @Component.InvokeAsync("CashFormat", new { cashValue = Model.Value }).Result
+        </dd>
+      
+        <dt>
+            @Html.DisplayNameFor(model => model.InjuredWeeks)
+        </dt>
+        <dd>
+            @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = Model.InjuredWeeks }).Result
+        </dd>
+      
+    </dl>
+</div>
+<div>
+    <h4>ATTRIBUTES:</h4>
+    @Component.InvokeAsync("PlayerAttributes", new { playerId = Model.Id }).Result
+</div>
+
+<div>
+    <h4>STATS:</h4>
+    @Component.InvokeAsync("PlayerStats", new { playerId = Model.Id }).Result
+</div>
+
+<div>
+    @Html.ActionLink("Back To Team", "TeamDetails", "Team", new { id = Model.TeamId })
+    @Html.ActionLink("Back To Main Page", "Index", "Game")
+</div>

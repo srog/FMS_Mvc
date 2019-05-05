@@ -3,12 +3,12 @@ using System.Net.Http;
 
 namespace FMS3.Data
 {
-    public class PlayerAttributesData
+    public class PlayerStatsData
     {
         private readonly IWebApi _webApi;
-        private readonly string playerAttributesURL = "http://localhost:56822/api/playerAttributes";
+        private readonly string playerStatsURL = "http://localhost:56822/api/playerStats";
 
-        public PlayerAttributesData()
+        public PlayerStatsData()
         {
             if (_webApi == null)
             {
@@ -16,13 +16,13 @@ namespace FMS3.Data
             }
         }
 
-        public PlayerAttributes GetPlayerAttributes(int playerId)
+        public PlayerStats GetPlayerStats(int playerId)
         {
-            var response = _webApi.GetById(playerAttributesURL, playerId);
+            var response = _webApi.GetById(playerStatsURL, playerId);
 
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsAsync<PlayerAttributes>().Result;
+                return response.Content.ReadAsAsync<PlayerStats>().Result;
             }
             else
             {
@@ -31,9 +31,9 @@ namespace FMS3.Data
             return null;
         }
 
-        public int AddPlayerAttributes(PlayerAttributes playerAttributes)
+        public int AddPlayerStats(PlayerStats playerStats)
         {
-            var response = _webApi.Post(playerAttributesURL, playerAttributes);
+            var response = _webApi.Post(playerStatsURL, playerStats);
 
             if (response.IsSuccessStatusCode)
             {
@@ -46,9 +46,9 @@ namespace FMS3.Data
             return 0;
         }
 
-        public int UpdatePlayerAttributes(PlayerAttributes playerAttributes)
+        public int UpdatePlayerStats(PlayerStats playerStats)
         {
-            var response = _webApi.Put(playerAttributesURL, playerAttributes);
+            var response = _webApi.Put(playerStatsURL, playerStats);
 
             if (response.IsSuccessStatusCode)
             {
@@ -62,3 +62,4 @@ namespace FMS3.Data
         }
     }
 }
+
