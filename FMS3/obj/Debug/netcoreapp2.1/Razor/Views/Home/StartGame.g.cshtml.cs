@@ -115,7 +115,7 @@ using FMS3.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(747, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e908d93e7cd24ae283ce7d593871ffa0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "672a8fcd5567470eaecd9df58c381c81", async() => {
                 BeginContext(773, 16, true);
                 WriteLiteral("Go To Pre-Season");
                 EndContext();
@@ -137,7 +137,7 @@ using FMS3.Models;
             WriteLiteral("\r\n</div>\r\n<div>    \r\n    ");
             EndContext();
             BeginContext(818, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0119998eddca4f42966b901ecf8b41b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d5f2ed7300b645aa8f8779577f86e001", async() => {
                 BeginContext(840, 12, true);
                 WriteLiteral("Back to Menu");
                 EndContext();

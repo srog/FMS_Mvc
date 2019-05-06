@@ -1,0 +1,79 @@
+﻿@model IEnumerable<FMS3.Models.TeamSeason>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+                
+            <th>
+                @Html.DisplayNameFor(model => model.TeamId)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Played)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Won)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Drawn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GoalsFor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GoalsAgainst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Points)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+
+            <td>
+                @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Played)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Won)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drawn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GoalsFor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GoalsAgainst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Points)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a asp-action="Index">Back</a>
+</div>

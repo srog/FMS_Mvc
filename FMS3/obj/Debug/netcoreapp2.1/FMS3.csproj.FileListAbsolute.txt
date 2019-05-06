@@ -89,3 +89,6 @@ D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Detai
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\InjuryStatus\InjuryStatus.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Components\PlayerAttributes\PlayerAttributes.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Components\PlayerStats\PlayerStats.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\League\League.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\League\Index.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\LatestNews\LatestNews.g.cshtml.cs
