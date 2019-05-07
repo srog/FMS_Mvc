@@ -1,12 +1,13 @@
 ﻿using FMS3.Models;
 using System.Net.Http;
+using System.Collections.Generic;
 
 namespace FMS3.Data
 {
     public class PlayerAttributesData
     {
         private readonly IWebApi _webApi;
-        private readonly string playerAttributesURL = "http://localhost:56822/api/playerAttributes";
+        private readonly string playerAttributeURL = "http://localhost:56822/api/playerAttribute";
 
         public PlayerAttributesData()
         {
@@ -16,13 +17,13 @@ namespace FMS3.Data
             }
         }
 
-        public PlayerAttributes GetPlayerAttributes(int playerId)
+        public IEnumerable<PlayerAttribute> GetPlayerAttributes(int playerId)
         {
-            var response = _webApi.GetById(playerAttributesURL, playerId);
+            var response = _webApi.GetById(playerAttributeURL, playerId);
 
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsAsync<PlayerAttributes>().Result;
+                return response.Content.ReadAsAsync<IEnumerable<PlayerAttribute>>().Result;
             }
             else
             {
@@ -31,9 +32,9 @@ namespace FMS3.Data
             return null;
         }
 
-        public int AddPlayerAttributes(PlayerAttributes playerAttributes)
+        public int AddPlayerAttributes(PlayerAttribute playerAttribute)
         {
-            var response = _webApi.Post(playerAttributesURL, playerAttributes);
+            var response = _webApi.Post(playerAttributeURL, playerAttribute);
 
             if (response.IsSuccessStatusCode)
             {
@@ -46,9 +47,9 @@ namespace FMS3.Data
             return 0;
         }
 
-        public int UpdatePlayerAttributes(PlayerAttributes playerAttributes)
+        public int UpdatePlayerAttributes(PlayerAttribute playerAttribute)
         {
-            var response = _webApi.Put(playerAttributesURL, playerAttributes);
+            var response = _webApi.Put(playerAttributeURL, playerAttribute);
 
             if (response.IsSuccessStatusCode)
             {
