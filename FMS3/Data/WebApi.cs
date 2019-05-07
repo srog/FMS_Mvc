@@ -20,6 +20,9 @@ namespace FMS3.Data
         HttpResponseMessage GetBySupplierId(string url, int supplierId, string param = "");
         HttpResponseMessage GetByGameDetailsId(string url, int gameDetailsId, string param = "");
         HttpResponseMessage GetByTeamId(string url, int teamId, string param = "");
+        HttpResponseMessage GetBySeasonId(string url, int seasonId, string param = "");
+            
+        HttpResponseMessage GetByPlayerId(string url, int playerId, string param = "");
 
     }
     public class WebApi : IWebApi
@@ -95,6 +98,29 @@ namespace FMS3.Data
             }
         }
 
+        public HttpResponseMessage GetByPlayerId(string url, int playerId, string param = null)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(url + "?playerId=" + playerId)
+            };
+
+            // Add an Accept header for JSON format.
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // List data response.
+            HttpResponseMessage response = client.GetAsync(param).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                return new HttpResponseMessage { StatusCode = response.StatusCode };
+            }
+        }
+
         public HttpResponseMessage GetByTeamId(string url, int teamId, string param = null)
         {
             var client = new HttpClient
@@ -123,6 +149,28 @@ namespace FMS3.Data
             var client = new HttpClient
             {
                 BaseAddress = new Uri(url + "/" + gameDetailsId)
+            };
+
+            // Add an Accept header for JSON format.
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // List data response.
+            HttpResponseMessage response = client.GetAsync(param).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                return new HttpResponseMessage { StatusCode = response.StatusCode };
+            }
+        }
+        public HttpResponseMessage GetBySeasonId(string url, int seasonId, string param = null)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(url + "?seasonId=" + seasonId)
             };
 
             // Add an Accept header for JSON format.

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FMS3.Models.News>
+
+@{
+    ViewData["Title"] = "News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All News</h2>
+
+<table class="table-bordered table-striped">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Week)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.NewsText)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+          
+            <td>
+                @Html.DisplayFor(modelItem => item.Week)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsText)
+            </td>
+         
+        </tr>
+}
+    </tbody>
+</table>
+<hr />
+<div>
+    <a asp-action="Index" asp-controller="Game">Back to Home</a>
+</div>

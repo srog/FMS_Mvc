@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FMS3.Data;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,11 @@ namespace FMS3.Views.Shared.Components.LatestNews
 {
     public class LatestNewsViewComponent : ViewComponent
     {
+        private readonly NewsData _newsData = new NewsData();
+        
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var newsList = new List<FMS3.Models.News>();
+            var newsList = _newsData.GetLatestNews();
             return View("LatestNews", newsList);
         }
     }

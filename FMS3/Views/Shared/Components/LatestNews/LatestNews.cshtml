@@ -1,25 +1,27 @@
 ﻿@model IEnumerable<FMS3.Models.News>
 
+    <div width="100%">
+        <table class="table-striped table-bordered" width="100%">
+            <thead>
+                <tr>
 
-<table class="table">
-    <thead>
-        <tr>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.NewsText)
-            </th>
-        
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.NewsText)
-            </td>
-           
-        </tr>
-}
-    </tbody>
-</table>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NewsText)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NewsText)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

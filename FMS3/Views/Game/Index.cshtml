@@ -41,26 +41,21 @@
                 @Model.WeekDisplay
             </dd>
 
-            <dt> <br />
-            </dt>
-            <dd></dd>
-
             <dt>
-                <a asp-action="Index" asp-controller="League">League Tables</a>
-            </dt>
-            <dd></dd>
-
-            <dt>
-                <a asp-action="Index" asp-controller="Transfers">Transfer Market</a>
-            </dt>
-            <dd></dd>
-            <dt>
-
-                @await Component.InvokeAsync("LatestNews")
-                <a asp-action="Index" asp-controller="News">All News</a>
+                <br />
             </dt>
             <dd></dd>
         </dl>
+        <hr />
+        <div>
+            Previous Result / Next Fixture
+        </div>
+        <hr />
+        <div>
+            @await Component.InvokeAsync("LatestNews")
+            <a asp-action="Index" asp-controller="News">All News</a>
+        </div>
+
 
     </div>
 

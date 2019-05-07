@@ -1,15 +1,15 @@
 ﻿using FMS3.Models;
-using System.Net.Http;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace FMS3.Data
 {
-    public class PlayerAttributesData
+    public class NewsData
     {
         private readonly IWebApi _webApi;
-        private readonly string playerAttributeURL = "http://localhost:56822/api/playerAttribute";
+        private readonly string newsURL = "http://localhost:56822/api/news";
 
-        public PlayerAttributesData()
+        public NewsData()
         {
             if (_webApi == null)
             {
@@ -17,13 +17,12 @@ namespace FMS3.Data
             }
         }
 
-        public IEnumerable<PlayerAttribute> GetPlayerAttributes(int playerId)
+        public IEnumerable<News> GetLatestNews()
         {
-            var response = _webApi.GetByPlayerId(playerAttributeURL, playerId);
-
+            var response = _webApi.GetBySeasonId(newsURL, GlobalData.CurrentSeasonId);
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsAsync<IEnumerable<PlayerAttribute>>().Result;
+                return response.Content.ReadAsAsync<IEnumerable<News>>().Result;
             }
             else
             {
@@ -32,9 +31,25 @@ namespace FMS3.Data
             return null;
         }
 
-        public int AddPlayerAttributes(PlayerAttribute playerAttribute)
+        public News GetNews(int id)
         {
-            var response = _webApi.Post(playerAttributeURL, playerAttribute);
+            var response = _webApi.Get(newsURL, id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<News>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+            return null;
+        }
+
+
+        public int AddNews(News news)
+        {
+            var response = _webApi.Post(newsURL, news);
 
             if (response.IsSuccessStatusCode)
             {
@@ -47,19 +62,5 @@ namespace FMS3.Data
             return 0;
         }
 
-        public int UpdatePlayerAttributes(PlayerAttribute playerAttribute)
-        {
-            var response = _webApi.Put(playerAttributeURL, playerAttribute);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<int>().Result;
-            }
-            else
-            {
-                var testerror = response;
-            }
-            return 0;
-        }
     }
 }

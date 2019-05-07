@@ -8,21 +8,17 @@ namespace FMS3.Controllers
     public class HomeController : Controller
     {
         private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
+        private readonly NewsData _newsData = new NewsData();
       
 
         public IActionResult Index()
         {
-            if (GlobalData.GameDetailsId > 0)
-            {
-                return RedirectToAction("Index", "Game");
-            }
             return View();
         }
 
         public IActionResult NewGame()
         {            
             GlobalData.GameDetailsId = _gameDetailsData.StartNewGame();
-
             return View();
         }
 
@@ -37,9 +33,19 @@ namespace FMS3.Controllers
             var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
             game.ManagerName = managerName;
             _gameDetailsData.UpdateGameDetails(game);
+            GlobalData.CurrentSeasonId = game.CurrentSeasonId;
+            var _teamQuery = new TeamData();
+            var team = _teamQuery.GetTeam(game.TeamId);
+            var newsText = managerName + " has become manager of " + team.Name;
+
+            _newsData.AddNews(new News
+            {
+                GameDetailsId = GlobalData.GameDetailsId,
+                SeasonId = GlobalData.CurrentSeasonId,
+                NewsText = newsText
+            });
 
             return View("StartGame",game);
-
         }
 
         public IActionResult SelectTeam(int teamId)

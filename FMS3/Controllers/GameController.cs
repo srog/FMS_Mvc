@@ -9,26 +9,28 @@ namespace FMS3.Controllers
     {
         private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
 
-        public IActionResult Start(int id)
+        public IActionResult Start()
         {
-            GlobalData.GameDetailsId = id;
             var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
-
-            SetUpGlobalData(game);
 
             return View("Index", game);
         }
-
-        private void SetUpGlobalData(GameDetails game)
+               
+        public IActionResult LoadGame(int id)
         {
+            var game = _gameDetailsData.GetGameDetails(id);
+            GlobalData.GameDetailsId = id;
             GlobalData.CurrentSeasonId = game.CurrentSeasonId;
-
-            var _teamData = new TeamData();
-            GlobalData.GameTeamIdList = _teamData.GetAllTeams(game.Id).Select(t => t.Id);
+            return View("Index", game);
         }
 
         public IActionResult Index()
         {
+            if (GlobalData.GameDetailsId == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
             return View(game);
         }

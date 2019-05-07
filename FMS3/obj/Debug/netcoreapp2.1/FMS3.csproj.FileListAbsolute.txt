@@ -145,3 +145,4 @@ D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.dll
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.pdb
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.csproj.CopyComplete
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Components\PlayerAttributes\PlayerAttributes.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\News\News.g.cshtml.cs

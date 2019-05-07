@@ -47,14 +47,16 @@
       
     </dl>
 </div>
-<div>
-    @Component.InvokeAsync("PlayerAttributes", new { playerId = Model.Id }).Result
-</div>
 
+<hr />
 <div>
     @Component.InvokeAsync("PlayerStats", new { playerId = Model.Id }).Result
 </div>
-
+<hr />
+<div>
+    @Component.InvokeAsync("PlayerAttributes", new { playerId = Model.Id }).Result
+</div>
+<hr />
 <div>
     @Html.ActionLink("Back To Team", "TeamDetails", "Team", new { id = Model.TeamId })
 </div>

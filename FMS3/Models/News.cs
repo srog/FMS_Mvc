@@ -8,6 +8,7 @@ namespace FMS3.Models
         public int GameDetailsId { get; set; }
         public int SeasonId { get; set; }
         public int DivisionId { get; set; }
+        public int Week { get; set; }
         public string NewsText { get; set; }
     }
 }

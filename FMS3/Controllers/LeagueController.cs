@@ -17,8 +17,5 @@ namespace FMS3.Controllers
             var teamSeasonList = _teamSeasonData.GetLeague(id);
             return View("League", teamSeasonList);
         }
-
-        
-
     }
 }

@@ -5,43 +5,51 @@
 </div>
 <div>
     <hr />
-    <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Games)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Games)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Goals)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Goals)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Assists)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Assists)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CleanSheets)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CleanSheets)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RedCards)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RedCards)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.YellowCards)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.YellowCards)
-        </dd>
-    </dl>
+    <table class="table-striped table-bordered" width="100%">
+        <thead>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Games)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Goals)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Assists)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.CleanSheets)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.RedCards)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.YellowCards)
+                </td>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Games)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Goals)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Assists)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CleanSheets)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.RedCards)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.YellowCards)
+            </td>
+        </tr>
+    </table>
+
+   
 </div>
