@@ -89,5 +89,14 @@ namespace FMS3.Data
                 return 0;
             }
         }
+
+        public int CompleteCurrentSeason()
+        {
+            var currentSeason = GetSeason(GlobalData.CurrentSeasonId);
+            currentSeason.Completed = true;
+            UpdateSeason(currentSeason);
+
+            return currentSeason.StartYear + 1;
+        }
     }
 }

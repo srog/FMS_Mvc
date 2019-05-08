@@ -19,7 +19,7 @@ namespace FMS3.Data
 
         public IEnumerable<News> GetLatestNews()
         {
-            var response = _webApi.GetBySeasonId(newsURL, GlobalData.CurrentSeasonId);
+            var response = _webApi.GetByGameDetailsId(newsURL, GlobalData.GameDetailsId);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<News>>().Result;
