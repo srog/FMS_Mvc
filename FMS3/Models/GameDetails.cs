@@ -14,7 +14,10 @@ namespace FMS3.Models
         [Display(Name = "Current Week")]
         public int CurrentWeek { get; set; }
 
-        public string WeekDisplay => (CurrentWeek == 0 ? "Pre-Season" : CurrentWeek.ToString());
+        public string WeekDisplay => (IsPreSeason ? "Pre-Season" : ( IsPostSeason ? "Post-Season" : CurrentWeek.ToString()));
+
+        public bool IsPreSeason => (CurrentWeek == 0);
+        public bool IsPostSeason => (CurrentWeek == 23);
 
     }
 }

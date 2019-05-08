@@ -1,5 +1,4 @@
-﻿
-using FMS3.Models;
+﻿using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 
@@ -94,6 +93,29 @@ namespace FMS3.Data
                 var testerror = response;
             }
             return 0;
+        }
+
+        public int SetGameToNewSeason(int seasonId)
+        {
+            var game = GetGameDetails(GlobalData.GameDetailsId);
+            game.CurrentSeasonId = seasonId;
+            game.CurrentWeek = 0;
+            return UpdateGameDetails(game);
+        }
+
+        public void AdvanceWeek()
+        {
+            var game = GetGameDetails(GlobalData.GameDetailsId);
+            game.CurrentWeek++;
+            UpdateGameDetails(game);
+        }
+
+        public GameDetails SetManagerName(string managerName)
+        {
+            var game = GetGameDetails(GlobalData.GameDetailsId);
+            game.ManagerName = managerName;
+            UpdateGameDetails(game);
+            return game;
         }
     }
 }

@@ -30,16 +30,16 @@ namespace FMS3.Controllers
 
         public IActionResult SelectManager(string managerName)
         {
-            var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
-            game.ManagerName = managerName;
-            _gameDetailsData.UpdateGameDetails(game);
+            var game = _gameDetailsData.SetManagerName(managerName);
             GlobalData.CurrentSeasonId = game.CurrentSeasonId;
+
             var _teamQuery = new TeamData();
             var team = _teamQuery.GetTeam(game.TeamId);
             var newsText = managerName + " has become manager of " + team.Name;
 
             _newsData.AddNews(new News
             {
+                TeamId = team.Id,
                 GameDetailsId = GlobalData.GameDetailsId,
                 SeasonId = GlobalData.CurrentSeasonId,
                 NewsText = newsText
