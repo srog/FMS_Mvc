@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FMS3.Models.Match>
+
+@{
+    ViewData["Title"] = "Matches";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Matches</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SeasonId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DivisionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Week)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeTeamId)
+            </th>
+            <th></th>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwayTeamId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Completed)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SeasonId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DivisionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Week)
+            </td>
+            <td>
+                @Component.InvokeAsync("TeamName", new { teamId = item.HomeTeamId }).Result
+            </td>
+            <td>
+                @if (item.Completed == true)
+                {
+                @Html.DisplayFor(modelItem => item.HomeTeamScore)
+                }
+            </td>
+            <td>
+                @if (item.Completed == true)
+                {
+                @Html.DisplayFor(modelItem => item.AwayTeamScore)
+                }
+            </td>
+
+            <td>
+                @Component.InvokeAsync("TeamName", new { teamId = item.AwayTeamId }).Result
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
