@@ -26,11 +26,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Value)
             </th>
-         
+
             <th>
                 @Html.DisplayNameFor(model => model.InjuredWeeks)
             </th>
-           
+
             <th></th>
         </tr>
     </thead>
@@ -38,9 +38,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
+              
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -51,25 +49,20 @@
                     @Html.DisplayFor(modelItem => item.Age)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Position)
+                    @Component.InvokeAsync("PlayerPosition", new { positionId = item.Position }).Result
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TeamId)
+                    @Component.InvokeAsync("TeamName", new { teamId = item.TeamId }).Result
                 </td>
                 <td>
                     @Component.InvokeAsync("CashFormat", new { cashValue = item.Value }).Result
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Retired)
-                </td>
-                <td>
                     @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = item.InjuredWeeks }).Result
                 </td>
+              
                 <td>
-                    @Html.DisplayFor(modelItem => item.GameDetailsId)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+                    @Html.ActionLink("Details", "Details", new { playerId = item.Id }) 
                 </td>
             </tr>
         }

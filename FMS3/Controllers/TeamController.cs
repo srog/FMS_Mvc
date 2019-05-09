@@ -21,10 +21,18 @@ namespace FMS3.Controllers
         }
 
         public IActionResult TeamDetails(int id)
-        {
+        { 
+            if (id == 0)
+            {
+                return RedirectToAction("TransferMarket", "Player");
+            }
             var team = _teamData.GetTeam(id);
             return View(team);
         }
 
+        public IActionResult Squad(int teamId)
+        {
+            return View(teamId);
+        }
     }
 }

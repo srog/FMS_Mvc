@@ -36,14 +36,14 @@ namespace FMS3.Controllers
 
         public IActionResult BeginSeason()
         {
-            _gameDetailsData.AdvanceWeek();
-            return View("Index");
+            var game = _gameDetailsData.AdvanceWeek();
+            return View("Index", game);
         }
 
         public IActionResult AdvanceWeek()
         {
-            _gameDetailsData.AdvanceWeek();
-            return View("Index");
+            var game = _gameDetailsData.AdvanceWeek();
+            return View("Index",game);
         }
 
         public IActionResult CompleteSeason()
@@ -57,12 +57,12 @@ namespace FMS3.Controllers
             var teamSeasonData = new TeamSeasonData();
             teamSeasonData.PromotionAndRelegation(GlobalData.GameDetailsId, GlobalData.CurrentSeasonId, newSeasonId);
 
-            _gameDetailsData.SetGameToNewSeason(newSeasonId);
+            var game = _gameDetailsData.SetGameToNewSeason(newSeasonId);
 
             // set globals to new data
             GlobalData.CurrentSeasonId = newSeasonId;
 
-            return View("Index");
+            return View("Index", game);
         }
     }
 }

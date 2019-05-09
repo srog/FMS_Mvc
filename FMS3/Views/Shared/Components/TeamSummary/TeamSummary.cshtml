@@ -1,0 +1,30 @@
+﻿@model Team
+
+<table class="table-striped table-bordered table-responsive" width="80%">
+    <thead>
+        <tr>
+            <td>
+                Team
+            </td>
+            <td>
+                Division
+            </td>
+            <td>
+                Funds
+            </td>
+        </tr>
+    </thead>
+    <tr>
+        <td>
+            @await Component.InvokeAsync("TeamName", new { teamId = Model.Id })
+        </td>
+        <td>
+            @await Component.InvokeAsync("DivisionName", new { divisionId = Model.DivisionId })
+        </td>
+        <td>
+            @await Component.InvokeAsync("CashFormat", new { cashValue = Model.Cash })
+        </td>
+
+    </tr>
+</table>
+

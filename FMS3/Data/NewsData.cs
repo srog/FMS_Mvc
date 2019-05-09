@@ -31,6 +31,20 @@ namespace FMS3.Data
             return null;
         }
 
+        public IEnumerable<News> GetTeamNews(int teamId)
+        {
+            var response = _webApi.Get(newsURL + "/" + GlobalData.GameDetailsId + "/" + teamId);
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<IEnumerable<News>>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+            return null;
+        }
+
         public News GetNews(int id)
         {
             var response = _webApi.Get(newsURL, id);

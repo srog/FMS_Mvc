@@ -77,7 +77,6 @@ D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.csprojAssemblyRefer
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\SelectManager.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Game\Index.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Team\Components\RecentForm\RecentForm.g.cshtml.cs
-D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Team\Components\SquadSummary\SquadSummary.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Home\Components\Teams\TeamSelect.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\CashFormat\CashFormat.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\DivisionName\DivisionName.g.cshtml.cs
@@ -146,3 +145,5 @@ D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.pdb
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\FMS3.csproj.CopyComplete
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Player\Components\PlayerAttributes\PlayerAttributes.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\News\News.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\TeamSummary\TeamSummary.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Team\Components\TeamNews\TeamNews.g.cshtml.cs

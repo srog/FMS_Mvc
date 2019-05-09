@@ -1,0 +1,19 @@
+﻿@model IEnumerable<FMS3.Models.News>
+
+    <div width="100%">
+        <table class="table-striped table-bordered" width="100%">
+            
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewsText)
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>

@@ -6,8 +6,6 @@
 
 <h2>Team Details - @Html.LabelForModel(Model.Name)</h2>
 
-
-
 @Html.DisplayNameFor(model => model.DivisionId):
 @Component.InvokeAsync("DivisionName", new { divisionId = Model.DivisionId }).Result
 <br />
@@ -23,19 +21,25 @@
 @Html.DisplayNameFor(model => model.StadiumCapacity):
 @Html.LabelForModel(Model.StadiumCapacity.ToString())
 <br />
-<br />
+<hr />
 Recent Form:
 <br />
 @Component.InvokeAsync("RecentForm", new { teamId = Model.Id }).Result
+<hr />
+(Fixtures / Results)
+<hr />
+News:
 <br />
-@Component.InvokeAsync("SquadSummary", new { teamId = Model.Id }).Result
-<br />
+@Component.InvokeAsync("TeamNews", new {  teamId = Model.Id }).Result
+<hr />
+@Html.ActionLink("Squad", "Squad", "Player", new { teamId = Model.Id })
+<hr />
 
 (History)
-<br />
-(News)
-<br />
+<hr />
+
 (Records)
+<br />
 <br />
 
 @Html.ActionLink("Back To Main Page", "Index", "Game")

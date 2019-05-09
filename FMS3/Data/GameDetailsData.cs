@@ -95,19 +95,21 @@ namespace FMS3.Data
             return 0;
         }
 
-        public int SetGameToNewSeason(int seasonId)
+        public GameDetails SetGameToNewSeason(int seasonId)
         {
             var game = GetGameDetails(GlobalData.GameDetailsId);
             game.CurrentSeasonId = seasonId;
             game.CurrentWeek = 0;
-            return UpdateGameDetails(game);
+            UpdateGameDetails(game);
+            return game;
         }
 
-        public void AdvanceWeek()
+        public GameDetails AdvanceWeek()
         {
             var game = GetGameDetails(GlobalData.GameDetailsId);
             game.CurrentWeek++;
             UpdateGameDetails(game);
+            return game;
         }
 
         public GameDetails SetManagerName(string managerName)

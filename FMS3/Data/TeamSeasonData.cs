@@ -44,27 +44,6 @@ namespace FMS3.Data
                 var testerror = response;
             }
             return 0;
-
-
-            //foreach (object division in Enum.GetValues(typeof(DivisionEnum)))
-            //{
-            //    var divisionId = division.GetHashCode();
-            //    var teamSeasons = GetLeague(divisionId);
-            //    //Recalculate ?
-
-            //    // promotion
-            //    if (divisionId != 1)
-            //    {
-            //        foreach()
-            //    }
-
-
-            //    // relegation
-            //    if (divisionId != 4)
-            //    {
-
-            //    }
-            //}
         }
 
     }

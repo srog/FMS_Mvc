@@ -1,4 +1,10 @@
 ﻿@model Team
 
-@Html.ActionLink(@Model.Name, "TeamDetails", "Team", new { id = Model.Id })
-
+@if (Model.Id != 0)
+{
+    @Html.ActionLink(@Model.Name, "TeamDetails", "Team", new { id = Model.Id })
+}
+else
+{
+    @Model.Name
+}

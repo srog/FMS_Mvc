@@ -2,21 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace FMS3.Views.Shared.ViewComponents.TeamName
+namespace FMS3.Views.Shared.Components.TeamSummary
 {
-    public class TeamNameViewComponent : ViewComponent
+    public class TeamSummaryViewComponent : ViewComponent
     {
         private static TeamData _teamData = new TeamData();
 
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
-            if (teamId == 0)
-            {
-                return View("TeamName",new Models.Team { Id = 0, Name = "(Unattached)" });
-            }
-
             var team = _teamData.GetTeam(teamId);
-            return View("TeamName", team);
+            return View("TeamSummary", team);
         }
     }
 }
