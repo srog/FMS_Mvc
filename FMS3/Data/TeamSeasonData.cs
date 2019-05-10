@@ -18,8 +18,14 @@ namespace FMS3.Data
         }
 
         public IEnumerable<TeamSeason> GetLeague(int divisionId)
-        {           
-            var response = _webApi.Get(teamSeasonURL + "/" + GlobalData.GameDetailsId + "/" + GlobalData.CurrentSeasonId + "?divisionid=" + divisionId);
+        { 
+            var paramList = new Dictionary<string, object>
+                {
+                    {"gameDetailsId", GlobalData.GameDetailsId},
+                    {"seasonId", GlobalData.CurrentSeasonId},
+                    {"divisionId", divisionId }
+                };
+            var response = _webApi.GetAll(teamSeasonURL, paramList);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<TeamSeason>>().Result;

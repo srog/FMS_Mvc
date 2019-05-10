@@ -9,10 +9,8 @@ namespace FMS3.Controllers
 
         public IActionResult Index()
         {
-            var news = _newsData.GetLatestNews();
+            var news = _newsData.GetGameNews();
             return View("News", news);
         }
-
-     
     }
 }

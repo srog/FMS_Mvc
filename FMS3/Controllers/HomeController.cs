@@ -9,7 +9,6 @@ namespace FMS3.Controllers
     {
         private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
         private readonly NewsData _newsData = new NewsData();
-      
 
         public IActionResult Index()
         {
@@ -24,7 +23,7 @@ namespace FMS3.Controllers
 
         public IActionResult LoadGame()
         {
-            var games = _gameDetailsData.GetAllGameDetails();
+            var games = _gameDetailsData.GetAll();
             return View(games);
         }
 
@@ -50,11 +49,7 @@ namespace FMS3.Controllers
 
         public IActionResult SelectTeam(int teamId)
         {
-            var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
-            game.TeamId = teamId;
-
-            _gameDetailsData.UpdateGameDetails(game);
-
+            var game = _gameDetailsData.SetTeam(teamId); 
             return View("SelectManager",game);     
         }
 

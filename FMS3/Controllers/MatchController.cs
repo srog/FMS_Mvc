@@ -9,7 +9,8 @@ namespace FMS3.Controllers
 
         public IActionResult Index()
         {
-            var matches = _matchData.GetMatches();
+            var matches = _matchData.GetAllMatches(1, 1);
+         
             return View("Matches",matches);
         }
 
