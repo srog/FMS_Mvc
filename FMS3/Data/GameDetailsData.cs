@@ -52,7 +52,7 @@ namespace FMS3.Data
 
         public GameDetails GetById(int id)
         {
-            var response = _webApi.GetById(gameDetailsURL, id);
+            var response = _webApi.GetById(gameDetailsURL, id, true);
 
             if (response.IsSuccessStatusCode)
             {

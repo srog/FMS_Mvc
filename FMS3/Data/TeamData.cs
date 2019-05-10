@@ -19,7 +19,12 @@ namespace FMS3.Data
 
         public IEnumerable<Team> GetAllTeams()
         {
-            var response = _webApi.GetAll(teamURL, GlobalData.GameDetailParamList);
+            var paramList = new Dictionary<string, object>
+            {
+                {"gameDetailsId", GlobalData.GameDetailsId}
+            };
+
+        var response = _webApi.GetAll(teamURL, paramList);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<Team>>().Result;

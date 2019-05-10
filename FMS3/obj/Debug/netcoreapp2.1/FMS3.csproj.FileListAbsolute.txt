@@ -147,3 +147,4 @@ D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Playe
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\News\News.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\TeamSummary\TeamSummary.g.cshtml.cs
 D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Team\Components\TeamNews\TeamNews.g.cshtml.cs
+D:\Code\FootManSim\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Match\Matches.g.cshtml.cs

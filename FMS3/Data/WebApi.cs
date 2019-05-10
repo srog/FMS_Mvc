@@ -9,11 +9,12 @@ namespace FMS3.Data
 {
     public class WebApi : IWebApi
     {
-        public HttpResponseMessage GetById(string url, int id)
+        public HttpResponseMessage GetById(string url, int id, bool idInPath = false)
         {
+            var newUrl = idInPath ? (url + "/" + id) : (url + "?id=" + id);
             var client = new HttpClient
                 {
-                    BaseAddress = new Uri(url + "?id=" + id)
+                    BaseAddress = new Uri(newUrl)
                 };
 
             // Add an Accept header for JSON format.

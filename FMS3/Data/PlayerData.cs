@@ -38,7 +38,11 @@ namespace FMS3.Data
 
         public IEnumerable<Player> GetAllPlayersInGame()
         {
-            var response = _webApi.GetAll(playerURL, GlobalData.GameDetailParamList);
+            var paramList = new Dictionary<string, object>
+            {
+                {"gameDetailsId", GlobalData.GameDetailsId}
+            };
+            var response = _webApi.GetAll(playerURL, paramList);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<Player>>().Result;

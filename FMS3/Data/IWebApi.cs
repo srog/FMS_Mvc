@@ -11,7 +11,7 @@ namespace FMS3.Data
         HttpResponseMessage Delete(string url, int id);
 
 
-        HttpResponseMessage GetById(string url, int id);
+        HttpResponseMessage GetById(string url, int id, bool idInPath = false);
         HttpResponseMessage GetAll(string url, Dictionary<string, object> paramList = null);
 
     }

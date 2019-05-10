@@ -64,7 +64,7 @@ using FMS3.Models;
             WriteLiteral("\r\n\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n");
             EndContext();
             BeginContext(163, 113, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f3a3be344d5a4b86810f18932bc8b123", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "95adfcc20d054bb7a3536841fffcf6d7", async() => {
                 BeginContext(169, 72, true);
                 WriteLiteral("\r\n    <meta name=\"viewport\" content=\"width=device-width\" />\r\n    <title>");
                 EndContext();
@@ -94,7 +94,7 @@ using FMS3.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(278, 1679, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "29f4c4de7b83446f870d2a9283f170e2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a00c65a3c024566bb2ec6db6b570d38", async() => {
                 BeginContext(284, 161, true);
                 WriteLiteral("\r\n\r\n    <h3>Team List</h3>\r\n\r\n    <div>\r\n        <table class=\"table table-bordered\">\r\n            <tr height=\"40px\">\r\n                <td>\r\n                    ");
                 EndContext();

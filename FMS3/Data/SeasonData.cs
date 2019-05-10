@@ -19,7 +19,12 @@ namespace FMS3.Data
 
         public IEnumerable<Season> GetAllSeasons()
         {
-            var response = _webApi.GetAll(seasonURL, GlobalData.GameDetailParamList);
+            var paramList = new Dictionary<string, object>
+            {
+                {"gameDetailsId", GlobalData.GameDetailsId}
+            };
+
+            var response = _webApi.GetAll(seasonURL, paramList);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<Models.Season>>().Result;

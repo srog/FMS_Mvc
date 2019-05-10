@@ -18,7 +18,7 @@ namespace FMS3.Data
 
         public PlayerStats GetPlayerStats(int playerId)
         {
-            var response = _webApi.GetById(playerStatsURL, playerId);
+            var response = _webApi.GetById(playerStatsURL, playerId, true);
 
             if (response.IsSuccessStatusCode)
             {
