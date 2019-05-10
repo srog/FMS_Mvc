@@ -17,9 +17,9 @@ namespace FMS3.Data
             }
         }
 
-        public IEnumerable<Team> GetAllTeams(int gameDetailsId)
+        public IEnumerable<Team> GetAllTeams()
         {
-            var response = _webApi.GetByGameDetailsId(teamURL, gameDetailsId);
+            var response = _webApi.GetAll(teamURL, GlobalData.GameDetailParamList);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<Team>>().Result;
@@ -33,7 +33,7 @@ namespace FMS3.Data
 
         public Team GetTeam(int id)
         {
-            var response = _webApi.Get(teamURL, id);
+            var response = _webApi.GetById(teamURL, id);
 
             if (response.IsSuccessStatusCode)
             {

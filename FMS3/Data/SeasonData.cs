@@ -19,7 +19,7 @@ namespace FMS3.Data
 
         public IEnumerable<Season> GetAllSeasons()
         {
-            var response = _webApi.Get(seasonURL);
+            var response = _webApi.GetAll(seasonURL, GlobalData.GameDetailParamList);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<Models.Season>>().Result;
@@ -33,7 +33,7 @@ namespace FMS3.Data
 
         public Season GetSeason(int id)
         {
-            var response = _webApi.Get(seasonURL, id);
+            var response = _webApi.GetById(seasonURL, id);
 
             if (response.IsSuccessStatusCode)
             {

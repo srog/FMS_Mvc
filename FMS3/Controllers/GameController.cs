@@ -10,14 +10,14 @@ namespace FMS3.Controllers
 
         public IActionResult Start()
         {
-            var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
+            var game = _gameDetailsData.GetById(GlobalData.GameDetailsId);
 
             return View("Index", game);
         }
                
         public IActionResult LoadGame(int id)
         {
-            var game = _gameDetailsData.GetGameDetails(id);
+            var game = _gameDetailsData.GetById(id);
             GlobalData.GameDetailsId = id;
             GlobalData.CurrentSeasonId = game.CurrentSeasonId;
             return View("Index", game);
@@ -30,7 +30,7 @@ namespace FMS3.Controllers
                 return RedirectToAction("Index", "Home");
             }
             // TODO - cache this 
-            var game = _gameDetailsData.GetGameDetails(GlobalData.GameDetailsId);
+            var game = _gameDetailsData.GetById(GlobalData.GameDetailsId);
             return View(game);
         }
 

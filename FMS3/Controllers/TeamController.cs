@@ -2,7 +2,6 @@
 using FMS3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FMS3.Controllers
 {
@@ -16,7 +15,7 @@ namespace FMS3.Controllers
             {
                 return View(new List<Team>());
             }
-            var teamList = _teamData.GetAllTeams(GlobalData.GameDetailsId);
+            var teamList = _teamData.GetAllTeams();
             return View(teamList);
         }
 

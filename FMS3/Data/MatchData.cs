@@ -17,9 +17,24 @@ namespace FMS3.Data
             }
         }
 
-        public IEnumerable<Match> GetMatches()
+        public IEnumerable<Match> GetAllMatches(int divisionId = 0, int week = 0)
         {
-            var response = _webApi.Get(matchURL + "/" + GlobalData.GameDetailsId);
+            var paramList = new Dictionary<string, object>
+                {
+                    {"gameDetailsId", GlobalData.GameDetailsId},
+                    {"seasonId", GlobalData.CurrentSeasonId}
+                };
+            if (divisionId > 0)
+            {
+                paramList.Add("divisionId", divisionId);
+
+                if (week > 0)
+                {
+                    paramList.Add("week", week);
+                }
+            }
+
+            var response = _webApi.GetAll(matchURL, paramList);
 
             if (response.IsSuccessStatusCode)
             {
@@ -32,9 +47,10 @@ namespace FMS3.Data
             return null;
         }
 
+
         public Match GetMatch(int id)
         {
-            var response = _webApi.Get(matchURL, id);
+            var response = _webApi.GetById(matchURL, id);
 
             if (response.IsSuccessStatusCode)
             {

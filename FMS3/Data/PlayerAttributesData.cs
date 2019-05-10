@@ -19,7 +19,11 @@ namespace FMS3.Data
 
         public IEnumerable<PlayerAttribute> GetPlayerAttributes(int playerId)
         {
-            var response = _webApi.GetByPlayerId(playerAttributeURL, playerId);
+            var paramList = new Dictionary<string, object>
+                {
+                    {"playerId", playerId}
+                };
+            var response = _webApi.GetAll(playerAttributeURL, paramList);
 
             if (response.IsSuccessStatusCode)
             {

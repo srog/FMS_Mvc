@@ -36,9 +36,9 @@ namespace FMS3.Data
             return newGameId;
         }
 
-        public IEnumerable<GameDetails> GetAllGameDetails()
+        public IEnumerable<GameDetails> GetAll()
         {
-            var response = _webApi.Get(gameDetailsURL);
+            var response = _webApi.GetAll(gameDetailsURL);
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<IEnumerable<GameDetails>>().Result;
@@ -50,9 +50,9 @@ namespace FMS3.Data
             return null;
         }
 
-        public GameDetails GetGameDetails(int id)
+        public GameDetails GetById(int id)
         {
-            var response = _webApi.GetByGameDetailsId(gameDetailsURL, id);
+            var response = _webApi.GetById(gameDetailsURL, id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -65,22 +65,7 @@ namespace FMS3.Data
             return null;
         }
 
-        public int AddGameDetails(GameDetails gameDetails)
-        {
-            var response = _webApi.Post(gameDetailsURL, gameDetails);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<int>().Result;
-            }
-            else
-            {
-                var testerror = response;
-            }
-            return 0;
-        }
-
-        public int UpdateGameDetails(GameDetails gameDetails)
+        private int UpdateGameDetails(GameDetails gameDetails)
         {
             var response = _webApi.Put(gameDetailsURL, gameDetails);
 
@@ -97,7 +82,7 @@ namespace FMS3.Data
 
         public GameDetails SetGameToNewSeason(int seasonId)
         {
-            var game = GetGameDetails(GlobalData.GameDetailsId);
+            var game = GetById(GlobalData.GameDetailsId);
             game.CurrentSeasonId = seasonId;
             game.CurrentWeek = 0;
             UpdateGameDetails(game);
@@ -106,7 +91,7 @@ namespace FMS3.Data
 
         public GameDetails AdvanceWeek()
         {
-            var game = GetGameDetails(GlobalData.GameDetailsId);
+            var game = GetById(GlobalData.GameDetailsId);
             game.CurrentWeek++;
             UpdateGameDetails(game);
             return game;
@@ -114,8 +99,16 @@ namespace FMS3.Data
 
         public GameDetails SetManagerName(string managerName)
         {
-            var game = GetGameDetails(GlobalData.GameDetailsId);
+            var game = GetById(GlobalData.GameDetailsId);
             game.ManagerName = managerName;
+            UpdateGameDetails(game);
+            return game;
+        }
+
+        public GameDetails SetTeam(int teamId)
+        {
+            var game = GetById(GlobalData.GameDetailsId);
+            game.TeamId = teamId;
             UpdateGameDetails(game);
             return game;
         }

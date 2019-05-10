@@ -13,7 +13,7 @@ namespace FMS3.Views.Shared.Components.LatestNews
         
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var newsList = _newsData.GetLatestNews().Take(5); // TODO - set this somewhere
+            var newsList = _newsData.GetGameNews().Take(5); // TODO - set this somewhere
             return View("LatestNews", newsList);
         }
     }
