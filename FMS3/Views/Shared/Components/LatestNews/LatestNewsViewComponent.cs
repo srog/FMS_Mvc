@@ -1,7 +1,6 @@
 ﻿using FMS3.Data;
+using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,8 +8,13 @@ namespace FMS3.Views.Shared.Components.LatestNews
 {
     public class LatestNewsViewComponent : ViewComponent
     {
-        private readonly NewsData _newsData = new NewsData();
-        
+        private INewsData _newsData { get; }
+
+        public LatestNewsViewComponent(INewsData newsData)
+        {
+            _newsData = newsData;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var newsList = _newsData.GetGameNews().Take(5); // TODO - set this somewhere

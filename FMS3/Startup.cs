@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FMS3.Views.Shared.ViewComponents.TeamName;
+﻿using FMS3.Data;
+using FMS3.Data.API;
+using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,8 +32,17 @@ namespace FMS3
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //services.AddTransient<FmsService.FmsServiceClient, FmsService.FmsServiceClient>();
-            //services.AddTransient<TeamNameViewComponent>();
+            services.AddTransient<IWebApi, WebApi>();
+            services.AddTransient<IGameDetailsData, GameDetailsData>();
+            services.AddTransient<INewsData, NewsData>();
+            services.AddTransient<ISeasonData, SeasonData>();
+            services.AddTransient<IMatchData, MatchData>();
+            services.AddTransient<IPlayerData, PlayerData>();
+            services.AddTransient<IPlayerStatsData, PlayerStatsData>();
+            services.AddTransient<IPlayerAttributesData, PlayerAttributesData>();
+            services.AddTransient<ITeamSeasonData, TeamSeasonData>();
+            services.AddTransient<ITeamData, TeamData>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

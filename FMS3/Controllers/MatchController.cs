@@ -1,12 +1,16 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class MatchController : Controller
     {
-        private readonly MatchData _matchData = new MatchData();
+        private IMatchData _matchData { get; }
 
+        public MatchController(IMatchData matchData)
+        {
+            _matchData = matchData;
+        }
         public IActionResult Index()
         {
             var matches = _matchData.GetAllMatches(1, 1);

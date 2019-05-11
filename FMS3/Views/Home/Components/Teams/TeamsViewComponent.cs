@@ -1,4 +1,4 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -6,8 +6,11 @@ namespace FMS3.ViewComponents
 {
     public class TeamsViewComponent : ViewComponent
     {
-        private static TeamData _teamData = new TeamData();
-
+        private ITeamData _teamData { get; }
+        public TeamsViewComponent(ITeamData teamData)
+        {
+            _teamData = teamData;
+        }
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var teamList = _teamData.GetAllTeams();

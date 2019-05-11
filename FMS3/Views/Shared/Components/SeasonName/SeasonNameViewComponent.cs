@@ -1,4 +1,4 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -6,12 +6,15 @@ namespace FMS3.Views.Shared.ViewComponents.DivisionName
 {
     public class SeasonNameViewComponent : ViewComponent
     {
+        private ISeasonData _seasonData { get; }
+        
+        public SeasonNameViewComponent(ISeasonData seasonData)
+        {
+            _seasonData = seasonData;
+        }
         public async Task<IViewComponentResult> InvokeAsync(int seasonId)
         {
-            var seasondata = new SeasonData();
-            var season = seasondata.GetSeason(seasonId);
-
-            return View("SeasonName", season.StartYear);
+            return View("SeasonName", _seasonData.GetSeasonYear(seasonId));
         }
     }
 }

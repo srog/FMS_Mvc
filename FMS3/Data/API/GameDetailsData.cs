@@ -1,21 +1,24 @@
-﻿using FMS3.Models;
+﻿using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
+using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class GameDetailsData
+    public class GameDetailsData : IGameDetailsData
     {
-        private readonly IWebApi _webApi;
+        private IWebApi _webApi { get; }
         private readonly string gameDetailsURL = "http://localhost:56822/api/gameDetails";
         private readonly string startNewGameURL = "http://localhost:56822/api/StartNewGame";
 
-        public GameDetailsData()
+        public GameDetailsData(IWebApi webApi)
         {
-            if (_webApi == null)
-            {
-                _webApi = new WebApi();
-            }
+            //if (_webApi == null)
+            //{
+            //    _webApi = new WebApi();
+            //}
+            _webApi = webApi;
         }
 
         public int StartNewGame()
@@ -82,7 +85,7 @@ namespace FMS3.Data
 
         public GameDetails SetGameToNewSeason(int seasonId)
         {
-            var game = GetById(GlobalData.GameDetailsId);
+            var game = GetById(GameCache.GameDetailsId);
             game.CurrentSeasonId = seasonId;
             game.CurrentWeek = 0;
             UpdateGameDetails(game);
@@ -91,7 +94,7 @@ namespace FMS3.Data
 
         public GameDetails AdvanceWeek()
         {
-            var game = GetById(GlobalData.GameDetailsId);
+            var game = GetById(GameCache.GameDetailsId);
             game.CurrentWeek++;
             UpdateGameDetails(game);
             return game;
@@ -99,7 +102,7 @@ namespace FMS3.Data
 
         public GameDetails SetManagerName(string managerName)
         {
-            var game = GetById(GlobalData.GameDetailsId);
+            var game = GetById(GameCache.GameDetailsId);
             game.ManagerName = managerName;
             UpdateGameDetails(game);
             return game;
@@ -107,7 +110,7 @@ namespace FMS3.Data
 
         public GameDetails SetTeam(int teamId)
         {
-            var game = GetById(GlobalData.GameDetailsId);
+            var game = GetById(GameCache.GameDetailsId);
             game.TeamId = teamId;
             UpdateGameDetails(game);
             return game;

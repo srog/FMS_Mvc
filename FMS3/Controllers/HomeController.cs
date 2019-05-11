@@ -1,14 +1,23 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FMS3.Models;
-using FMS3.Data;
+using FMS3.Data.Interfaces;
+using FMS3.Data.Cache;
 
 namespace FMS3.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
-        private readonly NewsData _newsData = new NewsData();
+        private IGameDetailsData _gameDetailsData { get; }
+        private INewsData _newsData {get;}
+        private ITeamData _teamData { get; }
+
+        public HomeController(IGameDetailsData gameDetailsData, INewsData newsData, ITeamData teamData)
+        {
+            _gameDetailsData = gameDetailsData;
+            _newsData = newsData;
+            _teamData = teamData;
+        }
 
         public IActionResult Index()
         {
@@ -17,7 +26,7 @@ namespace FMS3.Controllers
 
         public IActionResult NewGame()
         {            
-            GlobalData.GameDetailsId = _gameDetailsData.StartNewGame();
+            GameCache.GameDetailsId = _gameDetailsData.StartNewGame();
             return View();
         }
 
@@ -30,17 +39,16 @@ namespace FMS3.Controllers
         public IActionResult SelectManager(string managerName)
         {
             var game = _gameDetailsData.SetManagerName(managerName);
-            GlobalData.CurrentSeasonId = game.CurrentSeasonId;
-
-            var _teamQuery = new TeamData();
-            var team = _teamQuery.GetTeam(game.TeamId);
-            var newsText = managerName + " has become manager of " + team.Name;
+            GameCache.CurrentSeasonId = game.CurrentSeasonId;
+           
+            //var team = _teamData.GetTeam(game.TeamId);
+            var newsText = managerName + " has become manager of " + _teamData.GetTeamName(game.TeamId);
 
             _newsData.AddNews(new News
             {
-                TeamId = team.Id,
-                GameDetailsId = GlobalData.GameDetailsId,
-                SeasonId = GlobalData.CurrentSeasonId,
+                TeamId = game.TeamId,
+                GameDetailsId = game.Id,
+                SeasonId = game.CurrentSeasonId,
                 NewsText = newsText
             });
 

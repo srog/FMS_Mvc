@@ -1,19 +1,17 @@
-﻿using FMS3.Models;
+﻿using FMS3.Data.Interfaces;
+using FMS3.Models;
 using System.Net.Http;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class PlayerStatsData
+    public class PlayerStatsData : IPlayerStatsData
     {
-        private readonly IWebApi _webApi;
+        private IWebApi _webApi { get; }
         private readonly string playerStatsURL = "http://localhost:56822/api/playerStats";
 
-        public PlayerStatsData()
+        public PlayerStatsData(IWebApi webApi)
         {
-            if (_webApi == null)
-            {
-                _webApi = new WebApi();
-            }
+            _webApi = webApi;
         }
 
         public PlayerStats GetPlayerStats(int playerId)

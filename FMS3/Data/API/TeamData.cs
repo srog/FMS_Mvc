@@ -1,27 +1,45 @@
-﻿using FMS3.Models;
+﻿using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
+using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class TeamData
+    public class TeamData : ITeamData
     {
-        private readonly IWebApi _webApi;
+        private IWebApi _webApi { get; }
         private readonly string teamURL = "http://localhost:56822/api/team";
 
-        public TeamData()
+        public TeamData(IWebApi webApi)
         {
-            if (_webApi == null)
+            _webApi = webApi;
+        }
+
+        public string GetTeamName(int teamId)
+        {
+            if (!GameCache.TeamNames.ContainsKey(teamId))
             {
-                _webApi = new WebApi();
+                string name;
+                if (teamId == 0)
+                {
+                    name = "(Unattached)";
+                }
+                else
+                {
+                    name = GetTeam(teamId).Name;    
+                }
+                GameCache.TeamNames.Add(teamId, name);
             }
+            return GameCache.TeamNames.GetValueOrDefault(teamId);
+
         }
 
         public IEnumerable<Team> GetAllTeams()
         {
             var paramList = new Dictionary<string, object>
             {
-                {"gameDetailsId", GlobalData.GameDetailsId}
+                {"gameDetailsId", GameCache.GameDetailsId}
             };
 
         var response = _webApi.GetAll(teamURL, paramList);

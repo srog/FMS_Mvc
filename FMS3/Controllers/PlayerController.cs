@@ -1,11 +1,15 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class PlayerController : Controller
     {
-        private readonly PlayerData _playerData = new PlayerData();
+        private IPlayerData _playerData { get; }
+        public PlayerController(IPlayerData playerData)
+        {
+            _playerData = playerData;
+        }
 
         // All players in game
         public IActionResult Index()

@@ -1,4 +1,6 @@
 ﻿using FMS3.Data;
+using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
 using FMS3.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +8,19 @@ namespace FMS3.Controllers
 {
     public class GameController : Controller
     {
-        private readonly GameDetailsData _gameDetailsData = new GameDetailsData();
+        private IGameDetailsData _gameDetailsData { get; }
+        private ISeasonData _seasonData { get; }
+        private ITeamSeasonData _teamSeasonData { get; }
 
+        public GameController(IGameDetailsData gameDetailsData, ISeasonData seasonData, ITeamSeasonData teamSeasonData)
+        {
+            _gameDetailsData = gameDetailsData;
+            _seasonData = seasonData;
+            _teamSeasonData = teamSeasonData;
+        }
         public IActionResult Start()
         {
-            var game = _gameDetailsData.GetById(GlobalData.GameDetailsId);
+            var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
 
             return View("Index", game);
         }
@@ -18,19 +28,20 @@ namespace FMS3.Controllers
         public IActionResult LoadGame(int id)
         {
             var game = _gameDetailsData.GetById(id);
-            GlobalData.GameDetailsId = id;
-            GlobalData.CurrentSeasonId = game.CurrentSeasonId;
+            GameCache.GameDetailsId = id;
+            GameCache.CurrentSeasonId = game.CurrentSeasonId;
+         
             return View("Index", game);
         }
 
         public IActionResult Index()
         {
-            if (GlobalData.GameDetailsId == 0)
+            if (GameCache.GameDetailsId == 0)
             {
                 return RedirectToAction("Index", "Home");
             }
-            // TODO - cache this 
-            var game = _gameDetailsData.GetById(GlobalData.GameDetailsId);
+
+            var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
             return View(game);
         }
 
@@ -48,19 +59,17 @@ namespace FMS3.Controllers
 
         public IActionResult CompleteSeason()
         {
-            var seasonData = new SeasonData();
-            var newYear = seasonData.CompleteCurrentSeason();
+            var newYear = _seasonData.CompleteCurrentSeason();
 
-            var newSeason = new Season {Completed = false, GameDetailsId = GlobalData.GameDetailsId, StartYear = newYear };
-            var newSeasonId = seasonData.AddSeason(newSeason);
+            var newSeason = new Season {Completed = false, GameDetailsId = GameCache.GameDetailsId, StartYear = newYear };
+            var newSeasonId = _seasonData.AddSeason(newSeason);
 
-            var teamSeasonData = new TeamSeasonData();
-            teamSeasonData.PromotionAndRelegation(GlobalData.GameDetailsId, GlobalData.CurrentSeasonId, newSeasonId);
+            _teamSeasonData.PromotionAndRelegation(GameCache.GameDetailsId, GameCache.CurrentSeasonId, newSeasonId);
 
             var game = _gameDetailsData.SetGameToNewSeason(newSeasonId);
 
             // set globals to new data
-            GlobalData.CurrentSeasonId = newSeasonId;
+            GameCache.CurrentSeasonId = newSeasonId;
 
             return View("Index", game);
         }

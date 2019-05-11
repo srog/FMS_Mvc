@@ -1,4 +1,5 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
 using FMS3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -7,11 +8,16 @@ namespace FMS3.Controllers
 {
     public class TeamController : Controller
     {
-        private static readonly TeamData _teamData = new TeamData();
+        private ITeamData _teamData { get; }
+
+        public TeamController(ITeamData teamData)
+        {
+            _teamData = teamData;
+        }
 
         public IActionResult Index()
         {
-            if (GlobalData.GameDetailsId == 0)
+            if (GameCache.GameDetailsId == 0)
             {
                 return View(new List<Team>());
             }

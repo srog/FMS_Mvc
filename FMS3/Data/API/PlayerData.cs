@@ -1,10 +1,12 @@
-﻿using FMS3.Models;
+﻿using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
+using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class PlayerData
+    public class PlayerData : IPlayerData
     {
         private readonly IWebApi _webApi;
         private readonly string playerURL = "http://localhost:56822/api/player";
@@ -21,7 +23,7 @@ namespace FMS3.Data
         {
             var paramList = new Dictionary<string, object>
                 {
-                    {"gameDetailsId",GlobalData.GameDetailsId},
+                    {"gameDetailsId",GameCache.GameDetailsId},
                     {"teamId",teamId}
                 };
             var response = _webApi.GetAll(playerURL, paramList);
@@ -40,7 +42,7 @@ namespace FMS3.Data
         {
             var paramList = new Dictionary<string, object>
             {
-                {"gameDetailsId", GlobalData.GameDetailsId}
+                {"gameDetailsId", GameCache.GameDetailsId}
             };
             var response = _webApi.GetAll(playerURL, paramList);
             if (response.IsSuccessStatusCode)

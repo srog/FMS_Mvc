@@ -1,28 +1,27 @@
-﻿using FMS3.Models;
+﻿using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
+using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class TeamSeasonData
+    public class TeamSeasonData : ITeamSeasonData
     {
-        private readonly IWebApi _webApi;
+        private IWebApi _webApi { get; }
         private readonly string teamSeasonURL = "http://localhost:56822/api/league";
 
-        public TeamSeasonData()
+        public TeamSeasonData(IWebApi webApi)
         {
-            if (_webApi == null)
-            {
-                _webApi = new WebApi();
-            }
+            _webApi = webApi;
         }
 
         public IEnumerable<TeamSeason> GetLeague(int divisionId)
         { 
             var paramList = new Dictionary<string, object>
                 {
-                    {"gameDetailsId", GlobalData.GameDetailsId},
-                    {"seasonId", GlobalData.CurrentSeasonId},
+                    {"gameDetailsId", GameCache.GameDetailsId},
+                    {"seasonId", GameCache.CurrentSeasonId},
                     {"divisionId", divisionId }
                 };
             var response = _webApi.GetAll(teamSeasonURL, paramList);

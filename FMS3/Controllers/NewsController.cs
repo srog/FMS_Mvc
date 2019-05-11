@@ -1,11 +1,16 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class NewsController : Controller
     {
-        private readonly NewsData _newsData = new NewsData();
+        private INewsData _newsData { get; }
+
+        public NewsController(INewsData newsData)
+        {
+            _newsData = newsData;
+        }
 
         public IActionResult Index()
         {

@@ -1,27 +1,26 @@
-﻿using FMS3.Models;
+﻿using FMS3.Data.Cache;
+using FMS3.Data.Interfaces;
+using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class NewsData
+    public class NewsData : INewsData
     {
-        private readonly IWebApi _webApi;
+        private IWebApi _webApi { get; }
         private readonly string newsURL = "http://localhost:56822/api/news";
 
-        public NewsData()
+        public NewsData(IWebApi webApi)
         {
-            if (_webApi == null)
-            {
-                _webApi = new WebApi();
-            }
+            _webApi = webApi;
         }
 
         public IEnumerable<News> GetGameNews(int seasonId = 0, int divisionId = 0)
         {
             var paramList = new Dictionary<string, object>
                 {
-                    {"gameDetailsId", GlobalData.GameDetailsId}
+                    {"gameDetailsId", GameCache.GameDetailsId}
                 };
             if (seasonId > 0)
             {

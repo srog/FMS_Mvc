@@ -1,12 +1,16 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class LeagueController : Controller
     {
-        private readonly TeamSeasonData _teamSeasonData = new TeamSeasonData();
+        private ITeamSeasonData _teamSeasonData { get; }
 
+        public LeagueController(ITeamSeasonData teamSeasonData)
+        {
+            _teamSeasonData = teamSeasonData;
+        }
         public IActionResult Index()
         {
             return View();

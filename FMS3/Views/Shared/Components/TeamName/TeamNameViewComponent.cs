@@ -1,4 +1,4 @@
-﻿using FMS3.Data;
+﻿using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -6,16 +6,19 @@ namespace FMS3.Views.Shared.ViewComponents.TeamName
 {
     public class TeamNameViewComponent : ViewComponent
     {
-        private static TeamData _teamData = new TeamData();
-
+        private ITeamData _teamData { get; }
+        public TeamNameViewComponent(ITeamData teamData)
+        {
+            _teamData = teamData;
+        }
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
-            if (teamId == 0)
+            var team = new Models.Team
             {
-                return View("TeamName",new Models.Team { Id = 0, Name = "(Unattached)" });
-            }
-
-            var team = _teamData.GetTeam(teamId);
+                Id = teamId,
+                Name = _teamData.GetTeamName(teamId)
+            };
+            
             return View("TeamName", team);
         }
     }

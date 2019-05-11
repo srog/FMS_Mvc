@@ -1,27 +1,35 @@
 ﻿using FMS3.Models;
 using System.Collections.Generic;
 using System.Net.Http;
+using FMS3.Data.Interfaces;
+using FMS3.Data.Cache;
 
-namespace FMS3.Data
+namespace FMS3.Data.API
 {
-    public class SeasonData
+    public class SeasonData : ISeasonData
     {
-        private readonly IWebApi _webApi;
+        private IWebApi _webApi { get; }
         private readonly string seasonURL = "http://localhost:56822/api/season";
 
-        public SeasonData()
+        public SeasonData(IWebApi webApi)
         {
-            if (_webApi == null)
-            {
-                _webApi = new WebApi();
+            _webApi = webApi;
+        }
+
+        public int GetSeasonYear(int seasonId)
+        {
+            if (!GameCache.SeasonYear.ContainsKey(seasonId))
+            {                
+                GameCache.SeasonYear.Add(seasonId, GetSeason(seasonId).StartYear);
             }
+            return GameCache.SeasonYear.GetValueOrDefault(seasonId);
         }
 
         public IEnumerable<Season> GetAllSeasons()
         {
             var paramList = new Dictionary<string, object>
             {
-                {"gameDetailsId", GlobalData.GameDetailsId}
+                {"gameDetailsId", GameCache.GameDetailsId}
             };
 
             var response = _webApi.GetAll(seasonURL, paramList);
@@ -97,7 +105,7 @@ namespace FMS3.Data
 
         public int CompleteCurrentSeason()
         {
-            var currentSeason = GetSeason(GlobalData.CurrentSeasonId);
+            var currentSeason = GetSeason(GameCache.CurrentSeasonId);
             currentSeason.Completed = true;
             UpdateSeason(currentSeason);
 
