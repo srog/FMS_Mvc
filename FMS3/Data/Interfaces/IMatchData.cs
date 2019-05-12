@@ -8,5 +8,6 @@ namespace FMS3.Data.Interfaces
         IEnumerable<Match> GetAllMatches(int divisionId = 0, int week = 0);
         Match GetMatch(int id);
         int AddMatch(Match match);
+        int PlayMatch(int id);
     }
 }

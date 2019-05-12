@@ -77,5 +77,34 @@ namespace FMS3.Data.API
             return 0;
         }
 
+        public int PlayMatch(int id)
+        {
+            var response = _webApi.Put(matchURL + "/" + id, null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<int>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+            return 0;
+        }
+
+        public int UpdateMatch(Match match)
+        {
+            var response = _webApi.Put(matchURL, match);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<int>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+            return 0;
+        }
     }
 }

@@ -13,9 +13,15 @@ namespace FMS3.Controllers
         }
         public IActionResult Index()
         {
-            var matches = _matchData.GetAllMatches(1, 1);
+            //var matches = _matchData.GetAllMatches();
          
-            return View("Matches",matches);
+            return View("Index", 1);
+        }
+
+        public IActionResult PlayMatch(int id)
+        {
+            _matchData.PlayMatch(id);
+            return Index();
         }
 
     }

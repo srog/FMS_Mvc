@@ -1,0 +1,27 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Fixtures";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Fixtures For Week @Model</h2>
+<hr />
+@await Component.InvokeAsync("DivisionName", new { divisionId = 1 })
+<hr />
+@await Component.InvokeAsync("FixtureList", new { divisionId = 1, week = Model })
+<hr />
+@await Component.InvokeAsync("DivisionName", new { divisionId = 2 })
+<hr />
+@await Component.InvokeAsync("FixtureList", new { divisionId = 2, week = Model })
+<hr />
+@await Component.InvokeAsync("DivisionName", new { divisionId = 3 })
+<hr />
+@await Component.InvokeAsync("FixtureList", new { divisionId = 3, week = Model })
+<hr />
+@await Component.InvokeAsync("DivisionName", new { divisionId = 4 })
+<hr />
+@await Component.InvokeAsync("FixtureList", new { divisionId = 4, week = Model })
+
+
+
+

@@ -1,3 +1,4 @@
-﻿@model string
+﻿@model KeyValuePair<int, string>
 
-<span>@Model</span>
+@Html.ActionLink(Model.Value, "Division", "League", new { id = Model.Key })
+

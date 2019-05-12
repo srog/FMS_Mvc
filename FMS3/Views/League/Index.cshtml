@@ -9,10 +9,10 @@
     <div class="col-md-3" style="align-content:center">
         <h2>League Tables</h2>
         <ul>
-            <li>1. @Html.ActionLink("Premier League", "Division", new { id = 1 })</li>
-            <li>2. @Html.ActionLink("Championship", "Division", new { id = 2 })</li>
-            <li>3. @Html.ActionLink("League One", "Division", new { id = 3 })</li>
-            <li>4. @Html.ActionLink("League Two", "Division", new { id = 4 })</li>
+            <li>@await Component.InvokeAsync("DivisionName", new { divisionId = 1 })</li>
+            <li>@await Component.InvokeAsync("DivisionName", new { divisionId = 2 })</li>
+            <li>@await Component.InvokeAsync("DivisionName", new { divisionId = 3 })</li>
+            <li>@await Component.InvokeAsync("DivisionName", new { divisionId = 4 })</li>
 
         </ul>
     </div>
