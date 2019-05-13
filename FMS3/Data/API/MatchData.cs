@@ -92,6 +92,23 @@ namespace FMS3.Data.API
             return 0;
         }
 
+        public int PlayAllMatchesForWeek(int seasonId, int week, int divisionId)
+        {
+            var actualUrl = matchURL + "/" + seasonId + "/" + week + "/" + divisionId;
+
+            var response = _webApi.Put(actualUrl, null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<int>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+            return 0;
+        }
+
         public int UpdateMatch(Match match)
         {
             var response = _webApi.Put(matchURL, match);
