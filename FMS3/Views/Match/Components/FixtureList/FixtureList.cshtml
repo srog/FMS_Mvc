@@ -8,8 +8,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.HomeTeamId)
             </th>
-            <th width="15px"></th>
             <th width="20px"></th>
+            <th width="40px"></th>
             <th>
                 @Html.DisplayNameFor(model => model.AwayTeamId)
             </th>
@@ -19,40 +19,52 @@
     <tbody>
         @foreach (var item in Model)
         {
+            <tr>
+
+                <td>
+                    @Component.InvokeAsync("TeamName", new { teamId = item.HomeTeamId }).Result
+                </td>
+                <td>
+                    @if (item.Completed)
+                    {
+                        @Html.DisplayFor(modelItem => item.HomeTeamScore)
+                    }
+                
+                </td>
+                <td>
+                    :
+                    @if (item.Completed)
+                    {
+                        @Html.DisplayFor(modelItem => item.AwayTeamScore)
+                    }
+                </td>
+
+                <td>
+                    @Component.InvokeAsync("TeamName", new { teamId = item.AwayTeamId }).Result
+                </td>
+                <td>
+                    @if (item.Completed)
+                    {
+                        @Html.ActionLink("Details", "Index", "Match")
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Play", "PlayMatch", "Match", new { id = item.Id })
+                    }
+                </td>
+            </tr>
+        }
         <tr>
 
-            <td>
-                @Component.InvokeAsync("TeamName", new { teamId = item.HomeTeamId }).Result
-            </td>
-            <td>
-                @if (item.Completed)
-                {
-                    @Html.DisplayFor(modelItem => item.HomeTeamScore)
-                }
-                
-            </td>
-            <td>
-                :
-                @if (item.Completed)
-                {
-                    @Html.DisplayFor(modelItem => item.AwayTeamScore)
-                }
-            </td>
+            <td></td>
+            <td></td>
+            <td></td>
 
+            <td></td>
             <td>
-                @Component.InvokeAsync("TeamName", new { teamId = item.AwayTeamId }).Result
-            </td>
-            <td>
-                @if (item.Completed)
-                {
-                    @Html.ActionLink("Details", "Index", "Match")
-                }
-                else
-                {
-                    @Html.ActionLink("Play", "PlayMatch", "Match", new { id = item.Id })
-                }
+                @Html.ActionLink("Play All", "PlayAllMatches", "Match", new { divisionId = Model.First().DivisionId, seasonId = Model.First().SeasonId, week = Model.First().Week })
             </td>
         </tr>
-        }
+        
     </tbody>
 </table>

@@ -14,10 +14,6 @@ namespace FMS3.Data.API
 
         public GameDetailsData(IWebApi webApi)
         {
-            //if (_webApi == null)
-            //{
-            //    _webApi = new WebApi();
-            //}
             _webApi = webApi;
         }
 

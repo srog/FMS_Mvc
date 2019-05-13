@@ -13,14 +13,18 @@ namespace FMS3.Controllers
         }
         public IActionResult Index()
         {
-            //var matches = _matchData.GetAllMatches();
-         
             return View("Index", 1);
         }
 
         public IActionResult PlayMatch(int id)
         {
             _matchData.PlayMatch(id);
+            return Index();
+        }
+
+        public IActionResult PlayAllMatches(int divisionId, int seasonId, int week)
+        {
+            _matchData.PlayAllMatchesForWeek(seasonId, week, divisionId);
             return Index();
         }
 
