@@ -14,25 +14,25 @@ namespace FMS3.Controllers
         // All players in game
         public IActionResult Index()
         {
-            var playerList = _playerData.GetAllPlayersInGame();
+            var playerListDisplay = _playerData.GetAllPlayers();
 
-            return View(playerList);
+            return View(playerListDisplay);
         }
 
         // Players with TeamId = 0
         public IActionResult TransferMarket()
         {
-            var playerList = _playerData.GetPlayersForTeam(0);
+            var playerListDisplay = _playerData.GetAllPlayers(0);
 
-            return View("Index",playerList);
+            return View("Index", playerListDisplay);
         }
 
         // Players in team
         public IActionResult Squad(int teamId)
         {
-            var playerList = _playerData.GetPlayersForTeam(teamId);
+            var playerListDisplay = _playerData.GetAllPlayers(teamId);
 
-            return View("Index",playerList);
+            return View("Index", playerListDisplay);
         }
 
         public IActionResult Details(int playerId)

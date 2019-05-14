@@ -37,14 +37,14 @@
         <dd>
             @Component.InvokeAsync("CashFormat", new { cashValue = Model.Value }).Result
         </dd>
-      
+
         <dt>
             @Html.DisplayNameFor(model => model.InjuredWeeks)
         </dt>
         <dd>
             @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = Model.InjuredWeeks }).Result
         </dd>
-      
+
     </dl>
 </div>
 

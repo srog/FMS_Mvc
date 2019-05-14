@@ -12,5 +12,6 @@ namespace FMS3.Data.Interfaces
         GameDetails SetTeam(int teamId);
         GameDetails AdvanceWeek();
         GameDetails SetGameToNewSeason(int seasonId);
+        bool LoadStaticData();
     }
 }
