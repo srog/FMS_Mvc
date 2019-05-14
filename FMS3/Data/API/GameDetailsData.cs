@@ -11,6 +11,7 @@ namespace FMS3.Data.API
         private IWebApi _webApi { get; }
         private readonly string gameDetailsURL = "http://localhost:56822/api/gameDetails";
         private readonly string startNewGameURL = "http://localhost:56822/api/StartNewGame";
+        private readonly string formationsURL = "http://localhost:56822/api/Formations";
 
         public GameDetailsData(IWebApi webApi)
         {
@@ -109,7 +110,20 @@ namespace FMS3.Data.API
             var game = GetById(GameCache.GameDetailsId);
             game.TeamId = teamId;
             UpdateGameDetails(game);
+            GameCache.ManagedTeamId = teamId;
             return game;
+        }
+
+        public bool LoadStaticData()
+        {
+            var response = _webApi.GetAll(formationsURL);
+            if (response.IsSuccessStatusCode)
+            {
+                GameCache.Formations =  response.Content.ReadAsAsync<Formations>().Result;
+                if (GameCache.Formations != null)
+                    return true;
+            }
+            return false;
         }
     }
 }

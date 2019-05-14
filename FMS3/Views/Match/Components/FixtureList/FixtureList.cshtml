@@ -53,6 +53,20 @@
                     }
                 </td>
             </tr>
+            if (item.Completed)
+            {
+                <tr>
+                    <td>
+                        @Component.InvokeAsync("MatchGoalDisplay", new { matchId = item.Id, teamId = item.HomeTeamId }).Result
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @Component.InvokeAsync("MatchGoalDisplay", new { matchId = item.Id, teamId = item.AwayTeamId }).Result
+                    </td>
+                    <td></td>
+                </tr>
+            }
         }
         <tr>
 

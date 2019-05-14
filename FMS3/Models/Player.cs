@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using FMS3.Enums;
 
 namespace FMS3.Models
 {
@@ -16,7 +18,19 @@ namespace FMS3.Models
         [Display(Name = "Weeks Injured")]
         public int InjuredWeeks { get; set; }
         public int GameDetailsId { get; set; }
-
+        public int TeamSelection { get; set; }
+        public bool IsSelected => (TeamSelection > 0);
         public string ShortName => Name.Split(" ")[0][0] + "." + Name.Split(" ")[1];    
+    }
+
+    public class PlayerListDisplay
+    {
+        public List<Player> PlayerList { get; set; }
+        public PlayerListDisplayTypeEnum DisplayType { get; set; }
+        public string TeamName { get; set; }
+        public int TeamFormationId { get; set; }
+        public string TeamFormation { get; set; }
+        public bool IsPreSeason { get; set; }
+        public bool IsPostSeason { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FMS3.Models;
 using FMS3.Data.Interfaces;
@@ -8,6 +9,8 @@ namespace FMS3.Controllers
 {
     public class HomeController : Controller
     {
+        private static bool StaticDataLoaded { get; set; }
+
         private IGameDetailsData _gameDetailsData { get; }
         private INewsData _newsData {get;}
         private ITeamData _teamData { get; }
@@ -21,6 +24,15 @@ namespace FMS3.Controllers
 
         public IActionResult Index()
         {
+            if (!StaticDataLoaded)
+            {
+                var result = _gameDetailsData.LoadStaticData();
+                if (!result)
+                {
+                    throw new Exception("Failed to load static data");
+                }
+                StaticDataLoaded = true;
+            }
             return View();
         }
 

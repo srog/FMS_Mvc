@@ -15,5 +15,6 @@ namespace FMS3.Models
         [Display(Name = "Stadium Capacity")]
         public int StadiumCapacity { get; set; }
         public int GameDetailsId { get; set; }
+        public int FormationId { get; set; }
     }
 }

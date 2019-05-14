@@ -22,6 +22,10 @@
 @Html.LabelForModel(Model.StadiumCapacity.ToString())
 <br />
 <hr />
+@Html.DisplayNameFor(model => model.FormationId):
+@Html.LabelForModel(Model.FormationId.ToString())
+<br />
+<hr />
 Recent Form:
 <br />
 @Component.InvokeAsync("RecentForm", new { teamId = Model.Id }).Result
@@ -30,7 +34,7 @@ Recent Form:
 <hr />
 News:
 <br />
-@Component.InvokeAsync("TeamNews", new {  teamId = Model.Id }).Result
+@Component.InvokeAsync("TeamNews", new { teamId = Model.Id }).Result
 <hr />
 @Html.ActionLink("Squad", "Squad", "Player", new { teamId = Model.Id })
 <hr />
