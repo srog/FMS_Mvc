@@ -8,25 +8,36 @@
 
 <br />
 
-@if (Model.DisplayType == PlayerListDisplayTypeEnum.AllPlayers)
-{
-    @Component.InvokeAsync("TeamName", new { teamId = 0 }).Result
-}
-else
+@if (Model.DisplayType == PlayerListDisplayTypeEnum.MySquad || Model.DisplayType == PlayerListDisplayTypeEnum.OtherSquad)
 {
     @Component.InvokeAsync("TeamName", new { teamId = Model.PlayerList.First().TeamId }).Result
     <hr />
 
     <span> Formation: @Model.TeamFormation </span>
 }
+@if (Model.DisplayType == PlayerListDisplayTypeEnum.AllPlayers)
+{
+    <h2>All Players</h2>
+}
+@if (Model.DisplayType == PlayerListDisplayTypeEnum.TransferMarket)
+{
+    <h2>Transfer Market</h2>
+}
 
-<hr/>
+<hr />
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.PlayerList[0].Name)
             </th>
+            @if (Model.DisplayType == PlayerListDisplayTypeEnum.AllPlayers)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.PlayerList[0].TeamId)
+                </th>
+            }
+
             <th>
                 @Html.DisplayNameFor(model => model.PlayerList[0].Rating)
             </th>
@@ -44,54 +55,66 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.PlayerList[0].InjuredWeeks)
             </th>
-            @if (Model.DisplayType == PlayerListDisplayTypeEnum.MySquad
-                || Model.DisplayType == PlayerListDisplayTypeEnum.OtherSquad)
+            @if (Model.DisplayType == PlayerListDisplayTypeEnum.MySquad || Model.DisplayType == PlayerListDisplayTypeEnum.OtherSquad)
             {
                 <th>
                     @Html.DisplayNameFor(model => model.PlayerList[0].TeamSelection)
                 </th>
             }
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.PlayerList)
         {
-            <tr>
+        <tr>
 
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            @if (Model.DisplayType == PlayerListDisplayTypeEnum.AllPlayers)
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Component.InvokeAsync("TeamName", new { teamId = item.TeamId }).Result
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Component.InvokeAsync("PlayerPosition", new { positionId = item.Position }).Result
-                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Component.InvokeAsync("PlayerPosition", new { positionId = item.Position }).Result
+            </td>
 
+            <td>
+                @Component.InvokeAsync("CashFormat", new { cashValue = item.Value }).Result
+            </td>
+            <td>
+                @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = item.InjuredWeeks }).Result
+            </td>
+            @if (Model.DisplayType == PlayerListDisplayTypeEnum.MySquad
+             || Model.DisplayType == PlayerListDisplayTypeEnum.OtherSquad)
+            {
                 <td>
-                    @Component.InvokeAsync("CashFormat", new { cashValue = item.Value }).Result
+                    @if (item.IsSelected)
+                    {
+                        <span>Yes</span>
+                    }
                 </td>
+            }
+            <td>
+                @Html.ActionLink("Details", "Details", new { playerId = item.Id })
+            </td>
+            @if (Model.DisplayType == PlayerListDisplayTypeEnum.MySquad)
+            {
                 <td>
-                    @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = item.InjuredWeeks }).Result
+                    @Html.ActionLink("Sell", "Sell", new { playerId = item.Id })
                 </td>
-                @if (Model.DisplayType == PlayerListDisplayTypeEnum.MySquad
-                    || Model.DisplayType == PlayerListDisplayTypeEnum.OtherSquad)
-                {
-                    <td>
-                        @if (item.IsSelected)
-                        {
-                            <span>Yes</span>
-                        }
-                    </td>
-                }
-                <td>
-                    @Html.ActionLink("Details", "Details", new { playerId = item.Id })
-                </td>
-            </tr>
+            }
+        </tr>
         }
     </tbody>
 </table>

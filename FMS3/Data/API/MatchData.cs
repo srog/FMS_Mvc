@@ -2,6 +2,7 @@
 using FMS3.Data.Interfaces;
 using FMS3.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace FMS3.Data.API
@@ -14,6 +15,17 @@ namespace FMS3.Data.API
         public MatchData(IWebApi webApi)
         {
             _webApi = webApi;
+        }
+
+        // Get all matches for a team sorted by recent first
+        public IEnumerable<Match> GetForm(int teamId)
+        {            
+            var matches = GetAllMatches();
+            
+            return matches
+                .Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId)
+                .OrderByDescending(m => m.SeasonId)
+                .ThenByDescending(m => m.Week);            
         }
 
         public IEnumerable<Match> GetAllMatches(int divisionId = 0, int week = 0)

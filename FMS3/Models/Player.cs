@@ -12,6 +12,7 @@ namespace FMS3.Models
         public int Rating { get; set; }
         public int Age { get; set; }
         public int Position { get; set; }
+        [Display(Name = "Team")]
         public int TeamId { get; set; }
         public int Value { get; set; }
         public bool Retired { get; set; }
@@ -19,6 +20,7 @@ namespace FMS3.Models
         public int InjuredWeeks { get; set; }
         public int GameDetailsId { get; set; }
         public int TeamSelection { get; set; }
+        [Display(Name = "Selected?")]
         public bool IsSelected => (TeamSelection > 0);
         public string ShortName => Name.Split(" ")[0][0] + "." + Name.Split(" ")[1];    
     }

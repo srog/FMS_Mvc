@@ -30,7 +30,7 @@ namespace FMS3.Controllers
             var game = _gameDetailsData.GetById(id);
             GameCache.GameDetailsId = id;
             GameCache.CurrentSeasonId = game.CurrentSeasonId;
-         
+            GameCache.ManagedTeamId = game.TeamId;
             return View("Index", game);
         }
 
