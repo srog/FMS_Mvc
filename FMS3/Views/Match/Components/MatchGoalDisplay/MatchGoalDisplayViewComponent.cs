@@ -8,9 +8,11 @@ namespace FMS3.Views.Match.Components.MatchGoalDisplay
     public class MatchGoalDisplayViewComponent : ViewComponent
     {
         private IMatchGoalData _matchGoalData { get; }
-        public MatchGoalDisplayViewComponent(IMatchGoalData matchGoalData)
+        private IPlayerData _playerData { get; }
+        public MatchGoalDisplayViewComponent(IMatchGoalData matchGoalData, IPlayerData playerData)
         {
             _matchGoalData = matchGoalData;
+            _playerData = playerData;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int matchId, int teamId)
@@ -24,7 +26,7 @@ namespace FMS3.Views.Match.Components.MatchGoalDisplay
                 {
                     if (goal.TeamId == teamId)
                     {
-                        displayString += goal.PlayerId + " (" + goal.Minute + ") ";
+                        displayString += _playerData.GetPlayerShortName(goal.PlayerId) + " (" + goal.Minute + ") ";
                     }
                 }
             }

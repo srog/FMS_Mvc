@@ -95,6 +95,30 @@ namespace FMS3.Data.API
             return null;
         }
 
+        public string GetPlayerShortName(int playerId)
+        {
+            if (!GameCache.PlayerShortNames.ContainsKey(playerId))
+            {
+                string name;
+                name = GetPlayer(playerId).ShortName;
+                
+                GameCache.PlayerShortNames.Add(playerId, name);
+            }
+            return GameCache.PlayerShortNames.GetValueOrDefault(playerId);
+        }
+
+        public string GetPlayerFullName(int playerId)
+        {
+            if (!GameCache.PlayerFullNames.ContainsKey(playerId))
+            {
+                string name;
+                name = GetPlayer(playerId).Name;
+
+                GameCache.PlayerFullNames.Add(playerId, name);
+            }
+            return GameCache.PlayerFullNames.GetValueOrDefault(playerId);
+        }
+
         public int AddPlayer(Player player)
         {
             var response = _webApi.Post(playerURL, player);

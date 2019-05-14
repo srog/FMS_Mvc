@@ -6,6 +6,8 @@ namespace FMS3.Data.Interfaces
     {
         PlayerListDisplay GetAllPlayers(int? teamId = null);
         Player GetPlayer(int id);
+        string GetPlayerShortName(int playerId);
+        string GetPlayerFullName(int playerId);
         int AddPlayer(Player player);
         int UpdatePlayer(Player player);
         int DeletePlayer(int id);

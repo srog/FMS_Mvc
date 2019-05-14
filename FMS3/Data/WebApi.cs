@@ -60,6 +60,12 @@ namespace FMS3.Data
                 actualUrl += "?playerId=" + paramList["playerId"];
                 return actualUrl;
             }
+            //match goals
+            if (paramList.ContainsKey("matchId"))
+            {
+                actualUrl += "/" + paramList["matchId"];
+                return actualUrl;
+            }
 
             if (paramList.ContainsKey("gameDetailsId"))
             {
