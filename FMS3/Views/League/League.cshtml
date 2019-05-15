@@ -5,7 +5,7 @@
 </div>
 <hr/>
 
-<table class="table">
+<table class="table-bordered table-striped" width="80%">
     <thead>
         <tr>
             <th>
@@ -45,44 +45,49 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+    <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position)
+        </td>
 
-            <td>
-                @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
-            </td>
+        <td>
+            @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
+        </td>
 
+        <td>
+            @Html.DisplayFor(modelItem => item.Played)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Won)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Drawn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GoalsFor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GoalsAgainst)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GoalDifference)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Points)
+        </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Played)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Won)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Drawn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoalsFor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoalsAgainst)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoalDifference)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Points)
-            </td>
-
-        </tr>
-}
+    </tr>
+    if (item.Position == 2 || item.Position == 10)
+     {
+         <tr>
+             <td></td>
+         </tr>
+     }
+        }
     </tbody>
 </table>
 <div>

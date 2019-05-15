@@ -10,15 +10,6 @@
 <table class="table-bordered table-striped" width="100%">
     <thead>
         <tr>
-
-            <th>
-                Week
-            </th>
-
-            <th>
-                Season
-            </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.NewsText)
             </th>
@@ -28,16 +19,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.WeekDisplay)
-            </td>
-
-            <td>
-                @await Component.InvokeAsync("SeasonName", new { seasonId = item.SeasonId })
-
-            </td>
-            
             <td>
                 @Html.DisplayFor(modelItem => item.NewsText)
             </td>

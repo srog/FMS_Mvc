@@ -51,7 +51,14 @@
 {
     <hr />
     <div>
-        @Html.ActionLink("Play Fixtures / Advance Week", "AdvanceWeek", "Game")
+        @if (Model.CanAdvanceWeek)
+        {
+            @Html.ActionLink("Advance Week", "AdvanceWeek", "Game")
+        }
+        else
+        {
+            @Html.ActionLink("Go to Fixtures", "WeeklyFixtures", "Match", new { week = Model.CurrentWeek })
+        }
     </div>
 }
 

@@ -38,6 +38,7 @@ namespace FMS3
             services.AddTransient<ISeasonData, SeasonData>();
             services.AddTransient<IMatchData, MatchData>();
             services.AddTransient<IMatchGoalData, MatchGoalData>();
+            services.AddTransient<IMatchEventData, MatchEventData>();
             services.AddTransient<IPlayerData, PlayerData>();
             services.AddTransient<IPlayerStatsData, PlayerStatsData>();
             services.AddTransient<IPlayerAttributesData, PlayerAttributesData>();

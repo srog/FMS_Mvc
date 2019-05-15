@@ -2,6 +2,7 @@
 using FMS3.Data.Interfaces;
 using FMS3.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace FMS3.Data.API
@@ -35,7 +36,11 @@ namespace FMS3.Data.API
             var response = _webApi.GetAll(newsURL, paramList);
             if (response.IsSuccessStatusCode)
             {
-                return response.Content.ReadAsAsync<IEnumerable<News>>().Result;
+                var news = response.Content.ReadAsAsync<IEnumerable<News>>().Result;
+                return news
+                    .OrderByDescending(n => n.SeasonId)
+                    .ThenByDescending(n => n.Week)
+                    .ThenByDescending(n => n.DivisionId);
             }
             else
             {
