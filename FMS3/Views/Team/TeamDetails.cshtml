@@ -32,7 +32,11 @@ Recent Form:
 <br />
 @Component.InvokeAsync("RecentForm", new { teamId = Model.Id }).Result
 <hr />
-(Fixtures / Results)
+<div>
+    This Week's Fixture: @await Component.InvokeAsync("ThisWeeksFixture")
+</div>
+<br />
+        (All Fixtures/Results)
 <hr />
 News:
 <br />

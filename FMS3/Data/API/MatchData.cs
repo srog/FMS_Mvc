@@ -23,7 +23,7 @@ namespace FMS3.Data.API
             var matches = GetAllMatches();
             
             return matches
-                .Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId)
+                .Where(m => m.Completed && (m.HomeTeamId == teamId || m.AwayTeamId == teamId))
                 .OrderByDescending(m => m.SeasonId)
                 .ThenByDescending(m => m.Week);            
         }
@@ -72,6 +72,13 @@ namespace FMS3.Data.API
                 var testerror = response;
             }
             return null;
+        }
+
+        public Match GetThisWeeksMatch(int divisionId, int teamId, int week)
+        {
+            var matches = GetAllMatches(divisionId, week);
+
+            return matches.First(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId);
         }
 
         public int AddMatch(Match match)

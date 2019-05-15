@@ -15,14 +15,11 @@
 </head>
 <body>
 
-    <h3>Team List</h3>
+    <h3>All Teams</h3>
 
     <div>
-        <table class="table table-bordered">
+        <table class="table-bordered table-striped" width="100%">
             <tr height="40px">
-                <td>
-                    @Html.LabelFor(t => t.First().Id)
-                </td>
                 <td>
                     @Html.LabelFor(t => t.First().Name)
                 </td>
@@ -41,10 +38,7 @@
             {
                 <tr>
                     <td>
-                        @team.Id.ToString()
-                    </td>
-                    <td>
-                        @team.Name.ToString()
+                        @Component.InvokeAsync("TeamName", new { teamId = team.Id }).Result
                     </td>
                     <td>
                         @Component.InvokeAsync("DivisionName", new { divisionId = @team.DivisionId }).Result
@@ -54,9 +48,6 @@
                     </td>
                     <td>
                         @Component.InvokeAsync("CashFormat", new { cashValue = @team.Cash }).Result
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "TeamDetails", "Team", new { id = team.Id })
                     </td>
                 </tr>
             }

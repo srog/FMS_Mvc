@@ -37,8 +37,10 @@
         </div>
         <hr />
         <div>
-            Previous Result / Next Fixture
+            This Week's Fixture: @await Component.InvokeAsync("ThisWeeksFixture")
         </div>
+        <br />
+        (All Fixtures/Results)
         <hr />
         <div>
             @await Component.InvokeAsync("LatestNews")

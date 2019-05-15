@@ -1,0 +1,42 @@
+﻿@model Match
+
+<table class="table-bordered" width="50%">
+    <thead>
+        <tr>
+            <td>
+                Home Team
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                Away Team
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @await Component.InvokeAsync("TeamName", new { teamId = Model.HomeTeamId })
+            </td>
+            <td>
+                @if (Model.Completed) { <span> @Model.HomeTeamScore </span> }
+            </td>
+            <td>
+                @if (Model.Completed) { <span> @Model.AwayTeamScore </span> }
+            </td>
+            <td>
+                @await Component.InvokeAsync("TeamName", new { teamId = Model.AwayTeamId })
+            </td>
+            <td>
+                @if (Model.Completed)
+                {
+                    @Html.ActionLink("Details", "MatchDetail", "Match", new { id = @Model.Id })
+                }
+                else
+                {
+                    @Html.ActionLink("Play", "PlayMatch", "Match", new { id = @Model.Id })
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>

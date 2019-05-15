@@ -17,6 +17,7 @@ namespace FMS3.Models
         public int AwayTeamId { get; set; }
         public int HomeTeamScore { get; set; }
         public int AwayTeamScore { get; set; }
+        public int Attendance { get; set; }
         public bool Completed { get; set; }
     }
 }

@@ -30,7 +30,11 @@ namespace FMS3
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddRazorOptions(o =>
+                {
+                    o.ViewLocationFormats.Add("Views/Match/{0}.cshtml");
+                });
 
             services.AddTransient<IWebApi, WebApi>();
             services.AddTransient<IGameDetailsData, GameDetailsData>();

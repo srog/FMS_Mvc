@@ -5,13 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>MatchDetail</h2>
-
-<hr />
+<h2>Match Details</h2>
+<br />
+Result:
+<br />
 @Component.InvokeAsync("TeamName", new { teamId = Model.Match.HomeTeamId }).Result : @Model.Match.HomeTeamScore
 <br />
 @Component.InvokeAsync("TeamName", new { teamId = Model.Match.AwayTeamId }).Result :  @Model.Match.AwayTeamScore
 
+<hr />
+Attendance: @Model.Match.Attendance
 <hr />
 <h3>Goals</h3>
 <br />

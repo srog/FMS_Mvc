@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FMS3.Models.Match>
 
 
-<table class="table">
+<table class="table-bordered" width="80%">
     <thead>
         <tr>
 
@@ -13,6 +13,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.AwayTeamId)
             </th>
+            <th>Attendance</th>
             <th></th>
         </tr>
     </thead>
@@ -41,6 +42,12 @@
 
                 <td>
                     @Component.InvokeAsync("TeamName", new { teamId = item.AwayTeamId }).Result
+                </td>
+                <td>
+                    @if (item.Attendance > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.Attendance)
+                    }
                 </td>
                 <td>
                     @if (item.Completed)
