@@ -1,26 +1,30 @@
-﻿@model int
+﻿@model FixtureInfo
 @{
     ViewData["Title"] = "Fixtures";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Fixtures For Week @Model</h2>
+<h2>Fixtures For Week @Model.Week</h2>
+<br />
+@Html.DropDownList("week", Model.WeekList)
+@Html.ActionLink("Show", "WeeklyFixtures", "Match")
+
 <hr />
 @await Component.InvokeAsync("DivisionName", new { divisionId = 1 })
 <hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 1, week = Model })
+@await Component.InvokeAsync("FixtureList", new { divisionId = 1, week = Model.Week })
 <hr />
 @await Component.InvokeAsync("DivisionName", new { divisionId = 2 })
 <hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 2, week = Model })
+@await Component.InvokeAsync("FixtureList", new { divisionId = 2, week = Model.Week })
 <hr />
 @await Component.InvokeAsync("DivisionName", new { divisionId = 3 })
 <hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 3, week = Model })
+@await Component.InvokeAsync("FixtureList", new { divisionId = 3, week = Model.Week })
 <hr />
 @await Component.InvokeAsync("DivisionName", new { divisionId = 4 })
 <hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 4, week = Model })
+@await Component.InvokeAsync("FixtureList", new { divisionId = 4, week = Model.Week })
 
 
 

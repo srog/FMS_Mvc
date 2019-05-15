@@ -18,6 +18,6 @@ namespace FMS3.Models
 
         public bool IsPreSeason => (CurrentWeek == 0);
         public bool IsPostSeason => (CurrentWeek == 23);
-
+        public bool CanAdvanceWeek { get; set; }
     }
 }

@@ -29,7 +29,7 @@
                     {
                         @Html.DisplayFor(modelItem => item.HomeTeamScore)
                     }
-                
+
                 </td>
                 <td>
                     :
@@ -45,7 +45,7 @@
                 <td>
                     @if (item.Completed)
                     {
-                        @Html.ActionLink("Details", "Index", "Match")
+                        @Html.ActionLink("Details", "MatchDetail", "Match", new { id = item.Id })
                     }
                     else
                     {
@@ -66,6 +66,17 @@
                     </td>
                     <td></td>
                 </tr>
+                <tr>
+                    <td>
+                        @Component.InvokeAsync("MatchCardsDisplay", new { matchId = item.Id, teamId = item.HomeTeamId }).Result
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @Component.InvokeAsync("MatchCardsDisplay", new { matchId = item.Id, teamId = item.AwayTeamId }).Result
+                    </td>
+                    <td></td>
+                </tr>
             }
         }
         <tr>
@@ -79,6 +90,6 @@
                 @Html.ActionLink("Play All", "PlayAllMatches", "Match", new { divisionId = Model.First().DivisionId, seasonId = Model.First().SeasonId, week = Model.First().Week })
             </td>
         </tr>
-        
+
     </tbody>
 </table>
