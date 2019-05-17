@@ -1,102 +1,117 @@
-﻿@model IEnumerable<FMS3.Models.Match>
+﻿@model FixtureList
 
-
-<table class="table-bordered" width="80%">
-    <thead>
-        <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.HomeTeamId)
-            </th>
-            <th width="20px"></th>
-            <th width="40px"></th>
-            <th>
-                @Html.DisplayNameFor(model => model.AwayTeamId)
-            </th>
-            <th>Attendance</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (Model.Fixtures.Count() == 0)
+{
+    <span></span>
+}
+else
+{
+    <br />
+    @await Component.InvokeAsync("DivisionName", new { divisionId = Model.Fixtures.First().DivisionId })
+    <hr />
+    <table class="table-bordered" width="80%">
+        <thead>
             <tr>
 
-                <td>
-                    @Component.InvokeAsync("TeamName", new { teamId = item.HomeTeamId }).Result
-                </td>
-                <td>
-                    @if (item.Completed)
-                    {
-                        @Html.DisplayFor(modelItem => item.HomeTeamScore)
-                    }
+                <th>
+                    @Html.DisplayNameFor(model => model.Fixtures.FirstOrDefault().HomeTeamId)
+                </th>
+                <th width="20px"></th>
+                <th width="40px"></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fixtures.FirstOrDefault().AwayTeamId)
+                </th>
+                <th>Attendance</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Fixtures)
+            {
+                <tr>
 
-                </td>
-                <td>
-                    :
-                    @if (item.Completed)
-                    {
-                        @Html.DisplayFor(modelItem => item.AwayTeamScore)
-                    }
-                </td>
+                    <td>
+                        @Component.InvokeAsync("TeamName", new { teamId = item.HomeTeamId }).Result
+                    </td>
+                    <td>
+                        @if (item.Completed)
+                        {
+                            @Html.DisplayFor(modelItem => item.HomeTeamScore)
+                        }
 
+                    </td>
+                    <td>
+                        :
+                        @if (item.Completed)
+                        {
+                            @Html.DisplayFor(modelItem => item.AwayTeamScore)
+                        }
+                    </td>
+
+                    <td>
+                        @Component.InvokeAsync("TeamName", new { teamId = item.AwayTeamId }).Result
+                    </td>
+                    <td>
+                        @if (item.Attendance > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.Attendance)
+                        }
+                    </td>
+                    <td>
+                        @if (item.Completed)
+                        {
+                            @Html.ActionLink("Details", "MatchDetail", "Match", new { id = item.Id })
+                        }
+                        else
+                        {
+                            if (Model.CurrentWeek == item.Week)
+                            {
+                                @Html.ActionLink("Play", "PlayMatch", "Match", new { id = item.Id })
+                            }
+                        }
+                    </td>
+                </tr>
+                if (item.Completed)
+                {
+                    <tr>
+                        <td>
+                            @Component.InvokeAsync("MatchGoalDisplay", new { matchId = item.Id, teamId = item.HomeTeamId }).Result
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @Component.InvokeAsync("MatchGoalDisplay", new { matchId = item.Id, teamId = item.AwayTeamId }).Result
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Component.InvokeAsync("MatchCardsDisplay", new { matchId = item.Id, teamId = item.HomeTeamId }).Result
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @Component.InvokeAsync("MatchCardsDisplay", new { matchId = item.Id, teamId = item.AwayTeamId }).Result
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            }
+            <tr>
+
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td></td>
                 <td>
-                    @Component.InvokeAsync("TeamName", new { teamId = item.AwayTeamId }).Result
-                </td>
-                <td>
-                    @if (item.Attendance > 0)
+                    @if (Model.Fixtures.Any(m => m.Completed == false) && Model.CurrentWeek == Model.Fixtures.First().Week)
                     {
-                        @Html.DisplayFor(modelItem => item.Attendance)
-                    }
-                </td>
-                <td>
-                    @if (item.Completed)
-                    {
-                        @Html.ActionLink("Details", "MatchDetail", "Match", new { id = item.Id })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Play", "PlayMatch", "Match", new { id = item.Id })
+                    @Html.ActionLink("Play All", "PlayAllMatches", "Match", new { divisionId = Model.Fixtures.First().DivisionId, seasonId = Model.Fixtures.First().SeasonId, week = Model.Fixtures.First().Week })
                     }
                 </td>
             </tr>
-            if (item.Completed)
-            {
-                <tr>
-                    <td>
-                        @Component.InvokeAsync("MatchGoalDisplay", new { matchId = item.Id, teamId = item.HomeTeamId }).Result
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        @Component.InvokeAsync("MatchGoalDisplay", new { matchId = item.Id, teamId = item.AwayTeamId }).Result
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        @Component.InvokeAsync("MatchCardsDisplay", new { matchId = item.Id, teamId = item.HomeTeamId }).Result
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        @Component.InvokeAsync("MatchCardsDisplay", new { matchId = item.Id, teamId = item.AwayTeamId }).Result
-                    </td>
-                    <td></td>
-                </tr>
-            }
-        }
-        <tr>
 
-            <td></td>
-            <td></td>
-            <td></td>
-
-            <td></td>
-            <td>
-                @Html.ActionLink("Play All", "PlayAllMatches", "Match", new { divisionId = Model.First().DivisionId, seasonId = Model.First().SeasonId, week = Model.First().Week })
-            </td>
-        </tr>
-
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}

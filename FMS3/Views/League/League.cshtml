@@ -3,7 +3,7 @@
 <div>
     @Component.InvokeAsync("DivisionName", new { divisionId = Model.First().DivisionId }).Result
 </div>
-<hr/>
+<hr />
 
 <table class="table-bordered table-striped" width="80%">
     <thead>
@@ -44,50 +44,52 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    <tr>
+        @foreach (var item in Model)
+        {
+            <tr>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Position)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
 
-        <td>
-            @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
-        </td>
+                <td>
+                    @await Component.InvokeAsync("TeamName", new { teamId = item.TeamId })
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Played)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Won)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Drawn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GoalsFor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GoalsAgainst)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GoalDifference)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Points)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Played)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Won)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Drawn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoalsFor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoalsAgainst)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoalDifference)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Points)
+                </td>
 
-    </tr>
-    if (item.Position == 2 || item.Position == 10)
-    {
-        //show Pro-Rel dividers
-    }
-}
+            </tr>
+            if (item.Position == 2 || item.Position == 10)
+            {
+                //show Pro-Rel dividers
+            }
+        }
     </tbody>
 </table>
+<hr />
 <div>
-    <a asp-action="Index">Back</a>
+    <a asp-action="Index" asp-controller="Game">Back to Game Home</a>
 </div>

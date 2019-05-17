@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FMS3.Data.Cache;
 using FMS3.Data.Interfaces;
 using FMS3.Models;
@@ -27,23 +28,38 @@ namespace FMS3.Controllers
         public IActionResult Index()
         {
             var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
-            var fixtureInfo = new FixtureInfo(game.CurrentWeek);
+
+            return WeeklyFixtures(new FixtureInfo { SelectedWeek = game.CurrentWeek.ToString() });
+        }
+
+        public IActionResult ThisWeeksFixtures()
+        {
+            var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
+
+            var fixtureInfo = new FixtureInfo
+            {
+                CurrentWeek = game.CurrentWeek,
+                SelectedWeek = game.CurrentWeek.ToString()
+            };
+            return WeeklyFixtures(fixtureInfo);
+        }
+        public IActionResult WeeklyFixtures(FixtureInfo fixtureInfo)
+        {
+            var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
+            fixtureInfo.Week = Int32.Parse(fixtureInfo.SelectedWeek);
+            fixtureInfo.CurrentWeek = game.CurrentWeek;
             for (var index = 1; index <= GameCache.NumberOfWeeksInSeason; index++)
             {
-                fixtureInfo.WeekList.Add(new SelectListItem("Week " + index, index.ToString()));
+                fixtureInfo.WeekList.Add(new SelectListItem("Week " + index, index.ToString(), index == fixtureInfo.Week));
             }
-
             return View("Index", fixtureInfo);
         }
 
-        public IActionResult WeeklyFixtures(int week)
+        public IActionResult TeamFixtures(int teamId, int divisionId = 0)
         {
-            var fixtureInfo = new FixtureInfo(week);
-            for (var index = 1; index <= GameCache.NumberOfWeeksInSeason; index++)
-            {
-                fixtureInfo.WeekList.Add(new SelectListItem("Week " + index, index.ToString(), index == week));
-            }
-            return View("Index", fixtureInfo);
+            var matches = _matchData.GetAllMatches(divisionId, -1).Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId);
+
+            return View("Matches", matches);
         }
 
         public IActionResult PlayMatch(int id)

@@ -45,6 +45,20 @@
             @Component.InvokeAsync("InjuryStatus", new { injuredWeeks = Model.InjuredWeeks }).Result
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.SuspendedWeeks)
+        </dt>
+        <dd>
+            @if (Model.SuspendedWeeks > 0)
+            {
+                <span>@Model.SuspendedWeeks Weeks</span>
+            }
+            else
+            {
+                <span>None</span>
+            }
+        </dd>
+
     </dl>
 </div>
 
@@ -58,5 +72,7 @@
 </div>
 <hr />
 <div>
-    @Html.ActionLink("Back", "TeamDetails", "Team", new { id = Model.TeamId })
+    @Html.ActionLink("Back To Team", "TeamDetails", "Team", new { id = Model.TeamId })
+    <br/>
+    @Html.ActionLink("Back To Game Home", "Index", "Game")
 </div>

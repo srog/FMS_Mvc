@@ -40,7 +40,7 @@
             This Week's Fixture: @await Component.InvokeAsync("ThisWeeksFixture")
         </div>
         <br />
-        (All Fixtures/Results)
+        @Html.ActionLink("All Teams Fixtures/Results", "TeamFixtures", "Match", new { teamId = Model.TeamId })
         <hr />
         <div>
             @await Component.InvokeAsync("LatestNews")
@@ -53,13 +53,14 @@
 {
     <hr />
     <div>
-        @if (Model.CanAdvanceWeek)
+        @*@if (Model.CanAdvanceWeek)*@
         {
             @Html.ActionLink("Advance Week", "AdvanceWeek", "Game")
         }
-        else
+        @*else*@
         {
-            @Html.ActionLink("Go to Fixtures", "WeeklyFixtures", "Match", new { week = Model.CurrentWeek })
+            <br />
+            @Html.ActionLink("Go to Fixtures", "ThisWeeksFixtures", "Match")
         }
     </div>
 }

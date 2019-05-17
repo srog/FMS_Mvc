@@ -3,29 +3,25 @@
     ViewData["Title"] = "Fixtures";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm("WeeklyFixtures", "Match", FormMethod.Post))
+{
+    <h2>Fixtures For Week @Model.Week</h2>
+    <br />
+    @Html.DropDownListFor(m => m.SelectedWeek, Model.WeekList)
 
-<h2>Fixtures For Week @Model.Week</h2>
-<br />
-@Html.DropDownList("week", Model.WeekList)
-@Html.ActionLink("Show", "WeeklyFixtures", "Match")
+    <input name="Show" type="submit" value="Show" />
 
-<hr />
-@await Component.InvokeAsync("DivisionName", new { divisionId = 1 })
-<hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 1, week = Model.Week })
-<hr />
-@await Component.InvokeAsync("DivisionName", new { divisionId = 2 })
-<hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 2, week = Model.Week })
-<hr />
-@await Component.InvokeAsync("DivisionName", new { divisionId = 3 })
-<hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 3, week = Model.Week })
-<hr />
-@await Component.InvokeAsync("DivisionName", new { divisionId = 4 })
-<hr />
-@await Component.InvokeAsync("FixtureList", new { divisionId = 4, week = Model.Week })
+    <hr />
 
+    <hr />
+    @await Component.InvokeAsync("FixtureList", new { divisionId = 1, week = Int32.Parse(Model.SelectedWeek) })
+    @await Component.InvokeAsync("FixtureList", new { divisionId = 2, week = Int32.Parse(Model.SelectedWeek) })
+    @await Component.InvokeAsync("FixtureList", new { divisionId = 3, week = Int32.Parse(Model.SelectedWeek) })
+    @await Component.InvokeAsync("FixtureList", new { divisionId = 4, week = Int32.Parse(Model.SelectedWeek) })
 
-
+    <hr />
+    <div>
+        <a asp-action="Index" asp-controller="Game">Back to Game Home</a>
+    </div>
+}
 

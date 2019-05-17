@@ -39,7 +39,7 @@ namespace FMS3.Data.API
             {
                 paramList.Add("divisionId", divisionId);
 
-                if (week > 0)
+                if (week >= 0)
                 {
                     paramList.Add("week", week);
                 }
@@ -78,7 +78,7 @@ namespace FMS3.Data.API
         {
             var matches = GetAllMatches(divisionId, week);
 
-            return matches.First(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId);
+            return matches.Count() == 0 ? null : matches.First(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId);
         }
 
         public int AddMatch(Match match)

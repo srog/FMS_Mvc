@@ -1,5 +1,4 @@
-﻿using FMS3.Data;
-using FMS3.Data.Cache;
+﻿using FMS3.Data.Cache;
 using FMS3.Data.Interfaces;
 using FMS3.Models;
 using Microsoft.AspNetCore.Mvc;

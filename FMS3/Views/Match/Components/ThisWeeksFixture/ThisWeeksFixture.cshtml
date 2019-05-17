@@ -1,5 +1,11 @@
 ﻿@model Match
 
+@if (Model == null)
+{
+    <span>No match this week!</span>
+}
+else
+{
 <table class="table-bordered" width="50%">
     <thead>
         <tr>
@@ -19,10 +25,12 @@
                 @await Component.InvokeAsync("TeamName", new { teamId = Model.HomeTeamId })
             </td>
             <td>
-                @if (Model.Completed) { <span> @Model.HomeTeamScore </span> }
+                @if (Model.Completed)
+                { <span> @Model.HomeTeamScore </span> }
             </td>
             <td>
-                @if (Model.Completed) { <span> @Model.AwayTeamScore </span> }
+                @if (Model.Completed)
+                { <span> @Model.AwayTeamScore </span> }
             </td>
             <td>
                 @await Component.InvokeAsync("TeamName", new { teamId = Model.AwayTeamId })
@@ -40,3 +48,4 @@
         </tr>
     </tbody>
 </table>
+}

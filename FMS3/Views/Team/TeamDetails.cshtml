@@ -36,7 +36,7 @@ Recent Form:
     This Week's Fixture: @await Component.InvokeAsync("ThisWeeksFixture")
 </div>
 <br />
-        (All Fixtures/Results)
+@Html.ActionLink("All Team's Fixtures/Results", "TeamFixtures", "Match", new { teamId = Model.Id, divisionId = Model.DivisionId })
 <hr />
 News:
 <br />

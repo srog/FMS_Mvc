@@ -7,6 +7,13 @@
 
 <h2>Match Details</h2>
 <br />
+@await Component.InvokeAsync("DivisionName", new { divisionId = Model.Match.DivisionId })
+<br />  
+Week: @Model.Match.Week
+<hr />
+
+
+
 Result:
 <br />
 @Component.InvokeAsync("TeamName", new { teamId = Model.Match.HomeTeamId }).Result : @Model.Match.HomeTeamScore
@@ -38,28 +45,28 @@ Attendance: @Model.Match.Attendance
     <tbody>
         @foreach (var item in Model.Goals)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Minute)
-            </td>
-            <td>
-                @Component.InvokeAsync("TeamName", new { teamId = item.TeamId }).Result
-            </td>
-            <td>
-                @Component.InvokeAsync("PlayerName", new { playerId = item.PlayerId }).Result
-            </td>
-            <td>
-                @if (item.AssistPlayerId == 0)
-                {
-                    <span>(None)</span>
-                }
-                else
-                {
-                    @Component.InvokeAsync("PlayerName", new { playerId = item.AssistPlayerId }).Result
-                }
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Minute)
+                </td>
+                <td>
+                    @Component.InvokeAsync("TeamName", new { teamId = item.TeamId }).Result
+                </td>
+                <td>
+                    @Component.InvokeAsync("PlayerName", new { playerId = item.PlayerId }).Result
+                </td>
+                <td>
+                    @if (item.AssistPlayerId == 0)
+                    {
+                        <span>(None)</span>
+                    }
+                    else
+                    {
+                        @Component.InvokeAsync("PlayerName", new { playerId = item.AssistPlayerId }).Result
+                    }
+                </td>
 
-        </tr>
+            </tr>
         }
     </tbody>
 </table>
@@ -84,26 +91,30 @@ Events:
     <tbody>
         @foreach (var item in Model.Events)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Minute)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Minute)
+                </td>
 
-            <td>
-                @Enum.GetName(typeof(MatchEventTypesEnum), item.EventType)
-            </td>
+                <td>
+                    @Enum.GetName(typeof(MatchEventTypesEnum), item.EventType)
+                </td>
 
-            <td>
-                @if (item.EventType != MatchEventTypesEnum.Corner.GetHashCode())
-                {
-                    @Component.InvokeAsync("PlayerName", new { playerId = item.PlayerId }).Result
-                }
-                else
-                {
-                    @Component.InvokeAsync("TeamName", new { teamId = item.TeamId }).Result
-                }
-            </td>
-        </tr>
+                <td>
+                    @if (item.EventType != MatchEventTypesEnum.Corner.GetHashCode())
+                    {
+                        @Component.InvokeAsync("PlayerName", new { playerId = item.PlayerId }).Result
+                    }
+                    else
+                    {
+                        @Component.InvokeAsync("TeamName", new { teamId = item.TeamId }).Result
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<br />
+<div>
+    <a asp-action="Index" asp-controller="Game">Back to Game Home</a>
+</div>

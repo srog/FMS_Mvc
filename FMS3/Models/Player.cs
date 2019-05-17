@@ -18,6 +18,8 @@ namespace FMS3.Models
         public bool Retired { get; set; }
         [Display(Name = "Weeks Injured")]
         public int InjuredWeeks { get; set; }
+        [Display(Name = "Suspensions")]
+        public int SuspendedWeeks { get; set; }
         public int GameDetailsId { get; set; }
         public int TeamSelection { get; set; }
         [Display(Name = "Selected?")]
