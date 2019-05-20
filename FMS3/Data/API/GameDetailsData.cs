@@ -12,6 +12,8 @@ namespace FMS3.Data.API
         private readonly string gameDetailsURL = "http://localhost:56822/api/gameDetails";
         private readonly string startNewGameURL = "http://localhost:56822/api/StartNewGame";
         private readonly string formationsURL = "http://localhost:56822/api/Formations";
+        private readonly string advanceWeekURL = "http://localhost:56822/api/AdvanceWeek";
+
 
         public GameDetailsData(IWebApi webApi)
         {
@@ -92,10 +94,24 @@ namespace FMS3.Data.API
         public GameDetails AdvanceWeek()
         {
             var game = GetById(GameCache.GameDetailsId);
-            game.CurrentWeek++;
-            UpdateGameDetails(game);
+            //game.CurrentWeek++;
+            //UpdateGameDetails(game);
+            //return game;
+            var response = _webApi.Put(advanceWeekURL, game);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsAsync<int>().Result;
+            }
+            else
+            {
+                var testerror = response;
+            }
+            game = GetById(GameCache.GameDetailsId);
+
             return game;
         }
+
 
         public GameDetails SetManagerName(string managerName)
         {

@@ -58,6 +58,8 @@ namespace FMS3.Controllers
 
         public IActionResult CompleteSeason()
         {
+            // TODO - _gameDetailsData.AdvanceSeason();
+
             var newYear = _seasonData.CompleteCurrentSeason();
 
             var newSeason = new Season {Completed = false, GameDetailsId = GameCache.GameDetailsId, StartYear = newYear };
