@@ -1,32 +1,33 @@
 ﻿using FMS3.Data.Cache;
-using FMS3.Data.Interfaces;
 using FMS3.Models;
+using FMS3.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class GameController : Controller
     {
-        private IGameDetailsData _gameDetailsData { get; }
-        private ISeasonData _seasonData { get; }
-        private ITeamSeasonData _teamSeasonData { get; }
+        private readonly IGameDetailsService _gameDetailsService;
 
-        public GameController(IGameDetailsData gameDetailsData, ISeasonData seasonData, ITeamSeasonData teamSeasonData)
+        private ISeasonService _seasonService { get; }
+        private ITeamSeasonService _teamSeasonService { get; }
+
+        public GameController(ISeasonService seasonService, ITeamSeasonService teamSeasonService, IGameDetailsService gameDetailsService)
         {
-            _gameDetailsData = gameDetailsData;
-            _seasonData = seasonData;
-            _teamSeasonData = teamSeasonData;
+            _seasonService = seasonService;
+            _teamSeasonService = teamSeasonService;
+            _gameDetailsService = gameDetailsService;
         }
         public IActionResult Start()
         {
-            var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
+            var game = _gameDetailsService.Get(GameCache.GameDetailsId);
 
             return View("Index", game);
         }
                
         public IActionResult LoadGame(int id)
         {
-            var game = _gameDetailsData.GetById(id);
+            var game = _gameDetailsService.Get(id);
             GameCache.GameDetailsId = id;
             GameCache.CurrentSeasonId = game.CurrentSeasonId;
             GameCache.ManagedTeamId = game.TeamId;
@@ -40,19 +41,19 @@ namespace FMS3.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var game = _gameDetailsData.GetById(GameCache.GameDetailsId);
+            var game = _gameDetailsService.Get(GameCache.GameDetailsId);
             return View(game);
         }
 
         public IActionResult BeginSeason()
         {
-            var game = _gameDetailsData.AdvanceWeek();
+            var game = _gameDetailsService.AdvanceWeek();
             return View("Index", game);
         }
 
         public IActionResult AdvanceWeek()
         {
-            var game = _gameDetailsData.AdvanceWeek();
+            var game = _gameDetailsService.AdvanceWeek();
             return View("Index",game);
         }
 
@@ -60,14 +61,14 @@ namespace FMS3.Controllers
         {
             // TODO - _gameDetailsData.AdvanceSeason();
 
-            var newYear = _seasonData.CompleteCurrentSeason();
+            var newYear = _seasonService.CompleteCurrentSeason();
 
             var newSeason = new Season {Completed = false, GameDetailsId = GameCache.GameDetailsId, StartYear = newYear };
-            var newSeasonId = _seasonData.AddSeason(newSeason);
+            var newSeasonId = _seasonService.Add(newSeason);
 
-            _teamSeasonData.PromotionAndRelegation(GameCache.GameDetailsId, GameCache.CurrentSeasonId, newSeasonId);
+            _teamSeasonService.PromotionAndRelegation(newSeasonId);
 
-            var game = _gameDetailsData.SetGameToNewSeason(newSeasonId);
+            var game = _gameDetailsService.SetGameToNewSeason(newSeasonId);
 
             // set globals to new data
             GameCache.CurrentSeasonId = newSeasonId;

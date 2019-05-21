@@ -1,20 +1,19 @@
-﻿using FMS3.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Team.Components.RecentForm
 {
     public class RecentFormViewComponent : ViewComponent
     {
-        private readonly IMatchData _matchData;
-        public RecentFormViewComponent(IMatchData matchData)
+        private readonly IMatchService _matchService;
+        public RecentFormViewComponent(IMatchService matchService)
         {
-            _matchData = matchData;
+            _matchService = matchService;
         }
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
-            var matches = _matchData.GetForm(teamId);
+            var matches = _matchService.GetForm(teamId);
             var displayString = "";
             foreach (var match in matches)
             {

@@ -1,20 +1,20 @@
-﻿using FMS3.Data.Interfaces;
+﻿using FMS3.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class NewsController : Controller
     {
-        private INewsData _newsData { get; }
+        private INewsService _newsService { get; }
 
-        public NewsController(INewsData newsData)
+        public NewsController(INewsService newsService)
         {
-            _newsData = newsData;
+            _newsService = newsService;
         }
 
         public IActionResult Index()
         {
-            var news = _newsData.GetGameNews();
+            var news = _newsService.GetForGame();
             return View("News", news);
         }
     }

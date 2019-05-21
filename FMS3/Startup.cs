@@ -1,6 +1,8 @@
-﻿using FMS3.Data;
-using FMS3.Data.API;
-using FMS3.Data.Interfaces;
+﻿using FMS3.DataAccess.Interfaces;
+using FMS3.DataAccess.Queries;
+using FMS3.Services;
+using FMS3.Services.Interfaces;
+using FMS3.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,19 +37,34 @@ namespace FMS3
                 {
                     o.ViewLocationFormats.Add("Views/Match/{0}.cshtml");
                 });
+            
+            services.AddDbContext<FmsDbContext>();
+            services.AddTransient<IMatchQuery, MatchQuery>();
+            services.AddTransient<IMatchGoalQuery, MatchGoalQuery>();
+            services.AddTransient<IGameDetailsQuery, GameDetailsQuery>();
+            services.AddTransient<INewsQuery, NewsQuery>();
+            services.AddTransient<IPlayerQuery, PlayerQuery>();
+            services.AddTransient<IPlayerAttributeQuery, PlayerAttributeQuery>();
+            services.AddTransient<IPlayerStatsQuery, PlayerStatsQuery>();
+            services.AddTransient<ISeasonQuery, SeasonQuery>();
+            services.AddTransient<ITeamQuery, TeamQuery>();
+            services.AddTransient<ITeamSeasonQuery, TeamSeasonQuery>();
+            services.AddTransient<IMatchGoalQuery, MatchGoalQuery>();
+            services.AddTransient<IMatchEventQuery, MatchEventQuery>();
 
-            services.AddTransient<IWebApi, WebApi>();
-            services.AddTransient<IGameDetailsData, GameDetailsData>();
-            services.AddTransient<INewsData, NewsData>();
-            services.AddTransient<ISeasonData, SeasonData>();
-            services.AddTransient<IMatchData, MatchData>();
-            services.AddTransient<IMatchGoalData, MatchGoalData>();
-            services.AddTransient<IMatchEventData, MatchEventData>();
-            services.AddTransient<IPlayerData, PlayerData>();
-            services.AddTransient<IPlayerStatsData, PlayerStatsData>();
-            services.AddTransient<IPlayerAttributesData, PlayerAttributesData>();
-            services.AddTransient<ITeamSeasonData, TeamSeasonData>();
-            services.AddTransient<ITeamData, TeamData>();
+            services.AddTransient<IPlayerCreatorService, PlayerCreatorService>();
+            services.AddTransient<IPlayerService, PlayerService>();
+            services.AddTransient<IPlayerAttributeService, PlayerAttributeService>();
+            services.AddTransient<IPlayerStatsService, PlayerStatsService>();
+            services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<ITeamSeasonService, TeamSeasonService>();
+            services.AddTransient<IGameDetailsService, GameDetailsService>();
+            services.AddTransient<IFixtureGenerator, FixtureGenerator>();
+            services.AddTransient<ISeasonService, SeasonService>();
+            services.AddTransient<IMatchService, MatchService>();
+            services.AddTransient<IMatchGoalService, MatchGoalService>();
+            services.AddTransient<IMatchEventService, MatchEventService>();
 
         }
 

@@ -154,3 +154,7 @@ D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\News\
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\TeamSummary\TeamSummary.g.cshtml.cs
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Team\Components\TeamNews\TeamNews.g.cshtml.cs
 D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Match\Components\MatchGoalDisplay\MatchGoalDisplay.g.cshtml.cs
+D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Match\Components\MatchCardsDisplay\MatchCardsDisplay.g.cshtml.cs
+D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Match\Components\ThisWeeksFixture\ThisWeeksFixture.g.cshtml.cs
+D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Match\MatchDetail.g.cshtml.cs
+D:\Projects\Projects\FMS3\FMS_Mvc\FMS3\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\PlayerName\PlayerName.g.cshtml.cs

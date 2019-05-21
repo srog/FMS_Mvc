@@ -1,32 +1,32 @@
 ﻿using System.Linq;
-using FMS3.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Match.Components.MatchGoalDisplay
 {
     public class MatchGoalDisplayViewComponent : ViewComponent
     {
-        private IMatchGoalData _matchGoalData { get; }
-        private IPlayerData _playerData { get; }
-        public MatchGoalDisplayViewComponent(IMatchGoalData matchGoalData, IPlayerData playerData)
+        private IMatchGoalService _matchGoalService { get; }
+        private IPlayerService _playerService { get; }
+        public MatchGoalDisplayViewComponent(IMatchGoalService matchGoalService, IPlayerService playerService)
         {
-            _matchGoalData = matchGoalData;
-            _playerData = playerData;
+            _matchGoalService = matchGoalService;
+            _playerService = playerService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int matchId, int teamId)
         {
-            var goals = _matchGoalData.GetAllForMatch(matchId);
+            var goals = _matchGoalService.GetForMatch(matchId);
             var displayString = "";
 
-            if (goals.Count() > 0)
+            if (goals.Count > 0)
             {
                 foreach (var goal in goals)
                 {
                     if (goal.TeamId == teamId)
                     {
-                        displayString += _playerData.GetPlayerShortName(goal.PlayerId) + " (" + goal.Minute + ") ";
+                        displayString += _playerService.GetPlayerShortName(goal.PlayerId) + " (" + goal.Minute + ") ";
                     }
                 }
             }

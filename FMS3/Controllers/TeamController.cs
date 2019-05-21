@@ -1,18 +1,18 @@
 ﻿using FMS3.Data.Cache;
-using FMS3.Data.Interfaces;
 using FMS3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Controllers
 {
     public class TeamController : Controller
     {
-        private ITeamData _teamData { get; }
+        private ITeamService _teamService { get; }
 
-        public TeamController(ITeamData teamData)
+        public TeamController(ITeamService teamService)
         {
-            _teamData = teamData;
+            _teamService = teamService;
         }
 
         public IActionResult Index()
@@ -21,7 +21,7 @@ namespace FMS3.Controllers
             {
                 return View(new List<Team>());
             }
-            var teamList = _teamData.GetAllTeams();
+            var teamList = _teamService.GetTeamsForGame();
             return View(teamList);
         }
 
@@ -31,7 +31,7 @@ namespace FMS3.Controllers
             {
                 return RedirectToAction("TransferMarket", "Player");
             }
-            var team = _teamData.GetTeam(id);
+            var team = _teamService.Get(id);
             return View(team);
         }
 

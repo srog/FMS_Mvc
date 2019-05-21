@@ -1,19 +1,19 @@
-﻿using FMS3.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Shared.Components.TeamSummary
 {
     public class TeamSummaryViewComponent : ViewComponent
     {
-        private ITeamData _teamData { get; }
-        public TeamSummaryViewComponent(ITeamData teamData)
+        private ITeamService _teamService { get; }
+        public TeamSummaryViewComponent(ITeamService teamService)
         {
-            _teamData = teamData;
+            _teamService = teamService;
         }
         public async Task<IViewComponentResult> InvokeAsync(int teamId)
         {
-            var team = _teamData.GetTeam(teamId);
+            var team = _teamService.Get(teamId);
             return View("TeamSummary", team);
         }
     }
