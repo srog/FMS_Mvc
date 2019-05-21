@@ -24,6 +24,8 @@ namespace FMS3.Models
         public int TeamSelection { get; set; }
         [Display(Name = "Selected?")]
         public bool IsSelected => (TeamSelection > 0);
+
+        public bool IsAvailable => (InjuredWeeks == 0) && (SuspendedWeeks == 0);
         public string ShortName => Name.Split(" ")[0][0] + "." + Name.Split(" ")[1];    
     }
 

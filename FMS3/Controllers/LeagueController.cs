@@ -1,15 +1,16 @@
-﻿using FMS3.Data.Interfaces;
+﻿using FMS3.Data.Cache;
+using FMS3.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Controllers
 {
     public class LeagueController : Controller
     {
-        private ITeamSeasonData _teamSeasonData { get; }
+        private ITeamSeasonService _teamSeasonService { get; }
 
-        public LeagueController(ITeamSeasonData teamSeasonData)
+        public LeagueController(ITeamSeasonService teamSeasonService)
         {
-            _teamSeasonData = teamSeasonData;
+            _teamSeasonService = teamSeasonService;
         }
         public IActionResult Index()
         {
@@ -18,7 +19,7 @@ namespace FMS3.Controllers
 
         public IActionResult Division(int id)
         {
-            var teamSeasonList = _teamSeasonData.GetLeague(id);
+            var teamSeasonList = _teamSeasonService.GetByGameAndDivision(GameCache.GameDetailsId, id);
             return View("League", teamSeasonList);
         }
     }

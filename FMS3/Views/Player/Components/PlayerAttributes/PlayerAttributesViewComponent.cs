@@ -1,20 +1,20 @@
-﻿using FMS3.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Player.Components.PlayerAttributes
 {
     public class PlayerAttributesViewComponent : ViewComponent
     {
-        private IPlayerAttributesData _playerAttributesData { get; }
-        public PlayerAttributesViewComponent(IPlayerAttributesData playerAttributesData)
+        private IPlayerAttributeService _playerAttributesService { get; }
+        public PlayerAttributesViewComponent(IPlayerAttributeService playerAttributeService)
         {
-            _playerAttributesData = playerAttributesData;
+            _playerAttributesService = playerAttributeService;
         }
         public async Task<IViewComponentResult> InvokeAsync(int playerId)
         {
-            var attributes = _playerAttributesData.GetPlayerAttributes(playerId).ToList();
+            var attributes = _playerAttributesService.GetByPlayer(playerId).ToList();
 
             return View("PlayerAttributes", attributes);
         }

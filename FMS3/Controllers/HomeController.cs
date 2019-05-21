@@ -2,8 +2,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FMS3.Models;
-using FMS3.Data.Interfaces;
 using FMS3.Data.Cache;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Controllers
 {
@@ -11,22 +11,22 @@ namespace FMS3.Controllers
     {
         private static bool StaticDataLoaded { get; set; }
 
-        private IGameDetailsData _gameDetailsData { get; }
-        private INewsData _newsData {get;}
-        private ITeamData _teamData { get; }
+        private IGameDetailsService _gameDetailsService { get; }
+        private INewsService _newsService {get;}
+        private ITeamService _teamService { get; }
 
-        public HomeController(IGameDetailsData gameDetailsData, INewsData newsData, ITeamData teamData)
+        public HomeController(IGameDetailsService gameDetailsService, INewsService newsService, ITeamService teamService)
         {
-            _gameDetailsData = gameDetailsData;
-            _newsData = newsData;
-            _teamData = teamData;
+            _gameDetailsService = gameDetailsService;
+            _newsService = newsService;
+            _teamService = teamService;
         }
 
         public IActionResult Index()
         {
             if (!StaticDataLoaded)
             {
-                var result = _gameDetailsData.LoadStaticData();
+                var result = _gameDetailsService.LoadStaticData();
                 if (!result)
                 {
                     throw new Exception("Failed to load static data");
@@ -38,25 +38,25 @@ namespace FMS3.Controllers
 
         public IActionResult NewGame()
         {            
-            GameCache.GameDetailsId = _gameDetailsData.StartNewGame();
+            GameCache.GameDetailsId = _gameDetailsService.StartNewGame();
             return View();
         }
 
         public IActionResult LoadGame()
         {
-            var games = _gameDetailsData.GetAll();
+            var games = _gameDetailsService.GetAll();
             return View(games);
         }
 
         public IActionResult SelectManager(string managerName)
         {
-            var game = _gameDetailsData.SetManagerName(managerName);
+            var game = _gameDetailsService.SetManagerName(managerName);
             GameCache.CurrentSeasonId = game.CurrentSeasonId;
            
             //var team = _teamData.GetTeam(game.TeamId);
-            var newsText = managerName + " has become manager of " + _teamData.GetTeamName(game.TeamId);
+            var newsText = managerName + " has become manager of " + _teamService.GetTeamName(game.TeamId);
 
-            _newsData.AddNews(new News
+            _newsService.Add(new News
             {
                 TeamId = game.TeamId,
                 GameDetailsId = game.Id,
@@ -69,7 +69,7 @@ namespace FMS3.Controllers
 
         public IActionResult SelectTeam(int teamId)
         {
-            var game = _gameDetailsData.SetTeam(teamId); 
+            var game = _gameDetailsService.SetTeam(teamId); 
             return View("SelectManager",game);     
         }
 

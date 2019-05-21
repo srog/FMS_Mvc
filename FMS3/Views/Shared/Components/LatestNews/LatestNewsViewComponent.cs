@@ -1,23 +1,22 @@
-﻿using FMS3.Data;
-using FMS3.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Shared.Components.LatestNews
 {
     public class LatestNewsViewComponent : ViewComponent
     {
-        private INewsData _newsData { get; }
+        private INewsService _newsService { get; }
 
-        public LatestNewsViewComponent(INewsData newsData)
+        public LatestNewsViewComponent(INewsService newsService)
         {
-            _newsData = newsData;
+            _newsService = newsService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var newsList = _newsData.GetGameNews().Take(5); // TODO - set this somewhere
+            var newsList = _newsService.GetForGame().Take(5); // TODO - set this somewhere
             return View("LatestNews", newsList);
         }
     }

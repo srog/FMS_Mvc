@@ -1,19 +1,19 @@
-﻿using FMS3.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.ViewComponents
 {
     public class TeamsViewComponent : ViewComponent
     {
-        private ITeamData _teamData { get; }
-        public TeamsViewComponent(ITeamData teamData)
+        private ITeamService _teamService { get; }
+        public TeamsViewComponent(ITeamService teamService)
         {
-            _teamData = teamData;
+            _teamService = teamService;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var teamList = _teamData.GetAllTeams();
+            var teamList = _teamService.GetTeamsForGame();
       
             return View("TeamSelect",teamList);
         }

@@ -1,25 +1,25 @@
-﻿using FMS3.Data.Cache;
-using FMS3.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Match.Components.FixtureList
 {
     public class FixtureListViewComponent : ViewComponent
     {
-        private readonly IMatchData _matchData;
-        private readonly IGameDetailsData _gameDetailsData;
+        private readonly IMatchService _matchService;
+        private readonly IGameDetailsService _gameDetailsService;
 
-        public FixtureListViewComponent(IMatchData matchData, IGameDetailsData gameDetailsData)
+        public FixtureListViewComponent(IMatchService matchService, 
+            IGameDetailsService gameDetailsService)
         {
-            _matchData = matchData;
-            _gameDetailsData = gameDetailsData;
+            _matchService = matchService;
+            _gameDetailsService = gameDetailsService;
         }
         public async Task<IViewComponentResult> InvokeAsync(int divisionId, int week)
         {
             var fixtureList = new Models.FixtureList();
-            fixtureList.Fixtures = _matchData.GetAllMatches(divisionId, week);
-            fixtureList.CurrentWeek = _gameDetailsData.GetById(GameCache.GameDetailsId).CurrentWeek;
+            fixtureList.Fixtures = _matchService.GetAll(new Models.Match { DivisionId = divisionId, Week = week });
+            fixtureList.CurrentWeek = _gameDetailsService.GetCurrentGame().CurrentWeek;
             return View("FixtureList", fixtureList);
         }
     }

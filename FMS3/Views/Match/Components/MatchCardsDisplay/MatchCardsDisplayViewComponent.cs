@@ -1,23 +1,23 @@
 ﻿using System.Threading.Tasks;
-using FMS3.Data.Interfaces;
 using FMS3.Enums;
+using FMS3.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FMS3.Views.Match.Components.MatchCardsDisplay
 {
     public class MatchCardsDisplayViewComponent : ViewComponent
     {
-        private IMatchEventData _matchEventData { get; }
-        private IPlayerData _playerData { get; }
-        public MatchCardsDisplayViewComponent(IMatchEventData matchEventData, IPlayerData playerData)
+        private IMatchEventService _matchEventService { get; }
+        private IPlayerService _playerService { get; }
+        public MatchCardsDisplayViewComponent(IMatchEventService matchEventService, IPlayerService playerService)
         {
-            _matchEventData = matchEventData;
-            _playerData = playerData;
+            _matchEventService = matchEventService;
+            _playerService = playerService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int matchId, int teamId)
         {
-            var matchEvents = _matchEventData.GetAllForMatch(matchId);
+            var matchEvents = _matchEventService.GetForMatch(matchId);
             var displayString = "";
             var yellows = 0;
 
@@ -29,7 +29,7 @@ namespace FMS3.Views.Match.Components.MatchCardsDisplay
                 }
                 if (matchEvent.EventType == MatchEventTypesEnum.RedCard.GetHashCode() && matchEvent.TeamId == teamId)
                 {
-                    displayString += "RED:" + _playerData.GetPlayerShortName(matchEvent.PlayerId) + " (" + matchEvent.Minute + "). ";
+                    displayString += "RED:" + _playerService.GetPlayerShortName(matchEvent.PlayerId) + " (" + matchEvent.Minute + "). ";
                 }
             }
             displayString += (yellows + " Yellow Cards");
