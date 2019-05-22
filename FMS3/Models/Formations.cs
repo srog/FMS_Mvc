@@ -15,4 +15,12 @@ namespace FMS3.Models
         public int Attackers { get; set; }
         
     }
+    public class TeamTemplates
+    {
+        public List<TeamTemplate> Teams { get; set; }
+    }
+    public class TeamTemplate
+    {
+        public string Name { get; set; }
+    }
 }

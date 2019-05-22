@@ -3,6 +3,7 @@ using System.Linq;
 using FMS3.Data.Cache;
 using FMS3.Models;
 using FMS3.Services.Interfaces;
+using FMS3.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -14,22 +15,24 @@ namespace FMS3.Controllers
         private readonly IMatchEventService _matchEventService;
         private readonly IMatchGoalService _matchGoalService;
         private readonly IGameDetailsService _gameDetailsService;
+        private readonly ITeamSeasonService _teamSeasonService;
 
         public MatchController(IMatchService matchService, 
             IMatchEventService matchEventService, 
             IMatchGoalService matchGoalService,
-            IGameDetailsService gameDetailsService)
+            IGameDetailsService gameDetailsService,
+            ITeamSeasonService teamSeasonService)
         {
             _matchService = matchService;
             _matchEventService = matchEventService;
             _matchGoalService = matchGoalService;
             _gameDetailsService = gameDetailsService;
+            _teamSeasonService = teamSeasonService;
         }
         public IActionResult Index()
         {
-            var game = _gameDetailsService.GetCurrentGame();
 
-            return WeeklyFixtures(new FixtureInfo { SelectedWeek = game.CurrentWeek.ToString() });
+            return WeeklyFixtures(new FixtureInfo { SelectedWeek = _gameDetailsService.GetCurrentWeek().ToString() });
         }
 
         public IActionResult ThisWeeksFixtures()
@@ -45,9 +48,8 @@ namespace FMS3.Controllers
         }
         public IActionResult WeeklyFixtures(FixtureInfo fixtureInfo)
         {
-            var game = _gameDetailsService.GetCurrentGame();
             fixtureInfo.Week = Int32.Parse(fixtureInfo.SelectedWeek);
-            fixtureInfo.CurrentWeek = game.CurrentWeek;
+            fixtureInfo.CurrentWeek = _gameDetailsService.GetCurrentWeek();
             for (var index = 1; index <= GameCache.NumberOfWeeksInSeason; index++)
             {
                 fixtureInfo.WeekList.Add(new SelectListItem("Week " + index, index.ToString(), index == fixtureInfo.Week));
@@ -82,8 +84,23 @@ namespace FMS3.Controllers
         public IActionResult PlayAllMatches(int divisionId, int seasonId, int week)
         {
             _matchService.PlayAllMatchesForDivision(seasonId, week, divisionId);
+
+            // Note - assuming everyone plays every week - no need to recalc all if not. 
+            _teamSeasonService.RecalculateAll(seasonId, divisionId);
             return Index();
         }
+
+        public IActionResult PlayAllMatchesForWeek(int seasonId, int week)
+        {
+            _matchService.PlayAllMatchesForWeek(seasonId, week);
+
+            // Note - assuming everyone plays every week - no need to recalc all if not. 
+            4.TimesWithIndex((divisionId) => _teamSeasonService.RecalculateAll(seasonId, divisionId));
+
+            return Index();
+        }
+
+
 
     }
 }

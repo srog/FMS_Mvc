@@ -99,12 +99,18 @@ namespace FMS3.Services
         }
         public List<Player> GetTeamSquad(int teamId)
         {
-            return _playerQuery.GetAll(new Player { TeamId = teamId}).ToList();
+            return _playerQuery.GetAll(new Player { GameDetailsId = GameCache.GameDetailsId, TeamId = teamId})
+                .OrderByDescending(p => p.TeamSelection)
+                .ThenBy(p => p.Position)
+                .ToList();
         }
 
         public List<Player> GetSelectedTeam(int teamId)
         {
-            return _playerQuery.GetAll(new Player { TeamId = teamId }).Where(p => p.IsSelected).ToList();
+            return _playerQuery.GetAll(new Player { GameDetailsId = GameCache.GameDetailsId, TeamId = teamId })
+                .Where(p => p.IsSelected)
+                .OrderBy(p => p.Position)
+                .ToList();
         }
 
         public Player Get(int id)
@@ -184,8 +190,10 @@ namespace FMS3.Services
 
         // advance injuries and suspensions. Recalculate team selections.
         // TODO - training, recalculate ratings, values
-        public int AdvanceWeek(GameDetails gameDetails)
+        public int AdvanceWeek()
         {
+            var gameDetails = _gameDetailsService.GetCurrentGame();
+
             var teamsChangedList = new List<int>();
             var injuredPlayerList = GetAllPlayersInGame().Where(p => p.InjuredWeeks > 0);
             foreach (var player in injuredPlayerList)
@@ -222,7 +230,7 @@ namespace FMS3.Services
         {
             if (!SquadCache.ContainsKey(teamId))
             {
-                var players = GetSelectedTeam(teamId);
+                var players = GetTeamSquad(teamId);
                 SquadCache.Add(teamId, players.Select(p => p.Id).ToList());
             }
             var playerList = SquadCache.GetValueOrDefault(teamId);

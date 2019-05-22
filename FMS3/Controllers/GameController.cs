@@ -9,14 +9,20 @@ namespace FMS3.Controllers
     {
         private readonly IGameDetailsService _gameDetailsService;
 
+        private readonly IPlayerService _playerService;
+
         private ISeasonService _seasonService { get; }
         private ITeamSeasonService _teamSeasonService { get; }
 
-        public GameController(ISeasonService seasonService, ITeamSeasonService teamSeasonService, IGameDetailsService gameDetailsService)
+        public GameController(ISeasonService seasonService, 
+            ITeamSeasonService teamSeasonService, 
+            IGameDetailsService gameDetailsService,
+            IPlayerService playerService)
         {
             _seasonService = seasonService;
             _teamSeasonService = teamSeasonService;
             _gameDetailsService = gameDetailsService;
+            _playerService = playerService;
         }
         public IActionResult Start()
         {
@@ -54,6 +60,7 @@ namespace FMS3.Controllers
         public IActionResult AdvanceWeek()
         {
             var game = _gameDetailsService.AdvanceWeek();
+            _playerService.AdvanceWeek();
             return View("Index",game);
         }
 

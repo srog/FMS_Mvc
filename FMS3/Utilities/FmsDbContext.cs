@@ -6,7 +6,7 @@ namespace FMS3.Utilities
 {
     public class FmsDbContext : DbContext
     {
-        private readonly string _connectionString = "server=(localdb)\\MSSQLLocalDB; Integrated Security=True; database=FMS";
+        private readonly string _connectionString = "server=MSI\\SQLEXPRESS; Integrated Security=True; database=FMS";
         public IDbConnection Connection;
 
         public FmsDbContext()

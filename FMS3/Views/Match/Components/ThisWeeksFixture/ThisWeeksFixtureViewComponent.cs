@@ -7,15 +7,18 @@ namespace FMS3.Views.Match.Components.ThisWeeksFixture
     public class ThisWeeksFixtureViewComponent : ViewComponent
     {
         private readonly IMatchService _matchService;
+        private readonly IGameDetailsService _gameDetailsService;
 
-        public ThisWeeksFixtureViewComponent(IMatchService matchService)
+        public ThisWeeksFixtureViewComponent(IMatchService matchService, IGameDetailsService gameDetailsService)
         {
             _matchService = matchService;
+            _gameDetailsService = gameDetailsService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var match = _matchService.GetThisWeeksForManagedTeam();
+            var week = _gameDetailsService.GetCurrentWeek();
+            var match = _matchService.GetThisWeeksForManagedTeam(week);
             
             return View("ThisWeeksFixture", match);
         }

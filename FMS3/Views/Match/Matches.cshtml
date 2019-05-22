@@ -16,12 +16,12 @@
                 Week
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HomeTeamId)
+                @Html.DisplayNameFor(model => model.HomeTeamId.Value)
             </th>
             <th width="20px"></th>
             <th width="40px"></th>
             <th>
-                @Html.DisplayNameFor(model => model.AwayTeamId)
+                @Html.DisplayNameFor(model => model.AwayTeamId.Value)
             </th>
             <th>Attendance</th>
             <th></th>
@@ -38,7 +38,7 @@
                     @Component.InvokeAsync("TeamName", new { teamId = item.HomeTeamId }).Result
                 </td>
                 <td>
-                    @if (item.Completed)
+                    @if (item.Completed.Value)
                     {
                         @Html.DisplayFor(modelItem => item.HomeTeamScore)
                     }
@@ -46,7 +46,7 @@
                 </td>
                 <td>
                     :
-                    @if (item.Completed)
+                    @if (item.Completed.Value)
                     {
                         @Html.DisplayFor(modelItem => item.AwayTeamScore)
                     }
@@ -62,13 +62,13 @@
                     }
                 </td>
                 <td>
-                    @if (item.Completed)
+                    @if (item.Completed.Value)
                     {
                         @Html.ActionLink("Details", "MatchDetail", "Match", new { id = item.Id })
                     }
                 </td>
             </tr>
-            if (item.Completed)
+            if (item.Completed.Value)
             {
                 <tr>
                     <td></td>

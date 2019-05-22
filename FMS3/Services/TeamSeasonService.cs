@@ -34,7 +34,8 @@ namespace FMS3.Services
 
         public List<TeamSeason> GetByGameAndDivision(int gameDetailsId, int divisionId)
         {
-            return _teamSeasonQuery.GetByGameAndDivision(gameDetailsId, divisionId).ToList();
+            return _teamSeasonQuery.GetByGameAndDivision(gameDetailsId, divisionId)
+                .OrderBy(ts => ts.Position).ToList();
         }
 
         public List<TeamSeason> GetByGameSeasonAndDivision(int gameDetailsId, int divisionId, int seasonId)

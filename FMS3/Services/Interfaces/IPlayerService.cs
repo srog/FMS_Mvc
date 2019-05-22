@@ -20,7 +20,7 @@ namespace FMS3.Services.Interfaces
         void SetTeamSelection(Team team);
         int Retire(int id);
         int AdvanceSeason(int gameDetailsId);
-        int AdvanceWeek(GameDetails gameDetails);
+        int AdvanceWeek();
         void Delete(int gameDetailsId);
     }
 }

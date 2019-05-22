@@ -18,8 +18,15 @@ namespace FMS3.Views.Match.Components.FixtureList
         public async Task<IViewComponentResult> InvokeAsync(int divisionId, int week)
         {
             var fixtureList = new Models.FixtureList();
-            fixtureList.Fixtures = _matchService.GetAll(new Models.Match { DivisionId = divisionId, Week = week });
-            fixtureList.CurrentWeek = _gameDetailsService.GetCurrentGame().CurrentWeek;
+            var game = _gameDetailsService.GetCurrentGame();
+            fixtureList.Fixtures = _matchService.GetAll(new Models.Match
+                {
+                    GameDetailsId = game.Id,
+                    SeasonId = game.CurrentSeasonId,
+                    DivisionId = divisionId,
+                    Week = week
+                });
+            fixtureList.CurrentWeek = game.CurrentWeek;
             return View("FixtureList", fixtureList);
         }
     }

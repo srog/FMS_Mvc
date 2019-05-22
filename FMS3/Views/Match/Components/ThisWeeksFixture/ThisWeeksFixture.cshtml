@@ -22,21 +22,21 @@ else
     <tbody>
         <tr>
             <td>
-                @await Component.InvokeAsync("TeamName", new { teamId = Model.HomeTeamId })
+                @await Component.InvokeAsync("TeamName", new { teamId = Model.HomeTeamId.Value })
             </td>
             <td>
-                @if (Model.Completed)
+                @if (Model.Completed.Value)
                 { <span> @Model.HomeTeamScore </span> }
             </td>
             <td>
-                @if (Model.Completed)
+                @if (Model.Completed.Value)
                 { <span> @Model.AwayTeamScore </span> }
             </td>
             <td>
                 @await Component.InvokeAsync("TeamName", new { teamId = Model.AwayTeamId })
             </td>
             <td>
-                @if (Model.Completed)
+                @if (Model.Completed.Value)
                 {
                     @Html.ActionLink("Details", "MatchDetail", "Match", new { id = @Model.Id })
                 }

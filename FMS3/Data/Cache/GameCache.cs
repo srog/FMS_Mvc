@@ -17,7 +17,7 @@ namespace FMS3.Data.Cache
         public static int CurrentSeasonId { get; set; }
         public static int ManagedTeamId { get; set; }
         public static Formations Formations { get; set; }
-        public static List<string> TeamTemplates { get; set; }
+        public static TeamTemplates TeamTemplates { get; set; }
     }
 
 }

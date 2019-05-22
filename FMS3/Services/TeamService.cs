@@ -63,7 +63,7 @@ namespace FMS3.Services
                             GameDetailsId = gameId,
                             Cash = cash,
                             FormationId = Utilities.Utilities.GetRandomNumber(1, 5),
-                            Name = GameCache.TeamTemplates[(division - 1) * numberOfTeamsInDivision + (teamIndex - 1)],
+                            Name = GameCache.TeamTemplates.Teams[(division - 1) * numberOfTeamsInDivision + (teamIndex - 1)].Name,
                             YearFormed = Utilities.Utilities.GetRandomNumber(1870, 1950),
                             StadiumCapacity = stadiumCapacity
                     };

@@ -12,14 +12,22 @@ namespace FMS3.Controllers
         private static bool StaticDataLoaded { get; set; }
 
         private IGameDetailsService _gameDetailsService { get; }
+        private readonly ITeamSeasonService _teamSeasonService;
+        private readonly IPlayerCreatorService _playerCreatorService;
         private INewsService _newsService {get;}
         private ITeamService _teamService { get; }
 
-        public HomeController(IGameDetailsService gameDetailsService, INewsService newsService, ITeamService teamService)
+        public HomeController(IGameDetailsService gameDetailsService, 
+            INewsService newsService, 
+            ITeamService teamService,
+            ITeamSeasonService teamSeasonService,
+            IPlayerCreatorService playerCreatorService)
         {
             _gameDetailsService = gameDetailsService;
             _newsService = newsService;
             _teamService = teamService;
+            _teamSeasonService = teamSeasonService;
+            _playerCreatorService = playerCreatorService;
         }
 
         public IActionResult Index()
@@ -38,7 +46,14 @@ namespace FMS3.Controllers
 
         public IActionResult NewGame()
         {            
-            GameCache.GameDetailsId = _gameDetailsService.StartNewGame();
+            var game = _gameDetailsService.StartNewGame();
+            GameCache.GameDetailsId = game.Id;
+
+            _teamService.CreateAllTeamsForGame(game.Id);
+            var teamList = _teamService.GetTeamsForGame();
+            _teamSeasonService.CreateForNewGame(teamList, game.CurrentSeasonId, game.Id);
+            _playerCreatorService.CreateAllPlayersForGame(teamList);
+
             return View();
         }
 

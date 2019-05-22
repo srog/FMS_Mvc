@@ -18,8 +18,6 @@ namespace FMS3.Services
         private readonly IPlayerStatsService _playerStatsService;
         private readonly INewsService _newsService;
         private readonly ITeamService _teamService;
-        private readonly ITeamSeasonService _teamSeasonService;
-        private readonly IGameDetailsService _gameDetailsService;
 
 
         public MatchService(IPlayerService playerService, 
@@ -28,9 +26,7 @@ namespace FMS3.Services
             IMatchEventService matchEventService,
             IPlayerStatsService playerStatsService,
             INewsService newsService,
-            ITeamService teamService,
-            ITeamSeasonService teamSeasonService,
-            IGameDetailsService gameDetailsService)
+            ITeamService teamService)
         {
             _matchGoalService = matchGoalService;
             _playerService = playerService;
@@ -39,8 +35,6 @@ namespace FMS3.Services
             _matchEventService = matchEventService;
             _newsService = newsService;
             _teamService = teamService;
-            _teamSeasonService = teamSeasonService;
-            _gameDetailsService = gameDetailsService;
         }
         #region Implementation of IMatchService
 
@@ -53,6 +47,7 @@ namespace FMS3.Services
         {
             var matchFilter = new Match
                 {
+                    GameDetailsId = GameCache.GameDetailsId,
                     SeasonId = seasonId,
                     Week = week,
                     DivisionId = divisionId
@@ -64,21 +59,19 @@ namespace FMS3.Services
                 PlayMatch(match.Id);
             }
 
-            // Note - assuming everyone plays every week - no need to recalc all if not. 
-            _teamSeasonService.RecalculateAll(seasonId, divisionId);
         }
 
         // Primitive
         public Match PlayMatch(int id)
         {
             var match = Get(id);
-            if (match.Completed)
+            if (match.Completed.Value)
             {
                 return null;
             }
 
             // Set attendance
-            var maxAttendance = _teamService.Get(match.HomeTeamId).StadiumCapacity;
+            var maxAttendance = _teamService.Get(match.HomeTeamId.Value).StadiumCapacity;
 
             match.Attendance = Utilities.Utilities.GetRandomNumber(maxAttendance / 3, maxAttendance);
 
@@ -88,11 +81,11 @@ namespace FMS3.Services
 
             for (var goalIndex = 1; goalIndex <= match.HomeTeamScore; goalIndex++)
             {
-                CreateGoalRecord(match.Id, match.HomeTeamId);
+                CreateGoalRecord(match.Id, match.HomeTeamId.Value);
             }
             for (var goalIndex = 1; goalIndex <= match.AwayTeamScore; goalIndex++)
             {
-                CreateGoalRecord(match.Id, match.AwayTeamId);
+                CreateGoalRecord(match.Id, match.AwayTeamId.Value);
             }
 
             // Events
@@ -110,34 +103,34 @@ namespace FMS3.Services
 
             for (var index = 1; index < homeRed; index++)
             {
-                CreateMatchEvent(match, match.HomeTeamId, MatchEventTypesEnum.RedCard);
+                CreateMatchEvent(match, match.HomeTeamId.Value, MatchEventTypesEnum.RedCard);
             }
             for (var index = 1; index < awayRed; index++)
             {
-                CreateMatchEvent(match, match.AwayTeamId, MatchEventTypesEnum.RedCard);
+                CreateMatchEvent(match, match.AwayTeamId.Value, MatchEventTypesEnum.RedCard);
             }
             for (var index = 1; index < homeYellow; index++)
             {
-                CreateMatchEvent(match, match.HomeTeamId, MatchEventTypesEnum.YellowCard);
+                CreateMatchEvent(match, match.HomeTeamId.Value, MatchEventTypesEnum.YellowCard);
             }
             for (var index = 1; index < awayYellow; index++)
             {
-                CreateMatchEvent(match, match.AwayTeamId, MatchEventTypesEnum.YellowCard);
+                CreateMatchEvent(match, match.AwayTeamId.Value, MatchEventTypesEnum.YellowCard);
             }
             for (var index = 1; index < homeCorners; index++)
             {
-                CreateMatchEvent(match, match.HomeTeamId, MatchEventTypesEnum.Corner);
+                CreateMatchEvent(match, match.HomeTeamId.Value, MatchEventTypesEnum.Corner);
             }
             for (var index = 1; index < awayCorners; index++)
             {
-                CreateMatchEvent(match, match.AwayTeamId, MatchEventTypesEnum.Corner);
+                CreateMatchEvent(match, match.AwayTeamId.Value, MatchEventTypesEnum.Corner);
             }
 
             match.Completed = true;
             Update(match);
 
-            UpdatePlayerGameStats(match.HomeTeamId, match.AwayTeamScore == 0);
-            UpdatePlayerGameStats(match.AwayTeamId, match.HomeTeamScore == 0);
+            UpdatePlayerGameStats(match.HomeTeamId.Value, match.AwayTeamScore == 0);
+            UpdatePlayerGameStats(match.AwayTeamId.Value, match.HomeTeamScore == 0);
 
             UpdatePlayerSuspensions(match);
             UpdatePlayerInjuries(match);
@@ -160,7 +153,7 @@ namespace FMS3.Services
                 var numInjuries = Utilities.Utilities.GetRandomNumber(0, injuryQuotient / 30);
                 for (var index = 1; index <= numInjuries; index++)
                 {
-                    var teamId = Utilities.Utilities.GetRandomNumber(1, 20) > 10 ? match.HomeTeamId : match.AwayTeamId;
+                    var teamId = Utilities.Utilities.GetRandomNumber(1, 20) > 10 ? match.HomeTeamId.Value : match.AwayTeamId.Value;
                     var playerId = _playerService.GetRandomPlayerFromTeam(teamId, true, false, false);
                     var weeks = Utilities.Utilities.GetRandomNumber(1, 10);
 
@@ -171,13 +164,13 @@ namespace FMS3.Services
                     
                     var news = new News
                         {
-                            GameDetailsId = match.GameDetailsId,
-                            DivisionId = match.DivisionId,
-                            //PlayerId = player.Id,
-                            SeasonId = match.SeasonId,
+                            GameDetailsId = match.GameDetailsId.Value,
+                            DivisionId = match.DivisionId.Value,
+                            PlayerId = player.Id,
+                            SeasonId = match.SeasonId.Value,
                             TeamId = teamId,
-                            Week = match.Week
-                        };
+                            Week = match.Week.Value
+                    };
                     _newsService.CreateInjuredNewsItem(new PlayerNews
                         {
                             News = news,
@@ -218,13 +211,13 @@ namespace FMS3.Services
 
                 var news = new News
                     {
-                        GameDetailsId = match.GameDetailsId,
-                        DivisionId = match.DivisionId,
-                        //PlayerId = player.Id,
-                        SeasonId = match.SeasonId,
+                        GameDetailsId = match.GameDetailsId.Value,
+                        DivisionId = match.DivisionId.Value,
+                        PlayerId = player.Id,
+                        SeasonId = match.SeasonId.Value,
                         TeamId = teamId,
-                        Week = match.Week
-                    };
+                        Week = match.Week.Value
+                };
 
                 _newsService.CreateSuspendedNewsItem(new PlayerNews
                 {
@@ -261,14 +254,13 @@ namespace FMS3.Services
             return _matchQuery.GetAll(match).ToList();
         }
 
-        public Match GetThisWeeksForManagedTeam()
+        public Match GetThisWeeksForManagedTeam(int week)
         {
-            var game = _gameDetailsService.GetCurrentGame();
             var teamId = GameCache.ManagedTeamId;
             var matchFilter = new Match
                 {
                     GameDetailsId = GameCache.GameDetailsId,
-                    Week = game.CurrentWeek,
+                    Week = week,
                     SeasonId = GameCache.CurrentSeasonId
                 };
             var matches = GetAll(matchFilter)
