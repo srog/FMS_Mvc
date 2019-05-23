@@ -4,7 +4,7 @@ using FMS3.Models;
 
 namespace FMS3.DataAccess.Queries
 {
-    public class GameDetailsQuery : Query, IGameDetailsQuery
+    public class GameDetailsQuery : IGameDetailsQuery
     {
         private const string GET_ALL = "spGetAllGameDetails";
         private const string GET = "spGetGameDetailsById";
@@ -12,28 +12,42 @@ namespace FMS3.DataAccess.Queries
         private const string UPDATE = "spUpdateGameDetails";
         private const string DELETE = "spDeleteGameDetails";
 
+        private readonly IQuery _query;
+        public GameDetailsQuery(IQuery query)
+        {
+            _query = query;
+        }
+
+
         public IEnumerable<GameDetails> GetAll()
         {
-            return GetAll<GameDetails>(GET_ALL);
+            return _query.GetAll<GameDetails>(GET_ALL);
         }
         public GameDetails Get(int id)
         {
-            return GetSingle<GameDetails>(GET, id);
+            return _query.GetSingle<GameDetails>(GET, id);
         }
         public int Insert(GameDetails gameDetails)
         {
-            return Add(INSERT, new Dictionary<string, object>
+            return _query.Add(INSERT, new Dictionary<string, object>
                 {
                     { "managerName", gameDetails.ManagerName }
                 });
         }
         public int Update(GameDetails gameDetails)
         {
-            return Update(UPDATE, new { gameDetails.Id, gameDetails.ManagerName, gameDetails.CurrentSeasonId, gameDetails.TeamId, gameDetails.CurrentWeek });
+            return _query.Update(UPDATE, new
+                {
+                    gameDetails.Id,
+                    gameDetails.ManagerName,
+                    gameDetails.CurrentSeasonId,
+                    gameDetails.TeamId,
+                    gameDetails.CurrentWeek
+                });
         }
         public int Delete(int id)
         {
-            return Delete(DELETE, id);
+            return _query.Delete(DELETE, id);
         }
 
     }

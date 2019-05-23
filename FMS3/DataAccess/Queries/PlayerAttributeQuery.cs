@@ -4,26 +4,32 @@ using FMS3.Models;
 
 namespace FMS3.DataAccess.Queries
 {
-    public class PlayerAttributeQuery : Query, IPlayerAttributeQuery
+    public class PlayerAttributeQuery : IPlayerAttributeQuery
     {
         private const string GET = "spGetPlayerAttribute";
         private const string GET_FOR_PLAYER = "spGetPlayerAttributes";
         private const string INSERT = "spInsertPlayerAttribute";
         private const string UPDATE = "spUpdatePlayerAttribute";
 
+        private readonly IQuery _query;
+        public PlayerAttributeQuery(IQuery query)
+        {
+            _query = query;
+        }
+
         public IEnumerable<PlayerAttribute> GetByPlayer(int playerId)
         {
-            return GetAllById<PlayerAttribute>(GET_FOR_PLAYER, "playerId", playerId);
+            return _query.GetAllById<PlayerAttribute>(GET_FOR_PLAYER, "playerId", playerId);
         }
 
         public PlayerAttribute Get(int id)
         {
-            return GetSingle<PlayerAttribute>(GET, id);
+            return _query.GetSingle<PlayerAttribute>(GET, id);
         }
 
         public int Add(PlayerAttribute playerAttribute)
         {
-            return Add(INSERT, new Dictionary<string, object>
+            return _query.Add(INSERT, new Dictionary<string, object>
                 {
                     {"playerId", playerAttribute.PlayerId },
                     {"attributeId", playerAttribute.AttributeId },
@@ -34,7 +40,7 @@ namespace FMS3.DataAccess.Queries
         }
         public int Update(PlayerAttribute playerAttribute)
         {
-            return Update(UPDATE, new { playerAttribute.Id, playerAttribute.AttributeValue });
+            return _query.Update(UPDATE, new { playerAttribute.Id, playerAttribute.AttributeValue });
         }
 
         public void Delete(int id)

@@ -1,5 +1,4 @@
 ﻿using FMS3.Data.Cache;
-using FMS3.Models;
 using FMS3.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,20 +8,10 @@ namespace FMS3.Controllers
     {
         private readonly IGameDetailsService _gameDetailsService;
 
-        private readonly IPlayerService _playerService;
-
-        private ISeasonService _seasonService { get; }
-        private ITeamSeasonService _teamSeasonService { get; }
-
-        public GameController(ISeasonService seasonService, 
-            ITeamSeasonService teamSeasonService, 
-            IGameDetailsService gameDetailsService,
-            IPlayerService playerService)
+        public GameController(IGameDetailsService gameDetailsService)
         {
-            _seasonService = seasonService;
-            _teamSeasonService = teamSeasonService;
             _gameDetailsService = gameDetailsService;
-            _playerService = playerService;
+   
         }
         public IActionResult Start()
         {
@@ -33,10 +22,7 @@ namespace FMS3.Controllers
                
         public IActionResult LoadGame(int id)
         {
-            var game = _gameDetailsService.Get(id);
-            GameCache.GameDetailsId = id;
-            GameCache.CurrentSeasonId = game.CurrentSeasonId;
-            GameCache.ManagedTeamId = game.TeamId;
+            var game = _gameDetailsService.LoadGame(id);
             return View("Index", game);
         }
 
@@ -60,26 +46,12 @@ namespace FMS3.Controllers
         public IActionResult AdvanceWeek()
         {
             var game = _gameDetailsService.AdvanceWeek();
-            _playerService.AdvanceWeek();
             return View("Index",game);
         }
 
         public IActionResult CompleteSeason()
         {
-            // TODO - _gameDetailsData.AdvanceSeason();
-
-            var newYear = _seasonService.CompleteCurrentSeason();
-
-            var newSeason = new Season {Completed = false, GameDetailsId = GameCache.GameDetailsId, StartYear = newYear };
-            var newSeasonId = _seasonService.Add(newSeason);
-
-            _teamSeasonService.PromotionAndRelegation(newSeasonId);
-
-            var game = _gameDetailsService.SetGameToNewSeason(newSeasonId);
-
-            // set globals to new data
-            GameCache.CurrentSeasonId = newSeasonId;
-
+            var game = _gameDetailsService.CompleteCurrentSeason();
             return View("Index", game);
         }
     }

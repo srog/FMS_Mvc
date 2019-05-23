@@ -5,6 +5,7 @@ namespace FMS3.DataAccess.Interfaces
 {
     public interface INewsQuery
     {
+        IEnumerable<News> GetAll(); 
         IEnumerable<News> GetAll(News news);
         News Get(int id);
         int Add(News news);

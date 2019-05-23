@@ -10,7 +10,7 @@ namespace FMS3.Services.Interfaces
 
         void PlayAllMatchesForWeek(int seasonId, int week);
         List<Match> GetAll(Match match);
-        Match GetThisWeeksForManagedTeam(int week);
+        Match GetThisWeeksFixture(int teamId);
         IEnumerable<Match> GetForm(int teamId);
         Match Get(int id);
         int Insert(Match match);

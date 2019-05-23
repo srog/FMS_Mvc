@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FMS3.Data.Cache;
 
 namespace FMS3.Models
 {
@@ -14,10 +15,10 @@ namespace FMS3.Models
         [Display(Name = "Current Week")]
         public int CurrentWeek { get; set; }
 
-        public string WeekDisplay => (IsPreSeason ? "Pre-Season" : ( IsPostSeason ? "Post-Season" : CurrentWeek.ToString()));
+        public string WeekDisplay => Utilities.Utilities.GetWeekDisplay(CurrentWeek);
 
         public bool IsPreSeason => (CurrentWeek == 0);
-        public bool IsPostSeason => (CurrentWeek == 23);
-        public bool CanAdvanceWeek { get; set; }
+        public bool IsPostSeason => (CurrentWeek == (GameCache.NumberOfWeeksInSeason + 1));
+        public bool CanAdvanceWeek => !IsPostSeason;
     }
 }

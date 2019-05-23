@@ -1,11 +1,10 @@
 ﻿using FMS3.Models;
 using System.Collections.Generic;
 using FMS3.DataAccess.Interfaces;
-using FMS3.Services.Interfaces;
 
 namespace FMS3.DataAccess.Queries
 {
-    public class TeamSeasonQuery : Query, ITeamSeasonQuery
+    public class TeamSeasonQuery : ITeamSeasonQuery
     {
         private const string GET_ALL = "spGetTeamSeasons";
         private const string GET = "spGetTeamSeasonById";
@@ -14,58 +13,54 @@ namespace FMS3.DataAccess.Queries
         private const string RECALCULATE = "spRecalculateTeamSeason";
         private const string RECALCULATE_POSITIONS = "spRecalculateDivisionPositions";
 
-        private INewsQuery _newsQuery { get; }
-        private ITeamQuery _teamQuery { get; }
-        private IFixtureGenerator _fixtureGenerator { get; }
-        public TeamSeasonQuery(INewsQuery newsQuery, ITeamQuery teamQuery, IFixtureGenerator fixtureGenerator)
+        private readonly IQuery _query;
+        public TeamSeasonQuery(IQuery query)
         {
-            _newsQuery = newsQuery;
-            _teamQuery = teamQuery;
-            _fixtureGenerator = fixtureGenerator;
+            _query = query;
         }
 
         public IEnumerable<TeamSeason> GetByGame(int gameDetailsId)
         {
-            return GetAllById<TeamSeason>(GET_ALL, "gameDetailsId", gameDetailsId);
+            return _query.GetAllById<TeamSeason>(GET_ALL, "gameDetailsId", gameDetailsId);
         }
 
         public IEnumerable<TeamSeason> GetByGameAndDivision(int gameDetailsId, int divisionId)
         {
             var param = new { gameDetailsId, divisionId };
-            return GetAll<TeamSeason>(GET_ALL, param);
+            return _query.GetAll<TeamSeason>(GET_ALL, param);
         }
 
         public IEnumerable<TeamSeason> GetByGameSeasonAndDivision(int gameDetailsId, int divisionId, int seasonId)
         {
             var param = new { gameDetailsId, divisionId, seasonId };
-            return GetAll<TeamSeason>(GET_ALL, param);
+            return _query.GetAll<TeamSeason>(GET_ALL, param);
         }
 
         public IEnumerable<TeamSeason> GetBySeasonAndDivision(int divisionId, int seasonId)
         {
             var param = new { divisionId, seasonId };
-            return GetAll<TeamSeason>(GET_ALL, param);
+            return _query.GetAll<TeamSeason>(GET_ALL, param);
         }
 
         public IEnumerable<TeamSeason> GetByGameAndSeason(int gameDetailsId, int seasonId)
         {
             var param = new { gameDetailsId, seasonId };
-            return GetAll<TeamSeason>(GET_ALL, param);
+            return _query.GetAll<TeamSeason>(GET_ALL, param);
         }
 
         public TeamSeason GetCurrentForTeam(int teamId)
         {
-            return GetSingleById<TeamSeason>(GET_ALL, "teamId", teamId);
+            return _query.GetSingleById<TeamSeason>(GET_ALL, "teamId", teamId);
         }
 
         public TeamSeason Get(int id)
         {
-            return GetSingle<TeamSeason>(GET, id);
+            return _query.GetSingle<TeamSeason>(GET, id);
         }
 
         public int Add(TeamSeason teamSeason)
         {
-            return Add(INSERT, new Dictionary<string, object>
+            return _query.Add(INSERT, new Dictionary<string, object>
                 {
                     {"divisionId", teamSeason.DivisionId},
                     {"gameDetailsId", teamSeason.GameDetailsId},
@@ -77,7 +72,7 @@ namespace FMS3.DataAccess.Queries
 
         public int Update(TeamSeason teamSeason)
         {
-            return Update(UPDATE, new Dictionary<string, object>
+            return _query.Update(UPDATE, new Dictionary<string, object>
                 {
                     {"Id", teamSeason.Id},
                     {"position", teamSeason.Position}
@@ -86,13 +81,13 @@ namespace FMS3.DataAccess.Queries
 
         public int Recalculate(int id)
         {
-            var result = Update(RECALCULATE, new { id });
+            var result = _query.Update(RECALCULATE, new { id });
             return result;
         }
 
         public void RecalculateDivisionPositions(int seasonId, int divisionId)
         {
-            Update(RECALCULATE_POSITIONS, new { seasonId, divisionId });
+            _query.Update(RECALCULATE_POSITIONS, new { seasonId, divisionId });
         }
     }
 }

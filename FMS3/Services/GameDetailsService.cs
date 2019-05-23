@@ -13,27 +13,37 @@ namespace FMS3.Services
         private readonly IGameDetailsQuery _gameDetailsQuery;
         private readonly ISeasonService _seasonService;
         private readonly IConfiguration _configuration;
+        private readonly ITeamSeasonService _teamSeasonService;
+        private readonly IPlayerCreatorService _playerCreatorService;
+        private readonly ITeamService _teamService;
+        private readonly INewsService _newsService;
+        private readonly IPlayerService _playerService;
+
 
         public GameDetailsService(IGameDetailsQuery gameDetailsQuery, 
             ISeasonService seasonService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ITeamService teamService,
+            ITeamSeasonService teamSeasonService,
+            INewsService newsService,
+            IPlayerCreatorService playerCreatorService,
+            IPlayerService playerService)
         {
             _gameDetailsQuery = gameDetailsQuery;
             _seasonService = seasonService;
             _configuration = configuration;
+            _teamService = teamService;
+            _teamSeasonService = teamSeasonService;
+            _playerCreatorService = playerCreatorService;
+            _newsService = newsService;
+            _playerService = playerService;
         }
 
         public GameDetails GetCurrentGame()
         {
             return Get(GameCache.GameDetailsId);
         }
-
-        public int GetCurrentWeek()
-        {
-            return GetCurrentGame().CurrentWeek;
-        }
-
-
+        
         #region Implementation of IGameDetailsService
 
         public GameDetails StartNewGame()
@@ -44,20 +54,19 @@ namespace FMS3.Services
             if (gameId > 0)
             {
                 newGame.Id = gameId;
-
                 var seasonId = _seasonService.AddNew(newGame.Id);
-
                 newGame.CurrentSeasonId = seasonId;
                 Update(newGame);
 
-                
-                return newGame;
-                
-                //var teamList = _teamService.GetTeamsForGame();
+                GameCache.GameDetailsId = gameId;
+                GameCache.CurrentWeek = 0;
 
-                //_teamService.CreateAllTeamsForGame(gameId);
-                //_teamSeasonService.CreateForNewGame(teamList, seasonId, gameId);
-                //_playerCreatorService.CreateAllPlayersForGame(teamList);
+                _teamService.CreateAllTeamsForGame(gameId);
+                var teamList = _teamService.GetTeamsForGame();
+                _teamSeasonService.CreateForNewGame(teamList, seasonId, gameId);
+                _playerCreatorService.CreateAllPlayersForGame(teamList);
+
+                return newGame;
             }
 
             return null;
@@ -68,6 +77,17 @@ namespace FMS3.Services
             var game = GetCurrentGame();
             game.ManagerName = managerName;
             Update(game);
+            GameCache.CurrentSeasonId = game.CurrentSeasonId;
+
+            var newsText = managerName + " has become manager of " + _teamService.GetTeamName(game.TeamId);
+            _newsService.Add(new News
+                {
+                    TeamId = game.TeamId,
+                    GameDetailsId = game.Id,
+                    SeasonId = game.CurrentSeasonId,
+                    NewsText = newsText
+                });
+
             return game;
         }
 
@@ -86,24 +106,27 @@ namespace FMS3.Services
             game.CurrentSeasonId = seasonId;
             game.CurrentWeek = 0;
             Update(game);
+
+            GameCache.CurrentWeek = 0;
+            GameCache.CurrentSeasonId = seasonId;
+            return game;
+        }
+
+        public GameDetails LoadGame(int id)
+        {
+            var game = Get(id);
+            GameCache.GameDetailsId = id;
+            GameCache.CurrentSeasonId = game.CurrentSeasonId;
+            GameCache.ManagedTeamId = game.TeamId;
+            GameCache.CurrentWeek = game.CurrentWeek;
+
             return game;
         }
 
         public bool LoadStaticData()
         {
-
-            //var response = _webApi.GetAll(formationsURL);
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    GameCache.Formations = response.Content.ReadAsAsync<Formations>().Result;
-            //    if (GameCache.Formations != null)
-            //        return true;
-            //}
-
             GameCache.Formations = _configuration.GetSection("FormationSection").Get<Formations>();
-
             GameCache.TeamTemplates = _configuration.GetSection("TeamTemplateSection").Get<TeamTemplates>();
-
             return true;
         }
 
@@ -133,13 +156,22 @@ namespace FMS3.Services
             var gameDetails = GetCurrentGame();
             gameDetails.CurrentWeek++;
             _gameDetailsQuery.Update(gameDetails);
+        
+            _playerService.AdvanceWeek();
+
+            GameCache.CurrentWeek = gameDetails.CurrentWeek;
             return gameDetails;
         }
-        public int AdvanceSeason(GameDetails gameDetails)
-        {
-            // TODO 
 
-            return 0;
+        public GameDetails CompleteCurrentSeason()
+        {
+            var newYear = _seasonService.CompleteCurrentSeason();
+
+            var newSeason = new Season { Completed = false, GameDetailsId = GameCache.GameDetailsId, StartYear = newYear };
+            var newSeasonId = _seasonService.Add(newSeason);
+            _teamSeasonService.PromotionAndRelegation(newSeasonId);
+
+            return SetGameToNewSeason(newSeasonId); 
         }
 
         public int Delete(int id)

@@ -14,50 +14,46 @@ namespace FMS3.Controllers
         private readonly IMatchService _matchService;
         private readonly IMatchEventService _matchEventService;
         private readonly IMatchGoalService _matchGoalService;
-        private readonly IGameDetailsService _gameDetailsService;
         private readonly ITeamSeasonService _teamSeasonService;
 
         public MatchController(IMatchService matchService, 
             IMatchEventService matchEventService, 
             IMatchGoalService matchGoalService,
-            IGameDetailsService gameDetailsService,
             ITeamSeasonService teamSeasonService)
         {
             _matchService = matchService;
             _matchEventService = matchEventService;
             _matchGoalService = matchGoalService;
-            _gameDetailsService = gameDetailsService;
             _teamSeasonService = teamSeasonService;
         }
         public IActionResult Index()
         {
-
-            return WeeklyFixtures(new FixtureInfo { SelectedWeek = _gameDetailsService.GetCurrentWeek().ToString() });
+            return WeeklyFixtures(new FixtureInfo { SelectedWeek = GameCache.CurrentWeek.ToString() });
         }
 
         public IActionResult ThisWeeksFixtures()
         {
-            var game = _gameDetailsService.GetCurrentGame();
-
             var fixtureInfo = new FixtureInfo
             {
-                CurrentWeek = game.CurrentWeek,
-                SelectedWeek = game.CurrentWeek.ToString()
+                CurrentWeek = GameCache.CurrentWeek,
+                SelectedWeek = GameCache.CurrentWeek.ToString()
             };
             return WeeklyFixtures(fixtureInfo);
         }
         public IActionResult WeeklyFixtures(FixtureInfo fixtureInfo)
         {
             fixtureInfo.Week = Int32.Parse(fixtureInfo.SelectedWeek);
-            fixtureInfo.CurrentWeek = _gameDetailsService.GetCurrentWeek();
-            for (var index = 1; index <= GameCache.NumberOfWeeksInSeason; index++)
+            fixtureInfo.WeekString = Utilities.Utilities.GetWeekDisplay(fixtureInfo.Week);
+            fixtureInfo.CurrentWeek = GameCache.CurrentWeek;
+            for (var index = 0; index <= GameCache.NumberOfWeeksInSeason + 1; index++)
             {
-                fixtureInfo.WeekList.Add(new SelectListItem("Week " + index, index.ToString(), index == fixtureInfo.Week));
+                var weekString = Utilities.Utilities.GetWeekDisplay(index);
+                fixtureInfo.WeekList.Add(new SelectListItem(weekString, index.ToString(), index == fixtureInfo.Week));
             }
             return View("Index", fixtureInfo);
         }
 
-        public IActionResult TeamFixtures(int teamId, int divisionId = 0)
+        public IActionResult TeamFixtures(int teamId, int? divisionId = null)
         {
             var matches = _matchService.GetAll(new Match {DivisionId = divisionId})
                 .Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId);
@@ -81,26 +77,21 @@ namespace FMS3.Controllers
             return View(matchDetail);
         }
 
-        public IActionResult PlayAllMatches(int divisionId, int seasonId, int week)
+        public IActionResult PlayAllMatches(int seasonId, int week, int? divisionId = null)
         {
-            _matchService.PlayAllMatchesForDivision(seasonId, week, divisionId);
+            if (divisionId == null)
+            {
+                _matchService.PlayAllMatchesForWeek(seasonId, week);
+                4.TimesWithIndex((div) => _teamSeasonService.RecalculateAll(seasonId, div+1));
+            }
+            else
+            {
+                _matchService.PlayAllMatchesForDivision(seasonId, week, divisionId.Value);
+                // Note - assuming everyone plays every week - no need to recalc all if not. 
+                _teamSeasonService.RecalculateAll(seasonId, divisionId.Value);
+            }
 
-            // Note - assuming everyone plays every week - no need to recalc all if not. 
-            _teamSeasonService.RecalculateAll(seasonId, divisionId);
             return Index();
         }
-
-        public IActionResult PlayAllMatchesForWeek(int seasonId, int week)
-        {
-            _matchService.PlayAllMatchesForWeek(seasonId, week);
-
-            // Note - assuming everyone plays every week - no need to recalc all if not. 
-            4.TimesWithIndex((divisionId) => _teamSeasonService.RecalculateAll(seasonId, divisionId));
-
-            return Index();
-        }
-
-
-
     }
 }

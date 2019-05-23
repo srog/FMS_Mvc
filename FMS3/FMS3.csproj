@@ -22,10 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Connected Services\" />
-    <Folder Include="DataAccess\Interfaces\" />
-    <Folder Include="DataAccess\Queries\" />
     <Folder Include="Utilities\" />
-    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 
 </Project>

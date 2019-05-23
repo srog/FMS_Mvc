@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using Dapper;
-using FMS3.Utilities;
 
 namespace FMS3.DataAccess
 {
-    public abstract class Query  : IQuery
+    public class Query  : IQuery
     {
         private readonly IDataAccessor _dataAccessor;
-        protected Query()
+
+        public Query(IDataAccessor dataAccessor)
         {
-            var db = new FmsDbContext();
-            _dataAccessor = new DataAccessor(db.Connection);
+            _dataAccessor = dataAccessor;
         }
         
         #region Implementation of IQuery
@@ -22,11 +21,6 @@ namespace FMS3.DataAccess
         }
 
         public IEnumerable<T> GetAll<T>(string storedProcedure, object param)
-        {
-            return _dataAccessor.Query<T>(storedProcedure, param);
-        }
-
-        public IEnumerable<T> GetLatest<T>(string storedProcedure, object param)
         {
             return _dataAccessor.Query<T>(storedProcedure, param);
         }

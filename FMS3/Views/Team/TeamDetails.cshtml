@@ -33,7 +33,7 @@ Recent Form:
 @Component.InvokeAsync("RecentForm", new { teamId = Model.Id }).Result
 <hr />
 <div>
-    This Week's Fixture: @await Component.InvokeAsync("ThisWeeksFixture")
+    This Week's Fixture: @await Component.InvokeAsync("ThisWeeksFixture", new { teamId = Model.Id})
 </div>
 <br />
 @Html.ActionLink("All Team's Fixtures/Results", "TeamFixtures", "Match", new { teamId = Model.Id, divisionId = Model.DivisionId })
@@ -41,6 +41,7 @@ Recent Form:
 News:
 <br />
 @Component.InvokeAsync("TeamNews", new { teamId = Model.Id }).Result
+<a asp-action="Index" asp-controller="News">All News</a>
 <hr />
 
 

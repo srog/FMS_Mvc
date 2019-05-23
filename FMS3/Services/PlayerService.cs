@@ -15,99 +15,85 @@ namespace FMS3.Services
         private readonly IPlayerQuery _playerQuery;
         private readonly IPlayerAttributeService _playerAttributeService;
         private readonly ITeamService _teamService;
-        private readonly IGameDetailsService _gameDetailsService;
 
         private static Dictionary<int, List<int>> SquadCache = new Dictionary<int, List<int>>();
         
         public PlayerService(IPlayerQuery playerQuery, 
             IPlayerAttributeService playerAttributeService, 
             IConfiguration configuration,
-            ITeamService teamService,
-            IGameDetailsService gameDetailsService)
+            ITeamService teamService)
         {
             _playerQuery = playerQuery;
             _playerAttributeService = playerAttributeService;
             _configuration = configuration;
             _teamService = teamService;
-            _gameDetailsService = gameDetailsService;
         }
         #region Implementation of IPlayerService
-
-
+        
         public PlayerListDisplay GetAllPlayers(int? teamId = null)
         {
-            var paramList = new Dictionary<string, object>
-                {
-                    {"gameDetailsId",GameCache.GameDetailsId},
-                    {"teamId",teamId}
-                };
-            //var response = _webApi.GetAll(playerURL, paramList);
-            if (true)
+          
+            var playerInfo = new PlayerListDisplay();
+            if (teamId == null)
             {
-                var playerInfo = new PlayerListDisplay();
-                if (teamId == null)
-                {
-                    playerInfo.PlayerList = GetAllPlayersInGame().ToList();
-                }
-                else
-                {
-                    playerInfo.PlayerList = GetTeamSquad(teamId.Value).ToList();
-                }
-                switch (teamId)
-                {
-                    case 0:
-                        playerInfo.DisplayType = PlayerListDisplayTypeEnum.TransferMarket;
-                        break;
-                    case null:
-                        playerInfo.DisplayType = PlayerListDisplayTypeEnum.AllPlayers;
-                        break;
-                    default:
-                        playerInfo.DisplayType = teamId == GameCache.ManagedTeamId ?
-                            PlayerListDisplayTypeEnum.MySquad :
-                            PlayerListDisplayTypeEnum.OtherSquad;
-                        break;
-                }
-                if (playerInfo.DisplayType == PlayerListDisplayTypeEnum.AllPlayers)
-                {
-                    playerInfo.TeamFormationId = 0;
-                    playerInfo.TeamFormation = "";
-                    playerInfo.TeamName = "";
-                }
-                else
-                {
-                    if (playerInfo.DisplayType != PlayerListDisplayTypeEnum.TransferMarket)
-                    {
-                        var team = _teamService.Get(teamId.Value);
-                        playerInfo.TeamFormationId = team.FormationId;
-                        playerInfo.TeamFormation = GameCache.Formations.FormationList.First(f => f.Id == team.FormationId).Name;
-                        playerInfo.TeamName = team.Name;
-                    }
-
-                }
-
-                var game = _gameDetailsService.GetCurrentGame();
-                playerInfo.IsPostSeason =  game.CurrentWeek == 23;
-                playerInfo.IsPreSeason = game.CurrentWeek == 0;
-
-                return playerInfo;
+                playerInfo.PlayerList = GetAllPlayersInGame().ToList();
             }
-           
+            else
+            {
+                playerInfo.PlayerList = GetTeamSquad(teamId.Value).ToList();
+            }
+            switch (teamId)
+            {
+                case 0:
+                    playerInfo.DisplayType = PlayerListDisplayTypeEnum.TransferMarket;
+                    break;
+                case null:
+                    playerInfo.DisplayType = PlayerListDisplayTypeEnum.AllPlayers;
+                    break;
+                default:
+                    playerInfo.DisplayType = teamId == GameCache.ManagedTeamId ?
+                        PlayerListDisplayTypeEnum.MySquad :
+                        PlayerListDisplayTypeEnum.OtherSquad;
+                    break;
+            }
+            if (playerInfo.DisplayType == PlayerListDisplayTypeEnum.AllPlayers)
+            {
+                playerInfo.TeamFormationId = 0;
+                playerInfo.TeamFormation = "";
+                playerInfo.TeamName = "";
+            }
+            else
+            {
+                if (playerInfo.DisplayType != PlayerListDisplayTypeEnum.TransferMarket)
+                {
+                    var team = _teamService.Get(teamId.Value);
+                    playerInfo.TeamFormationId = team.FormationId;
+                    playerInfo.TeamFormation = GameCache.Formations.FormationList.First(f => f.Id == team.FormationId).Name;
+                    playerInfo.TeamName = team.Name;
+                }
+
+            }
+
+            playerInfo.IsPostSeason =  GameCache.CurrentWeek == 23;
+            playerInfo.IsPreSeason = GameCache.CurrentWeek == 0;
+
+            return playerInfo;
+      
         }
         public IEnumerable<Player> GetAllPlayersInGame()
         {
-            return _playerQuery.GetAll(new Player { GameDetailsId = GameCache.GameDetailsId }).ToList();
+            return _playerQuery.GetAll().ToList();
         }
         public List<Player> GetTeamSquad(int teamId)
         {
-            return _playerQuery.GetAll(new Player { GameDetailsId = GameCache.GameDetailsId, TeamId = teamId})
-                .OrderByDescending(p => p.TeamSelection)
-                .ThenBy(p => p.Position)
+            return _playerQuery.GetAll(teamId)
+                .OrderBy(p => p.Position)
                 .ToList();
         }
 
         public List<Player> GetSelectedTeam(int teamId)
         {
-            return _playerQuery.GetAll(new Player { GameDetailsId = GameCache.GameDetailsId, TeamId = teamId })
+            return _playerQuery.GetAll(teamId)
                 .Where(p => p.IsSelected)
                 .OrderBy(p => p.Position)
                 .ToList();
@@ -192,8 +178,6 @@ namespace FMS3.Services
         // TODO - training, recalculate ratings, values
         public int AdvanceWeek()
         {
-            var gameDetails = _gameDetailsService.GetCurrentGame();
-
             var teamsChangedList = new List<int>();
             var injuredPlayerList = GetAllPlayersInGame().Where(p => p.InjuredWeeks > 0);
             foreach (var player in injuredPlayerList)
@@ -218,7 +202,7 @@ namespace FMS3.Services
 
             foreach(var team in teamsChangedList)
             {
-                if (team != gameDetails.TeamId)
+                if (team != GameCache.ManagedTeamId)
                 {
                     SetTeamSelection(_teamService.Get(team));
                 }

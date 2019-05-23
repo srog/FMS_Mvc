@@ -6,6 +6,7 @@ namespace FMS3.Models
     public class FixtureInfo
     {
         public int Week { get; set; }
+        public string WeekString { get; set; }
         public int CurrentWeek { get; set; }
         public List<SelectListItem> WeekList { get; set; }
         public string SelectedWeek { get; set; }
