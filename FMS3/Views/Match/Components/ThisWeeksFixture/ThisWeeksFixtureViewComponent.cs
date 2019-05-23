@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FMS3.Data.Cache;
 using FMS3.Services.Interfaces;
 
 namespace FMS3.Views.Match.Components.ThisWeeksFixture
@@ -7,18 +8,20 @@ namespace FMS3.Views.Match.Components.ThisWeeksFixture
     public class ThisWeeksFixtureViewComponent : ViewComponent
     {
         private readonly IMatchService _matchService;
-        private readonly IGameDetailsService _gameDetailsService;
 
-        public ThisWeeksFixtureViewComponent(IMatchService matchService, IGameDetailsService gameDetailsService)
+        public ThisWeeksFixtureViewComponent(IMatchService matchService)
         {
             _matchService = matchService;
-            _gameDetailsService = gameDetailsService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int teamId = 0)
         {
-            var week = _gameDetailsService.GetCurrentWeek();
-            var match = _matchService.GetThisWeeksForManagedTeam(week);
+            var week = GameCache.CurrentWeek;
+            if (teamId == 0)
+            {
+                teamId = GameCache.ManagedTeamId;
+            }
+            var match = _matchService.GetThisWeeksFixture(teamId);
             
             return View("ThisWeeksFixture", match);
         }

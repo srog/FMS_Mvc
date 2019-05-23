@@ -5,13 +5,18 @@ using FMS3.DataAccess.Interfaces;
 
 namespace FMS3.DataAccess.Queries
 {    
-    public class MatchQuery : Query, IMatchQuery
+    public class MatchQuery : IMatchQuery
     {
         private const string GET_ALL = "spGetMatches";
         private const string GET = "spGetMatchById";
         private const string INSERT = "spInsertMatch";
         private const string UPDATE = "spUpdateMatch";
-  
+
+        private readonly IQuery _query;
+        public MatchQuery(IQuery query)
+        {
+            _query = query;
+        }
         public IEnumerable<Match> GetAll(Match match)
         {
             var param = new
@@ -25,17 +30,17 @@ namespace FMS3.DataAccess.Queries
                 match.Attendance,
                 match.Completed
             };
-            return GetAll<Match>(GET_ALL, param);
+            return _query.GetAll<Match>(GET_ALL, param);
         }
 
         public Match Get(int id)
         {
-            return GetSingle<Match>(GET, id);
+            return _query.GetSingle<Match>(GET, id);
         }
 
         public int Insert(Match match)
         {
-            return Add(INSERT, new Dictionary<string, object>
+            return _query.Add(INSERT, new Dictionary<string, object>
             {
                 { "gameDetailsId", match.GameDetailsId },
                 { "seasonId", match.SeasonId },
@@ -51,7 +56,7 @@ namespace FMS3.DataAccess.Queries
 
         public int Update(Match match)
         {
-            return Update(UPDATE, new {
+            return _query.Update(UPDATE, new {
                 match.Id, match.HomeTeamScore, match.AwayTeamScore, match.Attendance, match.Completed
             });
         }

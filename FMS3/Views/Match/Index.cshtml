@@ -1,18 +1,19 @@
-﻿@model FixtureInfo
+﻿@using FMS3.Data.Cache
+@model FixtureInfo
 @{
     ViewData["Title"] = "Fixtures";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm("WeeklyFixtures", "Match", FormMethod.Post))
 {
-    <h2>Fixtures For Week @Model.Week</h2>
+    <h2>Fixtures For @Model.WeekString</h2>
     <br />
     @Html.DropDownListFor(m => m.SelectedWeek, Model.WeekList)
 
     <input name="Show" type="submit" value="Show" />
 
     <hr />
-
+    @Html.ActionLink("Play All", "PlayAllMatches", "Match", new { seasonId = GameCache.CurrentSeasonId, week = Int32.Parse(Model.SelectedWeek) })
     <hr />
     @await Component.InvokeAsync("FixtureList", new { divisionId = 1, week = Int32.Parse(Model.SelectedWeek) })
     @await Component.InvokeAsync("FixtureList", new { divisionId = 2, week = Int32.Parse(Model.SelectedWeek) })

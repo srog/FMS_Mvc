@@ -94,5 +94,19 @@ namespace FMS3.Services
             }
             return TeamNames.GetValueOrDefault(teamId);
         }
+
+        // Primitive - log these changes (to show in Match Details) 
+        public void MatchFinances(Match match)
+        {
+            var homeTeam = Get(match.HomeTeamId.Value);
+            var awayTeam = Get(match.AwayTeamId.Value);
+
+            homeTeam.Cash += match.Attendance * 5;
+            Update(homeTeam);
+
+            awayTeam.Cash += match.Attendance;
+            Update(awayTeam);
+
+        }
     }
 }

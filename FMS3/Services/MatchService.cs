@@ -40,7 +40,7 @@ namespace FMS3.Services
 
         public void PlayAllMatchesForWeek(int seasonId, int week)
         {
-            4.TimesWithIndex((i) => PlayAllMatchesForDivision(seasonId, week, i));
+            4.TimesWithIndex((i) => PlayAllMatchesForDivision(seasonId, week, i+1));
         }
 
         public void PlayAllMatchesForDivision(int seasonId, int week, int divisionId)
@@ -134,6 +134,8 @@ namespace FMS3.Services
 
             UpdatePlayerSuspensions(match);
             UpdatePlayerInjuries(match);
+
+            _teamService.MatchFinances(match);
 
             return match;
         }
@@ -254,15 +256,15 @@ namespace FMS3.Services
             return _matchQuery.GetAll(match).ToList();
         }
 
-        public Match GetThisWeeksForManagedTeam(int week)
+        public Match GetThisWeeksFixture(int teamId)
         {
-            var teamId = GameCache.ManagedTeamId;
             var matchFilter = new Match
                 {
                     GameDetailsId = GameCache.GameDetailsId,
-                    Week = week,
+                    Week = GameCache.CurrentWeek,
                     SeasonId = GameCache.CurrentSeasonId
                 };
+
             var matches = GetAll(matchFilter)
                 .Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId);
 

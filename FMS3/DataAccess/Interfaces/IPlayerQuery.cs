@@ -5,7 +5,7 @@ namespace FMS3.DataAccess.Interfaces
 {
     public interface IPlayerQuery
     {
-        IEnumerable<Player> GetAll(Player player);
+        IEnumerable<Player> GetAll(int? teamId = null);
         Player Get(int id);
         int Add(Player player);
         int Update(Player player);

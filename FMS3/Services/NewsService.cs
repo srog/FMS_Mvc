@@ -26,7 +26,7 @@ namespace FMS3.Services
 
         public IEnumerable<News> GetForGame()
         {
-            return _newsQuery.GetAll(new News {GameDetailsId = GameCache.GameDetailsId})
+            return _newsQuery.GetAll()
                 .OrderByDescending(n => n.SeasonId)
                 .ThenByDescending(n => n.Week)
                 .ThenByDescending(n => n.DivisionId);

@@ -1,8 +1,8 @@
-﻿using FMS3.DataAccess.Interfaces;
+﻿using FMS3.DataAccess;
+using FMS3.DataAccess.Interfaces;
 using FMS3.DataAccess.Queries;
 using FMS3.Services;
 using FMS3.Services.Interfaces;
-using FMS3.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,8 +37,10 @@ namespace FMS3
                 {
                     o.ViewLocationFormats.Add("Views/Match/{0}.cshtml");
                 });
-            
-            services.AddDbContext<FmsDbContext>();
+
+            services.AddTransient<IDataAccessor, DataAccessor>();
+            services.AddTransient<IQuery, Query>();
+
             services.AddTransient<IMatchQuery, MatchQuery>();
             services.AddTransient<IMatchGoalQuery, MatchGoalQuery>();
             services.AddTransient<IGameDetailsQuery, GameDetailsQuery>();

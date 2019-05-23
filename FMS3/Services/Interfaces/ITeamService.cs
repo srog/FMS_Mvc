@@ -12,5 +12,6 @@ namespace FMS3.Services.Interfaces
         void CreateAllTeamsForGame(int gameId);
         List<Team> GetTeamsForGame();
         string GetTeamName(int teamId);
+        void MatchFinances(Match match);
     }
 }
